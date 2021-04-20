@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>NullableToStringCall:BundleExtractorExt.kt$$key</ID>
+    <ID>UnnecessaryAbstractClass:BaseActivity.kt$BaseActivity : AppCompatActivity</ID>
+    <ID>UnnecessaryAbstractClass:BaseViewModel.kt$BaseViewModel : ViewModel</ID>
+  </CurrentIssues>
+</SmellBaseline>
