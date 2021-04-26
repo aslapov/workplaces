@@ -2,8 +2,9 @@
 object GradlePluginVersions {
     const val ANDROID_GRADLE = "4.1.3"
     const val KOTLIN = CoreVersions.KOTLIN
-    const val SAFE_ARGS = "2.2.2"
+    const val SAFE_ARGS = AppVersions.NAVIGATION
     const val DETEKT = CoreVersions.DETEKT
+    const val GRADLE_VERSIONS = "0.38.0"
 }
 
 object GradlePluginId {
@@ -16,4 +17,6 @@ object GradlePluginId {
     const val KAPT = "kapt"
 
     const val DETEKT = "io.gitlab.arturbosch.detekt"
+
+    const val GRADLE_VERSIONS = "com.github.ben-manes.versions"
 }

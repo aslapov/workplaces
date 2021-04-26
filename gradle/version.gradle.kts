@@ -9,9 +9,10 @@ fun getVersionCodeFromProperties(): Int {
 }
 
 fun loadVersionProperties(): Properties {
-    val fis = project.rootProject.file("version.properties").inputStream()
     val props = Properties()
-    props.load(fis)
+    project.rootProject.file("version.properties")
+        .inputStream()
+        .use(props::load)
     return props
 }
 

@@ -3,8 +3,7 @@ private object DataVersions {
 }
 
 object DataDependency {
-    const val OKHTTP_LOGGING =
-        "com.github.ihsanbal:LoggingInterceptor:${DataVersions.OKHTTP_LOGGING}"
+    const val OKHTTP_LOGGING = "com.github.ihsanbal:LoggingInterceptor:${DataVersions.OKHTTP_LOGGING}"
 
     const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:${CoreVersions.DAGGER}"
     const val MOSHI_COMPILER = "com.squareup.moshi:moshi-kotlin-codegen:${CoreVersions.MOSHI}"

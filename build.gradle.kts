@@ -1,5 +1,6 @@
-plugins {
+import io.gitlab.arturbosch.detekt.Detekt
 
+plugins {
     // pre-load plugins
     id(GradlePluginId.ANDROID_APPLICATION) version GradlePluginVersions.ANDROID_GRADLE apply false
     id(GradlePluginId.SAFE_ARGS) version GradlePluginVersions.SAFE_ARGS apply false
@@ -7,16 +8,7 @@ plugins {
 
     // apply plugins
     id(GradlePluginId.DETEKT) version GradlePluginVersions.DETEKT
-}
-
-// all projects = root project + sub projects
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven { url = uri("https://jitpack.io") }
-    }
-    apply { from("$rootDir/gradle/version.gradle.kts") }
+    id(GradlePluginId.GRADLE_VERSIONS) version GradlePluginVersions.GRADLE_VERSIONS
 }
 
 subprojects {
@@ -33,7 +25,20 @@ subprojects {
             }
         }
     }
+
+    tasks.withType<Detekt>().configureEach {
+        jvmTarget = "1.8"
+    }
+
     dependencies {
         detektPlugins(DetektDependency.DETEKT_FORMATTING)
     }
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url = uri("https://jitpack.io") }
+    }
+    apply { from("$rootDir/gradle/version.gradle.kts") }
 }

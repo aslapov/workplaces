@@ -135,13 +135,14 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation(AppDependency.CORE_KTX)
+    implementation(AppDependency.CORE)
     implementation(AppDependency.APPCOMPAT)
     implementation(AppDependency.CONSTRAINT_LAYOUT)
-    implementation(AppDependency.LIFECYCLE)
+    implementation(AppDependency.LIFECYCLE_VIEWMODEL)
     implementation(AppDependency.MATERIAL_UI)
     implementation(AppDependency.BROWSER)
     implementation(AppDependency.RMR_VIEW_BINDING)
+    implementation(AppDependency.RMR_LIVEDATA)
 
     implementation(AppDependency.NAVIGATION_FRAGMENT)
     implementation(AppDependency.NAVIGATION_FRAGMENT_KTX)

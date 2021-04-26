@@ -1,7 +1,7 @@
 private object TestVersions {
-    const val JUNIT = "4.13"
+    const val JUNIT = "4.13.2"
     const val MOCKITO = "2.2.0"
-    const val ASSERTJ = "3.12.2"
+    const val ASSERTJ = "3.19.0"
     const val ANDROIDX = "2.1.0"
 }
 

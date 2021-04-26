@@ -60,8 +60,6 @@ dependencies {
     api(DomainDependency.RETROFIT)
     api(DomainDependency.RETROFIT_MOSHI)
 
-    api(DomainDependency.CRYPTO)
-
     api(DomainDependency.TIMBER)
     api(DomainDependency.LOGGER)
 

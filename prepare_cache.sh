@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BUILD_CACHE_THRESHOLD=3000
+BUILD_CACHE_THRESHOLD=1500
 
 set -eu
 

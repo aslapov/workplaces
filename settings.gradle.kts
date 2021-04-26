@@ -3,14 +3,16 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         google()
-        jcenter()
     }
 
     resolutionStrategy {
         eachPlugin {
-            when (requested.id.id) {
-                "com.android.library", "com.android.application" -> useModule("com.android.tools.build:gradle:${requested.version}")
-                "androidx.navigation.safeargs" -> useModule("androidx.navigation:navigation-safe-args-gradle-plugin:${requested.version}")
+            val id = requested.id.id
+            when {
+                id.startsWith("com.android") ->
+                    useModule("com.android.tools.build:gradle:${requested.version}")
+                id.startsWith("androidx.navigation.safeargs") ->
+                    useModule("androidx.navigation:navigation-safe-args-gradle-plugin:${requested.version}")
             }
         }
     }
@@ -19,7 +21,7 @@ pluginManagement {
 rootProject.name = ("base-project")
 
 include(
-        "app",
-        "data",
-        "domain"
+    "app",
+    "data",
+    "domain"
 )

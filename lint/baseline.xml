@@ -1,25 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <issues format="5" by="lint 4.1.3" client="gradle" variant="debug" version="4.1.3">
-
-    <issue
-        id="IidCompatibilityCheckFailure"
-        message="Check failed with exception: java.lang.NoSuchMethodException: com.android.tools.lint.detector.api.LintModelModuleProject.getGradleProjectModel()">
-        <location
-            file="app"/>
-    </issue>
-
-    <issue
-        id="IidCompatibilityCheckFailure"
-        message="Check failed with exception: java.lang.NoSuchMethodException: com.android.tools.lint.detector.api.LintModelModuleProject.getGradleProjectModel()">
-        <location
-            file="../app"/>
-    </issue>
-
-    <issue
-        id="IidCompatibilityCheckFailure"
-        message="Check failed with exception: java.lang.NoSuchMethodException: com.android.tools.lint.detector.api.LintModelModuleProject.getGradleProjectModel()">
-        <location
-            file="../app"/>
-    </issue>
-
 </issues>
