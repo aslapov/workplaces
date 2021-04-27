@@ -16,7 +16,7 @@
             tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-                android:name="com.redmadrobot.aslapov.ui.MainActivity"
+                android:name="com.redmadrobot.aslapov.start.StartActivity"
                 android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
@@ -25,6 +25,12 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name="com.redmadrobot.aslapov.ui.MainActivity" />
+
+        <activity android:name="com.redmadrobot.aslapov.signin.SignInActivity" />
+
+        <activity android:name="com.redmadrobot.aslapov.signup.SignUpActivity" />
 
     </application>
 
