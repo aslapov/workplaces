@@ -7,7 +7,9 @@ import com.redmadrobot.aslapov.data.remote.UserCredentials
 import com.redmadrobot.aslapov.profile.User
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class UserRepository @Inject constructor(
     private val localSource: UserSource,
     private val remoteApiSource: AuthApi,
@@ -22,9 +24,9 @@ class UserRepository @Inject constructor(
 
     fun isUserLoggedIn(): Boolean = user != null
 
-    suspend fun register(username: String, password: String): AuthResult {
+    suspend fun register(email: String, password: String): AuthResult {
         return try {
-            val userCredentials = UserCredentials(username, password)
+            val userCredentials = UserCredentials(email, password)
             remoteApiSource.register(userCredentials)
             saveUser()
             AuthResult.AUTHORIZED

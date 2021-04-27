@@ -28,9 +28,13 @@
 
         <activity android:name="com.redmadrobot.aslapov.ui.MainActivity" />
 
+        <activity android:name="com.redmadrobot.aslapov.login.LoginActivity" />
+
         <activity android:name="com.redmadrobot.aslapov.signin.SignInActivity" />
 
         <activity android:name="com.redmadrobot.aslapov.signup.SignUpActivity" />
+
+        <activity android:name="com.redmadrobot.aslapov.ui.WelcomeActivity" />
 
     </application>
 

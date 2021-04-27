@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">InternshipApp</string>
+    <string name="workplaces">Workplaces</string>
+    <string name="logo">Найди своё место</string>
+    <string name="signin">Войти</string>
+    <string name="signup">Регистрация по почте</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Пароль</string>
+    <string name="go_to_register">Перейти к регистрации</string>
+    <string name="next">Далее</string>
+    <string name="login">Вход</string>
+    <string name="logout">Выйти из аккаунта</string>
+    <string name="welcome">Nice to meet you</string>
+    <string name="welcome_info">Теперь ты можешь смотреть и делать публикации</string>
+    <string name="go_to_feed">Перейти к ленте</string>
+    <string name="signup_back">Регистрация</string>
+    <string name="nickname">Никнейм</string>
+    <string name="register_already">Уже зарегистрирован</string>
+    <string name="firstname">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="birthday">Дата рождения</string>
+    <string name="register">Зарегистрироваться</string>
 </resources>

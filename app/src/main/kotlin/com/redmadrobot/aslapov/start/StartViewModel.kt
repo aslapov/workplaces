@@ -1,7 +1,7 @@
 package com.redmadrobot.aslapov.start
 
 import com.redmadrobot.aslapov.data.UserRepository
-import com.redmadrobot.aslapov.signin.SignInActivity
+import com.redmadrobot.aslapov.login.LoginActivity
 import com.redmadrobot.aslapov.ui.MainActivity
 import com.redmadrobot.aslapov.ui.base.activity.BaseActivity
 import com.redmadrobot.aslapov.ui.base.viewmodel.BaseViewModel
@@ -12,6 +12,6 @@ class StartViewModel @Inject constructor(private val userRepository: UserReposit
         if (userRepository.isUserLoggedIn()) {
             MainActivity::class.java
         } else {
-            SignInActivity::class.java
+            LoginActivity::class.java
         }
 }
