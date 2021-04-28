@@ -12,7 +12,8 @@ class SignUpStepFirstViewModel @Inject constructor() {
     private val _signUpStepFirstViewState = MutableLiveData<SignUpStepFirstViewState>()
     val signUpStepFirstViewState: LiveData<SignUpStepFirstViewState> = _signUpStepFirstViewState
 
-    fun validateInput(nickname: String, email: String, password: String) {
+    // Необходимо уточнение насчет валидации никнейма. По умолчанию не проверяю
+    fun validateInput(email: String, password: String) {
         when {
             !isEmailValid(email) -> {
                 _signUpStepFirstViewState.value = SignUpStepFirstError("E-mail не распознан")

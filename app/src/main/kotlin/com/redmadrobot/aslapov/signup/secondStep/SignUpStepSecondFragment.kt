@@ -7,19 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.aslapov.R
 import com.redmadrobot.aslapov.signup.SignUpActivity
 import com.redmadrobot.aslapov.signup.SignUpViewModel
-import com.redmadrobot.aslapov.signup.firstStep.SignUpStepFirstError
-import com.redmadrobot.aslapov.signup.firstStep.SignUpStepFirstSuccess
 import com.redmadrobot.aslapov.ui.base.fragment.BaseFragment
 import javax.inject.Inject
-import javax.inject.Provider
 
-class SignUpStepSecondFragment: BaseFragment(R.layout.fragment_signup_second) {
+class SignUpStepSecondFragment : BaseFragment(R.layout.fragment_signup_second) {
 
     @Inject
     lateinit var signUpViewModel: SignUpViewModel
@@ -76,17 +72,20 @@ class SignUpStepSecondFragment: BaseFragment(R.layout.fragment_signup_second) {
             signUpActivity.onBackToFirstStep()
         }
 
-        signUpStepSecondViewModel.signUpStepSecondViewState.observe(signUpActivity, { state ->
-            when (state) {
-                is SignUpStepSecondSuccess -> {
-                    register?.isEnabled = true
-                }
-                is SignUpStepSecondError -> {
-                    register?.isEnabled = false
-                    Snackbar.make(register!!, state.error, Snackbar.LENGTH_LONG).show()
+        signUpStepSecondViewModel.signUpStepSecondViewState.observe(
+            signUpActivity,
+            { state ->
+                when (state) {
+                    is SignUpStepSecondSuccess -> {
+                        register?.isEnabled = true
+                    }
+                    is SignUpStepSecondError -> {
+                        register?.isEnabled = false
+                        Snackbar.make(register!!, state.error, Snackbar.LENGTH_LONG).show()
+                    }
                 }
             }
-        })
+        )
 
         return view
     }

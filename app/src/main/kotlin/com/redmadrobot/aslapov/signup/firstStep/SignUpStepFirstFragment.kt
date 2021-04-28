@@ -8,17 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.aslapov.R
-import com.redmadrobot.aslapov.signin.SignInError
-import com.redmadrobot.aslapov.signin.SignInSuccess
 import com.redmadrobot.aslapov.signup.SignUpActivity
 import com.redmadrobot.aslapov.signup.SignUpViewModel
 import com.redmadrobot.aslapov.ui.base.fragment.BaseFragment
 import javax.inject.Inject
-import javax.inject.Provider
 
 class SignUpStepFirstFragment : BaseFragment(R.layout.fragment_signup_first) {
 
@@ -48,21 +44,18 @@ class SignUpStepFirstFragment : BaseFragment(R.layout.fragment_signup_first) {
 
         email?.doAfterTextChanged {
             signUpStepFirstViewModel.validateInput(
-                nickname?.text.toString(),
                 email.text.toString(),
                 password?.text.toString()
             )
         }
         password?.doAfterTextChanged {
             signUpStepFirstViewModel.validateInput(
-                nickname?.text.toString(),
                 email?.text.toString(),
                 password.text.toString()
             )
         }
         nickname?.doAfterTextChanged {
             signUpStepFirstViewModel.validateInput(
-                nickname.text.toString(),
                 email?.text.toString(),
                 password?.text.toString()
             )
@@ -85,20 +78,23 @@ class SignUpStepFirstFragment : BaseFragment(R.layout.fragment_signup_first) {
             signUpActivity.onBack()
         }
 
-        signUpStepFirstViewModel.signUpStepFirstViewState.observe(signUpActivity, { state ->
-            when (state) {
-                is SignUpStepFirstSuccess -> {
-                    signUpNext?.isEnabled = true
-                }
-                is SignUpStepFirstError -> {
-                    signUpNext?.isEnabled = false
-                    Snackbar.make(signUpNext!!, state.error, Snackbar.LENGTH_LONG).show()
+        signUpStepFirstViewModel.signUpStepFirstViewState.observe(
+            signUpActivity,
+            { state ->
+                when (state) {
+                    is SignUpStepFirstSuccess -> {
+                        signUpNext?.isEnabled = true
+                    }
+                    is SignUpStepFirstError -> {
+                        signUpNext?.isEnabled = false
+                        Snackbar.make(signUpNext!!, state.error, Snackbar.LENGTH_LONG).show()
+                    }
                 }
             }
-        })
+        )
 
         return view
     }
 }
 
-fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

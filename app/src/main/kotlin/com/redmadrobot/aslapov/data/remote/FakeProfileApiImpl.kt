@@ -5,8 +5,10 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class FakeProfileApiImpl @Inject constructor() : ProfileApi {
+    private val suspendTimeMillis = 500L
+
     override suspend fun getMe(): User {
-        delay(500)
+        delay(suspendTimeMillis)
         return User(
             "63abe7f0-03d5-451b-a744-f517973987db",
             "Unknown",

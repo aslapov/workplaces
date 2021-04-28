@@ -30,7 +30,7 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSo
     }
 
     override fun setUser(user: User) {
-        with (sharedPreferences.edit()) {
+        with(sharedPreferences.edit()) {
             putString(ID_KEY, user.id)
             putString(FIRSTNAME_KEY, user.firstName)
             putString(LASTNAME_KEY, user.lastName)
@@ -43,7 +43,7 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSo
     }
 
     override fun logout() {
-        with (sharedPreferences.edit()) {
+        with(sharedPreferences.edit()) {
             putString(ID_KEY, null)
             putString(FIRSTNAME_KEY, null)
             putString(LASTNAME_KEY, null)

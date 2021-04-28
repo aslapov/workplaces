@@ -4,21 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 
-private const val MAX_LENGTH = 5
+private const val MIN_LENGTH = 1
 
 class SignUpStepSecondViewModel @Inject constructor() {
     private val _signUpStepSecondViewState = MutableLiveData<SignUpStepSecondViewState>()
     val signUpStepSecondViewState: LiveData<SignUpStepSecondViewState> = _signUpStepSecondViewState
 
+    // Необходимо уточнить правила валидации. По умолчанию проверяется заполнение хотя бы одним символом
     fun validateInput(firstname: String, lastname: String, birthday: String) {
         when {
-            firstname.length < MAX_LENGTH -> {
+            firstname.length < MIN_LENGTH -> {
                 _signUpStepSecondViewState.value = SignUpStepSecondError("Username has to be longer than 4 characters")
             }
-            lastname.length < MAX_LENGTH -> {
+            lastname.length < MIN_LENGTH -> {
                 _signUpStepSecondViewState.value = SignUpStepSecondError("Username has to be longer than 4 characters")
             }
-            birthday.length < MAX_LENGTH -> {
+            birthday.length < MIN_LENGTH -> {
                 _signUpStepSecondViewState.value = SignUpStepSecondError("Password has to be longer than 4 characters")
             }
             else -> {

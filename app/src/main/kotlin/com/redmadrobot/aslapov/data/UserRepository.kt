@@ -5,7 +5,7 @@ import com.redmadrobot.aslapov.data.remote.AuthApi
 import com.redmadrobot.aslapov.data.remote.ProfileApi
 import com.redmadrobot.aslapov.data.remote.UserCredentials
 import com.redmadrobot.aslapov.profile.User
-import java.lang.Exception
+import java.net.ConnectException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,47 +24,37 @@ class UserRepository @Inject constructor(
 
     fun isUserLoggedIn(): Boolean = user != null
 
-    suspend fun register(email: String, password: String): AuthResult {
+    suspend fun register(email: String, password: String): ResponseResult {
         return try {
             val userCredentials = UserCredentials(email, password)
             remoteApiSource.register(userCredentials)
             saveUser()
-            AuthResult.AUTHORIZED
-        } catch (e: Exception) {
-            AuthResult.FAIL
+            ResponseResultSuccess
+        } catch (e: ConnectException) {
+            ResponseResultError(e.message!!)
         }
     }
 
-    suspend fun login(username: String, password: String): AuthResult {
+    suspend fun login(username: String, password: String): ResponseResult {
         return try {
             val userCredentials = UserCredentials(username, password)
             remoteApiSource.login(userCredentials)
             saveUser()
-            AuthResult.AUTHORIZED
-        } catch (e: Exception) {
-            AuthResult.FAIL
+            ResponseResultSuccess
+        } catch (e: ConnectException) {
+            ResponseResultError(e.message!!)
         }
     }
 
-    suspend fun logout(): LogoutResult {
+    suspend fun logout(): ResponseResult {
         return try {
             remoteApiSource.logout()
             localSource.logout()
             user = null
-            LogoutResult.LOGGEDOUT
-        } catch (e: Exception) {
-            LogoutResult.UNAUTHORIZED
+            ResponseResultSuccess
+        } catch (e: ConnectException) {
+            ResponseResultError(e.message!!)
         }
-    }
-
-    enum class AuthResult {
-        AUTHORIZED,
-        FAIL
-    }
-
-    enum class LogoutResult {
-        LOGGEDOUT,
-        UNAUTHORIZED
     }
 
     private suspend fun saveUser() {
@@ -73,3 +63,7 @@ class UserRepository @Inject constructor(
         user = me
     }
 }
+
+sealed class ResponseResult
+object ResponseResultSuccess : ResponseResult()
+data class ResponseResultError(val error: String) : ResponseResult()

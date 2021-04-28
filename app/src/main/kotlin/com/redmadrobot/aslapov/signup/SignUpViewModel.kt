@@ -3,6 +3,8 @@ package com.redmadrobot.aslapov.signup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.redmadrobot.aslapov.data.ResponseResultError
+import com.redmadrobot.aslapov.data.ResponseResultSuccess
 import com.redmadrobot.aslapov.data.UserRepository
 import com.redmadrobot.aslapov.di.ActivityScope
 import com.redmadrobot.aslapov.ui.base.viewmodel.BaseViewModel
@@ -43,8 +45,8 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
     fun signUp() {
         viewModelScope.launch {
             when (userRepository.register(email!!, password!!)) {
-                UserRepository.AuthResult.AUTHORIZED -> _signUpResult.value = SignUpAuthorized
-                UserRepository.AuthResult.FAIL -> _signUpResult.value = SignUpFail("Ошибка авторизации")
+                is ResponseResultSuccess -> _signUpResult.value = SignUpAuthorized
+                is ResponseResultError -> _signUpResult.value = SignUpFail("Ошибка авторизации")
             }
         }
     }

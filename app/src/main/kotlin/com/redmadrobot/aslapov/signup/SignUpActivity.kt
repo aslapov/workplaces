@@ -3,10 +3,8 @@ package com.redmadrobot.aslapov.signup
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.aslapov.App
 import com.redmadrobot.aslapov.R
 import com.redmadrobot.aslapov.login.LoginActivity
@@ -35,19 +33,22 @@ class SignUpActivity : BaseActivity() {
             add(R.id.nav_host_fragment, SignUpStepFirstFragment::class.java, null)
         }
 
-        signUpViewModel.signUpResult.observe(this, Observer {
-            val signUpResult = it ?: return@Observer
+        signUpViewModel.signUpResult.observe(
+            this,
+            Observer {
+                val signUpResult = it ?: return@Observer
 
-            when (signUpResult) {
-                is SignUpAuthorized -> {
-                    onWelcome()
-                }
+                when (signUpResult) {
+                    is SignUpAuthorized -> {
+                        onWelcome()
+                    }
 
-                is SignUpFail -> {
-                    Toast.makeText(this, signUpResult.error, Toast.LENGTH_LONG).show()
+                    is SignUpFail -> {
+                        Toast.makeText(this, signUpResult.error, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
-        })
+        )
     }
 
     fun onStepSecond() {

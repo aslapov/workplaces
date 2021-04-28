@@ -4,10 +4,11 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.redmadrobot.aslapov.data.ResponseResultError
+import com.redmadrobot.aslapov.data.ResponseResultSuccess
 import com.redmadrobot.aslapov.data.UserRepository
 import com.redmadrobot.aslapov.ui.base.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 private const val MIN_LENGTH = 6
@@ -39,8 +40,8 @@ class SignInViewModel @Inject constructor(private val userRepository: UserReposi
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
             when (userRepository.login(email, password)) {
-                UserRepository.AuthResult.AUTHORIZED -> _signInResult.value = SignInAuthorized
-                UserRepository.AuthResult.FAIL -> _signInResult.value = SignInFail("Ошибка авторизации")
+                is ResponseResultSuccess -> _signInResult.value = SignInAuthorized
+                is ResponseResultError -> _signInResult.value = SignInFail("Ошибка авторизации")
             }
         }
     }

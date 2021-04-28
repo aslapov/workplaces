@@ -53,34 +53,40 @@ class SignInActivity : BaseActivity() {
             )
         }
 
-        signInViewModel.signInFormState.observe(this, { state ->
-            when (state) {
-                is SignInSuccess -> {
-                    signin.isEnabled = true
-                }
+        signInViewModel.signInFormState.observe(
+            this,
+            { state ->
+                when (state) {
+                    is SignInSuccess -> {
+                        signin.isEnabled = true
+                    }
 
-                is SignInError -> {
-                    signin.isEnabled = false
-                    Snackbar.make(register, state.error, Snackbar.LENGTH_LONG).show()
-                }
-            }
-        })
-
-        signInViewModel.signInResult.observe(this, Observer {
-            val signInResult = it ?: return@Observer
-
-            when (signInResult) {
-                is SignInAuthorized -> {
-                    val intent = Intent(this, WelcomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-
-                is SignInFail -> {
-                    Toast.makeText(this, signInResult.error, Toast.LENGTH_LONG).show()
+                    is SignInError -> {
+                        signin.isEnabled = false
+                        Snackbar.make(register, state.error, Snackbar.LENGTH_LONG).show()
+                    }
                 }
             }
-        })
+        )
+
+        signInViewModel.signInResult.observe(
+            this,
+            Observer {
+                val signInResult = it ?: return@Observer
+
+                when (signInResult) {
+                    is SignInAuthorized -> {
+                        val intent = Intent(this, WelcomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+
+                    is SignInFail -> {
+                        Toast.makeText(this, signInResult.error, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        )
     }
 
     private fun onUserInfoChanged() {
