@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class FakeAuthApiImpl @Inject constructor() : AuthApi {
     override suspend fun register(user: UserCredentials): SignInResponseBody {
-        delay(2000)
+        delay(500)
         return SignInResponseBody(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
             "8feed535-5ca5-464e-862d-0de124800aa3"
@@ -13,7 +13,7 @@ class FakeAuthApiImpl @Inject constructor() : AuthApi {
     }
 
     override suspend fun login(user: UserCredentials): SignInResponseBody {
-        delay(1000)
+        delay(500)
         return SignInResponseBody(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
             "8feed535-5ca5-464e-862d-0de124800aa3"
@@ -21,6 +21,6 @@ class FakeAuthApiImpl @Inject constructor() : AuthApi {
     }
 
     override suspend fun logout() {
-        delay(1500)
+        delay(500)
     }
 }

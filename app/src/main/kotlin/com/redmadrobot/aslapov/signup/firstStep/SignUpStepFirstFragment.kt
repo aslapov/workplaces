@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.aslapov.R
 import com.redmadrobot.aslapov.signin.SignInError
 import com.redmadrobot.aslapov.signin.SignInSuccess
@@ -91,7 +92,7 @@ class SignUpStepFirstFragment : BaseFragment(R.layout.fragment_signup_first) {
                 }
                 is SignUpStepFirstError -> {
                     signUpNext?.isEnabled = false
-                    Toast.makeText(signUpActivity, state.error, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(signUpNext!!, state.error, Snackbar.LENGTH_LONG).show()
                 }
             }
         })

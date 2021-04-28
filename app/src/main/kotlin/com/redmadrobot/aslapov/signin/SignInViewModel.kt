@@ -1,14 +1,16 @@
 package com.redmadrobot.aslapov.signin
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redmadrobot.aslapov.data.UserRepository
 import com.redmadrobot.aslapov.ui.base.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 import javax.inject.Inject
 
-private const val MAX_LENGTH = 5
+private const val MIN_LENGTH = 6
 
 class SignInViewModel @Inject constructor(private val userRepository: UserRepository) : BaseViewModel() {
 
@@ -20,11 +22,13 @@ class SignInViewModel @Inject constructor(private val userRepository: UserReposi
 
     fun userInfoChanged(email: String, password: String) {
         when {
-            email.length < MAX_LENGTH -> {
-                _signInFormState.value = SignInError("Username has to be longer than 4 characters")
+            !isEmailValid(email) -> {
+                _signInFormState.value = SignInError("E-mail не распознан")
             }
-            password.length < MAX_LENGTH -> {
-                _signInFormState.value = SignInError("Password has to be longer than 4 characters")
+            !isPasswordValid(password) -> {
+                _signInFormState.value = SignInError(
+                    "Пароль должен быть не менее 6 символов и содержать цифры и буквы нижнего и верхнего регистра"
+                )
             }
             else -> {
                 _signInFormState.value = SignInSuccess
@@ -39,6 +43,13 @@ class SignInViewModel @Inject constructor(private val userRepository: UserReposi
                 UserRepository.AuthResult.FAIL -> _signInResult.value = SignInFail("Ошибка авторизации")
             }
         }
+    }
+
+    private fun isEmailValid(email: String) = email.matches(Patterns.EMAIL_ADDRESS.toRegex())
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length >= MIN_LENGTH && password.matches(Regex("(.*[a-z].*)")) &&
+            password.matches(Regex("(.*[A-Z].*)")) && password.matches(Regex("(.*\\d.*)"))
     }
 }
 

@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.aslapov.App
 import com.redmadrobot.aslapov.R
 import com.redmadrobot.aslapov.login.LoginActivity
@@ -60,7 +61,7 @@ class SignInActivity : BaseActivity() {
 
                 is SignInError -> {
                     signin.isEnabled = false
-                    Toast.makeText(this, state.error, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(register, state.error, Snackbar.LENGTH_LONG).show()
                 }
             }
         })

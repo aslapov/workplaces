@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class FakeProfileApiImpl @Inject constructor() : ProfileApi {
     override suspend fun getMe(): User {
-        delay(1000)
+        delay(500)
         return User(
             "63abe7f0-03d5-451b-a744-f517973987db",
             "Unknown",
