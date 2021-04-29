@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.aslapov.R
 import com.redmadrobot.aslapov.ui.base.fragment.BaseFragment
 import javax.inject.Inject
@@ -16,6 +17,7 @@ class MainFragment @Inject constructor() : BaseFragment(R.layout.fragment_main) 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+            ?: inflater.inflate(R.layout.fragment_main, container, false)
         val mainActivity = activity as MainActivity
 
         mainViewModel.mainFormState.observe(
@@ -24,6 +26,7 @@ class MainFragment @Inject constructor() : BaseFragment(R.layout.fragment_main) 
                 state ->
                 when (state) {
                     is MainSuccess -> mainActivity.onLogout()
+                    is MainError -> Snackbar.make(view, state.error, Snackbar.LENGTH_LONG).show()
                 }
             }
         )

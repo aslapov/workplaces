@@ -10,12 +10,12 @@ class FakeProfileApiImpl @Inject constructor() : ProfileApi {
     override suspend fun getMe(): User {
         delay(suspendTimeMillis)
         return User(
-            "63abe7f0-03d5-451b-a744-f517973987db",
-            "Unknown",
-            "Unknown",
-            "1970-01-01",
-            null,
-            null
+            id = "63abe7f0-03d5-451b-a744-f517973987db",
+            firstName = "Unknown",
+            lastName = "Unknown",
+            nickName = null,
+            avatarUrl = null,
+            birthday = "1970-01-01"
         )
     }
 }

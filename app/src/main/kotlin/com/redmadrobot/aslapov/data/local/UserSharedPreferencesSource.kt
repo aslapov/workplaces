@@ -26,7 +26,18 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSo
         val avatarUrl = sharedPreferences.getString(AVATAR_URL_KEY, null)
         val birthday = sharedPreferences.getString(BIRTHDAY_KEY, null)
 
-        return if (id != null) User(id, firstName, lastName, nickName, avatarUrl, birthday) else null
+        return if (id != null) {
+            User(
+                id = id,
+                firstName = firstName,
+                lastName = lastName,
+                nickName = nickName,
+                avatarUrl = avatarUrl,
+                birthday = birthday
+            )
+        } else {
+            null
+        }
     }
 
     override fun setUser(user: User) {

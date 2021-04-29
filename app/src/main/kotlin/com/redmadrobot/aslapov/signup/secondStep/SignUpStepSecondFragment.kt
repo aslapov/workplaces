@@ -30,45 +30,46 @@ class SignUpStepSecondFragment : BaseFragment(R.layout.fragment_signup_second) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+            ?: inflater.inflate(R.layout.fragment_signup_first, container, false)
         val signUpActivity = activity as SignUpActivity
 
-        val firstname = view?.findViewById<EditText>(R.id.firstname)
-        val lastname = view?.findViewById<EditText>(R.id.lastname)
-        val birthday = view?.findViewById<EditText>(R.id.birthday)
-        val register = view?.findViewById<Button>(R.id.register)
+        val firstname = view.findViewById<EditText>(R.id.firstname)
+        val lastname = view.findViewById<EditText>(R.id.lastname)
+        val birthday = view.findViewById<EditText>(R.id.birthday)
+        val register = view.findViewById<Button>(R.id.register)
 
-        firstname?.doAfterTextChanged {
+        firstname.doAfterTextChanged {
             signUpStepSecondViewModel.validateInput(
                 firstname.text.toString(),
-                lastname?.text.toString(),
-                birthday?.text.toString()
-            )
-        }
-        lastname?.doAfterTextChanged {
-            signUpStepSecondViewModel.validateInput(
-                firstname?.text.toString(),
                 lastname.text.toString(),
-                birthday?.text.toString()
+                birthday.text.toString()
             )
         }
-        birthday?.doAfterTextChanged {
+        lastname.doAfterTextChanged {
             signUpStepSecondViewModel.validateInput(
-                firstname?.text.toString(),
-                lastname?.text.toString(),
+                firstname.text.toString(),
+                lastname.text.toString(),
+                birthday.text.toString()
+            )
+        }
+        birthday.doAfterTextChanged {
+            signUpStepSecondViewModel.validateInput(
+                firstname.text.toString(),
+                lastname.text.toString(),
                 birthday.text.toString()
             )
         }
 
-        register?.setOnClickListener {
+        register.setOnClickListener {
             signUpViewModel.updateUserData(
-                firstname?.text.toString(),
-                lastname?.text.toString(),
-                birthday?.text.toString()
+                firstname.text.toString(),
+                lastname.text.toString(),
+                birthday.text.toString()
             )
             signUpViewModel.signUp()
         }
 
-        view?.findViewById<Button>(R.id.signUpBack)?.setOnClickListener {
+        view.findViewById<Button>(R.id.signUpBack).setOnClickListener {
             signUpActivity.onBackToFirstStep()
         }
 
@@ -77,11 +78,11 @@ class SignUpStepSecondFragment : BaseFragment(R.layout.fragment_signup_second) {
             { state ->
                 when (state) {
                     is SignUpStepSecondSuccess -> {
-                        register?.isEnabled = true
+                        register.isEnabled = true
                     }
                     is SignUpStepSecondError -> {
-                        register?.isEnabled = false
-                        Snackbar.make(register!!, state.error, Snackbar.LENGTH_LONG).show()
+                        register.isEnabled = false
+                        Snackbar.make(register, state.error, Snackbar.LENGTH_LONG).show()
                     }
                 }
             }

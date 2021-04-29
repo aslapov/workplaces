@@ -31,50 +31,51 @@ class SignUpStepFirstFragment : BaseFragment(R.layout.fragment_signup_first) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+            ?: inflater.inflate(R.layout.fragment_signup_first, container, false)
         val signUpActivity = activity as SignUpActivity
 
-        val nickname = view?.findViewById<EditText>(R.id.nickname)
-        val email = view?.findViewById<EditText>(R.id.email)
-        val password = view?.findViewById<EditText>(R.id.password)
-        val signUpNext = view?.findViewById<Button>(R.id.signUpNext)
+        val nickname = view.findViewById<EditText>(R.id.nickname)
+        val email = view.findViewById<EditText>(R.id.email)
+        val password = view.findViewById<EditText>(R.id.password)
+        val signUpNext = view.findViewById<Button>(R.id.signUpNext)
 
-        nickname?.text = signUpViewModel.nickname?.toEditable()
-        email?.text = signUpViewModel.email?.toEditable()
-        password?.text = signUpViewModel.password?.toEditable()
+        nickname.text = signUpViewModel.nickname.toEditable()
+        email.text = signUpViewModel.email.toEditable()
+        password.text = signUpViewModel.password.toEditable()
 
-        email?.doAfterTextChanged {
+        email.doAfterTextChanged {
             signUpStepFirstViewModel.validateInput(
                 email.text.toString(),
-                password?.text.toString()
-            )
-        }
-        password?.doAfterTextChanged {
-            signUpStepFirstViewModel.validateInput(
-                email?.text.toString(),
                 password.text.toString()
             )
         }
-        nickname?.doAfterTextChanged {
+        password.doAfterTextChanged {
             signUpStepFirstViewModel.validateInput(
-                email?.text.toString(),
-                password?.text.toString()
+                email.text.toString(),
+                password.text.toString()
+            )
+        }
+        nickname.doAfterTextChanged {
+            signUpStepFirstViewModel.validateInput(
+                email.text.toString(),
+                password.text.toString()
             )
         }
 
-        view?.findViewById<Button>(R.id.registerAlready)?.setOnClickListener {
+        view.findViewById<Button>(R.id.registerAlready).setOnClickListener {
             signUpActivity.onAlreadyRegister()
         }
 
-        signUpNext?.setOnClickListener {
+        signUpNext.setOnClickListener {
             signUpViewModel.setUserData(
-                nickname?.text.toString(),
-                email?.text.toString(),
-                password?.text.toString()
+                nickname.text.toString(),
+                email.text.toString(),
+                password.text.toString()
             )
             signUpActivity.onStepSecond()
         }
 
-        view?.findViewById<Button>(R.id.signUpBack)?.setOnClickListener {
+        view.findViewById<Button>(R.id.signUpBack).setOnClickListener {
             signUpActivity.onBack()
         }
 
@@ -83,11 +84,11 @@ class SignUpStepFirstFragment : BaseFragment(R.layout.fragment_signup_first) {
             { state ->
                 when (state) {
                     is SignUpStepFirstSuccess -> {
-                        signUpNext?.isEnabled = true
+                        signUpNext.isEnabled = true
                     }
                     is SignUpStepFirstError -> {
-                        signUpNext?.isEnabled = false
-                        Snackbar.make(signUpNext!!, state.error, Snackbar.LENGTH_LONG).show()
+                        signUpNext.isEnabled = false
+                        Snackbar.make(signUpNext, state.error, Snackbar.LENGTH_LONG).show()
                     }
                 }
             }

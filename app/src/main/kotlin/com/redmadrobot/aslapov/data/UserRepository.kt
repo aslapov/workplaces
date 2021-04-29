@@ -31,7 +31,7 @@ class UserRepository @Inject constructor(
             saveUser()
             ResponseResultSuccess
         } catch (e: ConnectException) {
-            ResponseResultError(e.message!!)
+            ResponseResultError(e.message ?: "Ошибка регистрации")
         }
     }
 
@@ -42,7 +42,7 @@ class UserRepository @Inject constructor(
             saveUser()
             ResponseResultSuccess
         } catch (e: ConnectException) {
-            ResponseResultError(e.message!!)
+            ResponseResultError(e.message ?: "Ошибка авторизации")
         }
     }
 
@@ -53,7 +53,7 @@ class UserRepository @Inject constructor(
             user = null
             ResponseResultSuccess
         } catch (e: ConnectException) {
-            ResponseResultError(e.message!!)
+            ResponseResultError(e.message ?: "Ошибка выхода из аккаунта")
         }
     }
 

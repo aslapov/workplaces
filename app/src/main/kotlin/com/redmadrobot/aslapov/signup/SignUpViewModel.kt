@@ -17,18 +17,18 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
     private val _signUpResult = MutableLiveData<SignUpResult>()
     val signUpResult: LiveData<SignUpResult> = _signUpResult
 
-    var nickname: String? = null
+    var nickname: String = ""
         private set
 
-    var email: String? = null
+    var email: String = ""
         private set
 
-    var password: String? = null
+    var password: String = ""
         private set
 
-    var firstname: String? = null
-    var lastname: String? = null
-    var birthday: String? = null
+    var firstname: String = ""
+    var lastname: String = ""
+    var birthday: String = ""
 
     fun setUserData(nickname: String, email: String, password: String) {
         this.nickname = nickname
@@ -44,7 +44,7 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
 
     fun signUp() {
         viewModelScope.launch {
-            when (userRepository.register(email!!, password!!)) {
+            when (userRepository.register(email, password)) {
                 is ResponseResultSuccess -> _signUpResult.value = SignUpAuthorized
                 is ResponseResultError -> _signUpResult.value = SignUpFail("Ошибка авторизации")
             }

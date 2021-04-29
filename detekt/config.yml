@@ -636,7 +636,7 @@ style:
   ModifierOrder:
     active: true
   MultilineLambdaItParameter:
-    active: true
+    active: false
   NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
