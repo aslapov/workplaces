@@ -5,51 +5,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.LoginActivity">
+    tools:context=".app.WelcomeActivity">
 
     <ImageView
-        android:id="@+id/loginImage"
+        android:id="@+id/welcomeImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/workplacesTextView" />
+        android:src="@drawable/welcome"
+        app:layout_constraintBottom_toTopOf="@id/welcome"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/workplacesTextView"
+        android:id="@+id/welcome"
         style="@style/HeadTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/workplaces"
+        android:text="@string/welcome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/logoTextView"
+        android:id="@+id/welcomeInfo"
         style="@style/LightTextView"
-        android:text="@string/logo"
+        android:text="@string/welcome_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workplacesTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <Button
-        android:id="@+id/signIn"
+        android:id="@+id/goToFeed"
         style="@style/ButtonSolidStyle"
-        android:layout_marginTop="128dp"
-        android:text="@string/signin"
+        android:layout_marginBottom="48dp"
+        android:text="@string/go_to_feed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoTextView" />
-
-    <Button
-        android:id="@+id/signUp"
-        style="@style/ButtonText"
-        android:text="@string/signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signIn" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

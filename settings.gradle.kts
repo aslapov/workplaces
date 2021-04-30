@@ -17,8 +17,7 @@ pluginManagement {
         }
     }
 }
-// FIXME - Переименовать на свое
-rootProject.name = ("base-project")
+rootProject.name = "Workplaces"
 
 include(
     "app",

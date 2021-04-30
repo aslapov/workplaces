@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.redmadrobot.aslapov">
+          package="com.workplaces.aslapov">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-            android:name="com.redmadrobot.aslapov.App"
+            android:name="com.workplaces.aslapov.App"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -16,25 +16,15 @@
             tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-                android:name="com.redmadrobot.aslapov.start.StartActivity"
-                android:windowSoftInputMode="adjustResize">
-
+                android:name="com.workplaces.aslapov.app.MainActivity"
+                android:windowSoftInputMode="adjustResize"
+                android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
         </activity>
-
-        <activity android:name="com.redmadrobot.aslapov.ui.MainActivity" />
-
-        <activity android:name="com.redmadrobot.aslapov.login.LoginActivity" />
-
-        <activity android:name="com.redmadrobot.aslapov.signin.SignInActivity" />
-
-        <activity android:name="com.redmadrobot.aslapov.signup.SignUpActivity" />
-
-        <activity android:name="com.redmadrobot.aslapov.ui.WelcomeActivity" />
 
     </application>
 

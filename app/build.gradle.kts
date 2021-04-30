@@ -32,8 +32,7 @@ android {
     }
 
     defaultConfig {
-        // FIXME - переименовать на свое
-        applicationId = "com.redmadrobot.base"
+        applicationId = "com.workplaces.aslapov"
 
         minSdkVersion(AndroidConfigVersions.MIN_SDK_VERSION)
         targetSdkVersion(AndroidConfigVersions.TARGET_SDK_VERSION)
