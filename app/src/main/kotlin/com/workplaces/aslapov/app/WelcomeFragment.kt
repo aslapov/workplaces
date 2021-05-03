@@ -1,11 +1,19 @@
 package com.workplaces.aslapov.app
 
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import androidx.navigation.Navigation
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import javax.inject.Inject
-import javax.inject.Provider
 
-class WelcomeFragment @Inject constructor(
-    viewModelProvide: Provider<WelcomeFragment>
-) : BaseFragment(R.layout.fragment_welcome) {
+class WelcomeFragment @Inject constructor() : BaseFragment(R.layout.welcome_fragment) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<Button>(R.id.goToFeed).setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.welcome_to_dummyy_action)
+        )
+    }
 }

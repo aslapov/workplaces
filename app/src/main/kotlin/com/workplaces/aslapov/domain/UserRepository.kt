@@ -4,7 +4,8 @@ interface UserRepository {
     var user: User?
     fun isUserLoggedIn(): Boolean
     suspend fun register(email: String, password: String): ResponseResult
-    suspend fun login(username: String, password: String): ResponseResult
+    suspend fun login(email: String, password: String): ResponseResult
+    suspend fun updateUser(user: User): ResponseResult
     suspend fun logout(): ResponseResult
 }
 

@@ -1,46 +1,40 @@
 package com.workplaces.aslapov.app
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import javax.inject.Inject
 
-class DummyFragment @Inject constructor() : BaseFragment(R.layout.fragment_main) {
+class DummyFragment @Inject constructor() : BaseFragment(R.layout.dummy_fragment) {
 
     @Inject
-    lateinit var mDummyViewModel: DummyViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val dummyViewModel: DummyViewModel by viewModels { viewModelFactory }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
-            ?: inflater.inflate(R.layout.fragment_main, container, false)
-        val mainActivity = activity as MainActivity
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        mDummyViewModel.mainFormState.observe(
-            mainActivity,
-            {
-                state ->
-                when (state) {
-                    is MainSuccess -> mainActivity.onLogout()
-                    is MainError -> Snackbar.make(view, state.error, Snackbar.LENGTH_LONG).show()
-                }
-            }
-        )
-
+        observe(dummyViewModel.dummyFormState, ::renderState)
         view.findViewById<Button>(R.id.logout).setOnClickListener {
-            mDummyViewModel.logout()
+            dummyViewModel.onLogout()
         }
-        return view
     }
 
-    fun onLogout() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun renderState(state: DummyViewState) {
+        when (state) {
+            is DummySuccess -> {
+                findNavController().navigate(R.id.login_dest)
+            }
+            is DummyError -> {
+                Snackbar.make(requireView(), getString(state.errorStringId), Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 }

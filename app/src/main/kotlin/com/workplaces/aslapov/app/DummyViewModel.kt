@@ -3,26 +3,33 @@ package com.workplaces.aslapov.app
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.data.UserRepositoryImpl
+import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
+import java.net.ConnectException
 import javax.inject.Inject
 
 class DummyViewModel @Inject constructor(
-    private val userRepository: UserRepositoryImpl
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-    private val _mainFormState = MutableLiveData<MainViewState>()
-    val mainFormState: LiveData<MainViewState> = _mainFormState
+    private val _mainFormState = MutableLiveData<DummyViewState>()
+    val dummyFormState: LiveData<DummyViewState> = _mainFormState
 
-    fun logout() {
+    fun onLogout() {
         viewModelScope.launch {
-            userRepository.logout()
-            _mainFormState.value = MainSuccess
+            try {
+                userRepository.logout()
+                _mainFormState.value = DummySuccess
+            } catch (e: ConnectException) {
+                e.message
+                _mainFormState.value = DummyError(R.string.dummy_logout_error)
+            }
         }
     }
 }
 
-sealed class MainViewState
-object MainSuccess : MainViewState()
-data class MainError(val error: String) : MainViewState()
+sealed class DummyViewState
+object DummySuccess : DummyViewState()
+data class DummyError(val errorStringId: Int) : DummyViewState()

@@ -12,7 +12,7 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         FragmentsModule::class,
-        StorageModule::class,
+        ViewModelModule::class,
         NetworkModule::class
     ]
 )

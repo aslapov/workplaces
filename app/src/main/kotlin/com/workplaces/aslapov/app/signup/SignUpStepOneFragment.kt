@@ -1,6 +1,7 @@
-package com.workplaces.aslapov.app.signin
+package com.workplaces.aslapov.app.signup
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -19,48 +20,53 @@ import com.workplaces.aslapov.app.MessageEvent
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import javax.inject.Inject
 
-class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragment) {
+class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup_one_fragment) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val signInViewModel: SignInViewModel by viewModels { viewModelFactory }
-    private lateinit var signIn: Button
+    private val signUpViewModel: SignUpViewModel by viewModels { viewModelFactory }
+    private val signUpStepOneViewModel: SignUpStepOneViewModel by viewModels { viewModelFactory }
+    private lateinit var signUpNext: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observe(signUpStepOneViewModel.isNextButtonEnabled, ::renderButton)
+        observe(signUpStepOneViewModel.eventsQueue, ::onEvent)
+
         val email = view.findViewById<EditText>(R.id.email)
         val password = view.findViewById<EditText>(R.id.password)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        val register = view.findViewById<Button>(R.id.doRegister)
-        signIn = view.findViewById(R.id.signIn)
+        val registered = view.findViewById<Button>(R.id.registerAlready)
+        signUpNext = view.findViewById(R.id.next)
 
-        observe(signInViewModel.isNextButtonEnabled, ::renderButton)
-        observe(signInViewModel.eventsQueue, ::onEvent)
+        email.text = signUpViewModel.email.toEditable()
+        password.text = signUpViewModel.password.toEditable()
+        signUpNext.isEnabled = signUpViewModel.isUserDataStepFirstValid()
 
-        email.doAfterTextChanged { signInViewModel.onEmailEntered(it.toString()) }
-        password.doAfterTextChanged { signInViewModel.onPasswordEntered(it.toString()) }
+        email.doAfterTextChanged { signUpStepOneViewModel.onEmailEntered(it.toString()) }
+        password.doAfterTextChanged { signUpStepOneViewModel.onPasswordEntered(it.toString()) }
 
         toolbar.setNavigationOnClickListener {
             findNavController().navigate(R.id.login_dest)
         }
-        register.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.sign_in_to_sign_up_action)
+        registered.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.sign_up_to_sign_in_action)
         )
-        signIn.setOnClickListener {
-            signInViewModel.onSignInClicked()
+        signUpNext.setOnClickListener {
+            signUpViewModel.onGoNextClicked(email.text.toString(), password.text.toString())
+            findNavController().navigate(R.id.sign_up_to_step_two_action)
         }
     }
 
     private fun renderButton(isEnabled: Boolean) {
-        signIn.isEnabled = isEnabled
+        signUpNext.isEnabled = isEnabled
     }
 
     private fun onEvent(event: Event) {
         when (event) {
             is MessageEvent -> showMessage(getString(event.message))
             is ErrorMessageEvent -> showError(getString(event.errorMessage))
-            is SignInSuccessEvent -> findNavController().navigate(R.id.sign_in_to_welcome_action)
         }
     }
 
@@ -72,3 +78,5 @@ class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragme
         Snackbar.make(requireView(), error, Snackbar.LENGTH_SHORT).show()
     }
 }
+
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

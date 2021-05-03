@@ -1,11 +1,10 @@
 package com.workplaces.aslapov.data
 
 import android.content.Context
-import com.workplaces.aslapov.domain.User
-import com.workplaces.aslapov.domain.UserSource
+import androidx.core.content.edit
 import javax.inject.Inject
 
-class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSource {
+class UserSharedPreferencesSource @Inject constructor(context: Context) {
 
     companion object {
         private const val USER_SHARED_PREFS_FILE: String = "USER_SHARED_PREFS_FILE"
@@ -19,7 +18,7 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSo
 
     private val sharedPreferences = context.getSharedPreferences(USER_SHARED_PREFS_FILE, Context.MODE_PRIVATE)
 
-    override fun getUser(): User? {
+    fun getUser(): UserNetwork? {
         val id = sharedPreferences.getString(ID_KEY, null)
         val firstName = sharedPreferences.getString(FIRSTNAME_KEY, null)
         val lastName = sharedPreferences.getString(LASTNAME_KEY, null)
@@ -28,21 +27,21 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSo
         val birthday = sharedPreferences.getString(BIRTHDAY_KEY, null)
 
         return if (id != null) {
-            User(
+            UserNetwork(
                 id = id,
-                firstName = firstName,
-                lastName = lastName,
+                firstName = firstName ?: "Unknown",
+                lastName = lastName ?: "Unknown",
                 nickName = nickName,
                 avatarUrl = avatarUrl,
-                birthday = birthday
+                birthday = birthday ?: "1970-01-01"
             )
         } else {
             null
         }
     }
 
-    override fun setUser(user: User) {
-        with(sharedPreferences.edit()) {
+    fun setUser(user: UserNetwork) {
+        sharedPreferences.edit {
             putString(ID_KEY, user.id)
             putString(FIRSTNAME_KEY, user.firstName)
             putString(LASTNAME_KEY, user.lastName)
@@ -54,8 +53,8 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) : UserSo
         }
     }
 
-    override fun logout() {
-        with(sharedPreferences.edit()) {
+    fun logout() {
+        sharedPreferences.edit {
             putString(ID_KEY, null)
             putString(FIRSTNAME_KEY, null)
             putString(LASTNAME_KEY, null)

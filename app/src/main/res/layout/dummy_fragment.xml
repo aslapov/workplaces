@@ -5,12 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.MainActivity">
+    tools:context=".app.DummyFragment">
 
     <Button
         android:id="@+id/logout"
-        style="@style/ButtonSolidStyle"
-        android:text="@string/logout"
+        style="@style/Widget.App.Button"
+        android:text="@string/dummy_logout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

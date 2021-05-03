@@ -1,10 +1,11 @@
 package com.workplaces.aslapov.data
 
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 private const val SUSPEND_TIME_MILLIS = 500L
 
-class FakeAuthApi {
+class FakeAuthApi @Inject constructor() {
 
     suspend fun register(): SignInResponseBody {
         delay(SUSPEND_TIME_MILLIS)

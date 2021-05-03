@@ -1,23 +1,19 @@
-package com.workplaces.aslapov.app.signin
+package com.workplaces.aslapov.app.signup
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.delegate
-import com.workplaces.aslapov.domain.*
-import kotlinx.coroutines.launch
+import com.workplaces.aslapov.domain.isEmailValid
+import com.workplaces.aslapov.domain.isPasswordValid
 import javax.inject.Inject
 
-class SignInViewModel @Inject constructor(
-    private val userRepository: UserRepository
-) : BaseViewModel() {
+class SignUpStepOneViewModel @Inject constructor() : BaseViewModel() {
 
     private val liveState = MutableLiveData(createInitialState())
-    private var state: SignInViewState by liveState.delegate()
+    private var state: SignUpOneViewState by liveState.delegate()
     val isNextButtonEnabled = liveState.mapDistinct { it.isNextButtonEnabled }
 
     fun onEmailEntered(email: String) {
@@ -25,30 +21,23 @@ class SignInViewModel @Inject constructor(
             state = state.copy(email = email, isEmailValid = true)
         } else {
             state = state.copy(email = email, isEmailValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_in_email_invalid))
+            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_email_invalid))
         }
         checkNextButtonEnable()
     }
 
     fun onPasswordEntered(password: String) {
-        if (password.isNotEmpty()) {
+        if (isPasswordValid(password)) {
             state = state.copy(password = password, isPasswordValid = true)
         } else {
             state = state.copy(password = password, isPasswordValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_in_password_invalid))
+            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_password_invalid))
         }
         checkNextButtonEnable()
     }
-    fun onSignInClicked() {
-        viewModelScope.launch {
-            when (userRepository.login(state.email, state.password)) {
-                is ResponseResultSuccess -> eventsQueue.offerEvent(SignInSuccessEvent)
-                is ResponseResultError -> eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_in_signin_fail))
-            }
-        }
-    }
-    private fun createInitialState(): SignInViewState {
-        return SignInViewState(
+
+    private fun createInitialState(): SignUpOneViewState {
+        return SignUpOneViewState(
             email = "",
             isEmailValid = false,
             password = "",
@@ -63,12 +52,10 @@ class SignInViewModel @Inject constructor(
     }
 }
 
-data class SignInViewState(
+data class SignUpOneViewState(
     val email: String,
     val isEmailValid: Boolean,
     val password: String,
     val isPasswordValid: Boolean,
     val isNextButtonEnabled: Boolean
 )
-
-object SignInSuccessEvent : Event

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.App.H1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">36sp</item>
+        <item name="lineHeight">44sp</item>
+        <item name="fontWeight">400</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextAppearance.App.H2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/textGrey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">20sp</item>
+        <item name="fontWeight">400</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>

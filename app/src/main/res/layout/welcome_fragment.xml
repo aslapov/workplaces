@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.WelcomeActivity">
+    tools:context=".app.WelcomeFragment">
 
     <ImageView
         android:id="@+id/welcomeImage"
@@ -18,7 +18,11 @@
 
     <TextView
         android:id="@+id/welcome"
-        style="@style/HeadTextView"
+        style="@style/TextAppearance.App.H1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/welcome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,7 +31,12 @@
 
     <TextView
         android:id="@+id/welcomeInfo"
-        style="@style/LightTextView"
+        style="@style/TextAppearance.App.H2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp"
+        android:textAlignment="center"
         android:text="@string/welcome_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +44,13 @@
 
     <Button
         android:id="@+id/goToFeed"
-        style="@style/ButtonSolidStyle"
-        android:layout_marginBottom="48dp"
-        android:text="@string/go_to_feed"
+        style="@style/Widget.App.Button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/welcome_go_to_feed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

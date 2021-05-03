@@ -4,7 +4,7 @@ import android.content.Context
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
-import com.redmadrobot.aslapov.R
+import com.workplaces.aslapov.R
 import timber.log.Timber
 
 @Suppress("MagicNumber")

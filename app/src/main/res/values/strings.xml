@@ -1,23 +1,50 @@
 <resources>
     <string name="app_name">InternshipApp</string>
-    <string name="workplaces">Workplaces</string>
-    <string name="logo">Найди своё место</string>
-    <string name="signin">Войти</string>
-    <string name="signup">Регистрация по почте</string>
-    <string name="e_mail">E-mail</string>
-    <string name="password">Пароль</string>
-    <string name="go_to_register">Перейти к регистрации</string>
-    <string name="next">Далее</string>
-    <string name="login">Вход</string>
-    <string name="logout">Выйти из аккаунта</string>
+
+    <!-- region Экран Логина -->
+    <string name="login_workplaces">Workplaces</string>
+    <string name="login_logo">Найди своё место</string>
+    <string name="login_signin">Войти</string>
+    <string name="login_signup">Регистрация по почте</string>
+    <!-- endregion -->
+
+    <!-- region Экран Авторизации -->
+    <string name="sign_in_email">E-mail</string>
+    <string name="sign_in_password">Пароль</string>
+    <string name="sign_in_go_to_register">Перейти к регистрации</string>
+    <string name="sign_in_next">Далее</string>
+    <string name="sign_in_login">Вход</string>
+    <string name="sign_in_email_invalid">E-mail не распознан</string>
+    <string name="sign_in_password_invalid">Пароль не должен быть пустым</string>
+    <string name="sign_in_signin_fail">Ошибка авторизации</string>
+    <!-- endregion -->
+
+    <!-- region Экран Регистрации -->
+    <string name="sign_up_back">Регистрация</string>
+    <string name="sign_up_email">E-mail</string>
+    <string name="sign_up_password">Пароль</string>
+    <string name="sign_up_register_already">Уже зарегистрирован</string>
+    <string name="sign_up_next">Далее</string>
+    <string name="sign_up_firstname">Имя</string>
+    <string name="sign_up_lastname">Фамилия</string>
+    <string name="sign_up_nickname">Никнейм</string>
+    <string name="sign_up_birthday">Дата рождения</string>
+    <string name="sign_up_register">Зарегистрироваться</string>
+    <string name="sign_up_email_invalid">E-mail не распознан</string>
+    <string name="sign_up_password_invalid">Пароль должен быть не менее 6 символов и содержать цифры и буквы нижнего и верхнего регистра</string>
+    <string name="sign_up_empty_field_error">Поле не должно быть пустым</string>
+    <string name="sign_up_calendar_title">Выберите дату</string>
+    <string name="sign_up_signup_fail">Ошибка регистрации</string>
+    <!-- endregion -->
+
+    <!-- region Экран Приветствия -->
     <string name="welcome">Nice to meet you</string>
     <string name="welcome_info">Теперь ты можешь смотреть и делать публикации</string>
-    <string name="go_to_feed">Перейти к ленте</string>
-    <string name="signup_back">Регистрация</string>
-    <string name="nickname">Никнейм</string>
-    <string name="register_already">Уже зарегистрирован</string>
-    <string name="firstname">Имя</string>
-    <string name="lastname">Фамилия</string>
-    <string name="birthday">Дата рождения</string>
-    <string name="register">Зарегистрироваться</string>
+    <string name="welcome_go_to_feed">Перейти к ленте</string>
+    <!-- endregion -->
+
+    <!-- region Экран Заглушки -->
+    <string name="dummy_logout">Выйти из аккаунта</string>
+    <string name="dummy_logout_error">Ошибка выхода из аккаунта</string>
+    <!-- endregion -->
 </resources>

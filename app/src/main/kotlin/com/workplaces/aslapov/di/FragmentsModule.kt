@@ -7,8 +7,8 @@ import com.workplaces.aslapov.app.FragmentsFactory
 import com.workplaces.aslapov.app.LoginFragment
 import com.workplaces.aslapov.app.WelcomeFragment
 import com.workplaces.aslapov.app.signin.SignInFragment
-import com.workplaces.aslapov.app.signup.SignUpStepFirstFragment
-import com.workplaces.aslapov.app.signup.SignUpStepSecondFragment
+import com.workplaces.aslapov.app.signup.SignUpStepOneFragment
+import com.workplaces.aslapov.app.signup.SignUpStepTwoFragment
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -36,13 +36,13 @@ interface FragmentsModule {
 
     @Binds
     @IntoMap
-    @FragmentKey(SignUpStepFirstFragment::class)
-    fun signUpStepFirstFragment(fragment: SignUpStepFirstFragment): Fragment
+    @FragmentKey(SignUpStepOneFragment::class)
+    fun signUpStepFirstFragment(fragment: SignUpStepOneFragment): Fragment
 
     @Binds
     @IntoMap
-    @FragmentKey(SignUpStepSecondFragment::class)
-    fun signUpStepSecondFragment(fragment: SignUpStepSecondFragment): Fragment
+    @FragmentKey(SignUpStepTwoFragment::class)
+    fun signUpStepSecondFragment(fragment: SignUpStepTwoFragment): Fragment
 
     @Binds
     @IntoMap

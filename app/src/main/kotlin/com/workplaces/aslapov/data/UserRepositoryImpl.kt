@@ -7,14 +7,14 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
-    private val userSource: UserSource,
+    private val userSource: UserSharedPreferencesSource,
     private val authApi: FakeAuthApi,
     private val profileApi: FakeProfileApi
 ) : UserRepository {
     override var user: User? = null
 
     init {
-        user = userSource.getUser()
+        user = userSource.getUser()?.toUser()
     }
 
     override fun isUserLoggedIn(): Boolean = user != null
@@ -29,13 +29,23 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun login(username: String, password: String): ResponseResult {
+    override suspend fun login(email: String, password: String): ResponseResult {
         return try {
             authApi.login()
             saveUser()
             ResponseResultSuccess
         } catch (e: ConnectException) {
             ResponseResultError(e.message ?: "Ошибка авторизации")
+        }
+    }
+
+    override suspend fun updateUser(user: User): ResponseResult {
+        return try {
+            profileApi.updateUser(user)
+            saveUser()
+            ResponseResultSuccess
+        } catch (e: ConnectException) {
+            ResponseResultError(e.message ?: "Ошибка обновления профиля")
         }
     }
 
@@ -51,8 +61,18 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     private suspend fun saveUser() {
-        val me: User = profileApi.getMe()
+        val me: UserNetwork = profileApi.getMe()
         userSource.setUser(me)
-        user = me
+        user = me.toUser()
     }
+}
+
+private fun UserNetwork.toUser(): User {
+    return User(
+        firstName = this.firstName,
+        lastName = this.lastName,
+        nickName = this.nickName,
+        avatarUrl = this.avatarUrl,
+        birthday = this.birthday
+    )
 }
