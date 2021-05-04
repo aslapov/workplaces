@@ -13,7 +13,7 @@ class WelcomeFragment @Inject constructor() : BaseFragment(R.layout.welcome_frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.goToFeed).setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.welcome_to_dummyy_action)
+            Navigation.createNavigateOnClickListener(R.id.login_to_main_action)
         )
     }
 }

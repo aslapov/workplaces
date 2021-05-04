@@ -5,63 +5,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.LoginFragment">
+    tools:context=".app.feed.FeedEmptyFragment">
 
     <ImageView
-        android:id="@+id/loginImage"
+        android:id="@+id/emptinessImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/workplacesTextView" />
+        android:src="@drawable/emptiness"
+        app:layout_constraintBottom_toTopOf="@id/emptiness"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/workplacesTextView"
+        android:id="@+id/emptiness"
         style="@style/TextAppearance.App.H1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_workplaces"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/feed_emptiness"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/logoTextView"
-        android:textAppearance="@style/TextAppearance.App.H2"
+        android:id="@+id/advise"
+        style="@style/TextAppearance.App.H2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="94dp"
-        android:paddingEnd="94dp"
-        android:text="@string/login_logo"
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp"
+        android:textAlignment="center"
+        android:text="@string/feed_emptiness_advise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workplacesTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/emptiness" />
 
     <Button
-        android:id="@+id/signIn"
-        style="@style/Widget.App.Button"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/login_signin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/signUp" />
-
-    <Button
-        android:id="@+id/signUp"
+        android:id="@+id/findFriends"
         style="@style/Widget.App.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="68dp"
-        android:text="@string/login_signup"
+        android:text="@string/feed_emptiness_find_friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/advise" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

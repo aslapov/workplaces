@@ -42,7 +42,7 @@ class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragme
         password.doAfterTextChanged { signInViewModel.onPasswordEntered(it.toString()) }
 
         toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.login_dest)
+            findNavController().navigate(R.id.sign_in_to_login_action)
         }
         register.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.sign_in_to_sign_up_action)

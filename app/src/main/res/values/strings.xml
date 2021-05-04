@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">InternshipApp</string>
 
+    <!-- region Bottom Navigation -->
+    <string name="bottom_navigation_feed">feed</string>
+    <string name="bottom_navigation_new_feed">new feed</string>
+    <string name="bottom_navigation_profile">profile</string>
+    <!-- endregion -->
+
     <!-- region Экран Логина -->
     <string name="login_workplaces">Workplaces</string>
     <string name="login_logo">Найди своё место</string>
@@ -47,4 +53,20 @@
     <string name="dummy_logout">Выйти из аккаунта</string>
     <string name="dummy_logout_error">Ошибка выхода из аккаунта</string>
     <!-- endregion -->
+
+    <!-- region Экран Ленты -->
+    <string name="feed_emptiness">Пустота</string>
+    <string name="feed_emptiness_advise">Вам нужны друзья, чтобы лента стала живой</string>
+    <string name="feed_emptiness_find_friends">Найти друзей</string>
+    <!-- endregion -->
+
+    <!-- region Экран Профиля -->
+    <string name="profile_posts">Посты</string>
+    <string name="profile_likes">Лайки</string>
+    <string name="profile_friends">Друзья</string>
+    <string name="profile_emptiness">Пустота</string>
+    <string name="profile_emptiness_advise">Вы пока одиноки в сервисе, но это можно исправить</string>
+    <string name="profile_find_friends">Найти друзей</string>
+    <!-- endregion -->
+
 </resources>

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.workplaces.aslapov.app.DummyViewModel
 import com.workplaces.aslapov.app.MainViewModel
 import com.workplaces.aslapov.app.ViewModelFactory
+import com.workplaces.aslapov.app.ViewModelKey
+import com.workplaces.aslapov.app.newfeed.NewFeedDummyViewModel
 import com.workplaces.aslapov.app.signin.SignInViewModel
 import com.workplaces.aslapov.app.signup.SignUpStepOneViewModel
 import com.workplaces.aslapov.app.signup.SignUpStepTwoViewModel
@@ -47,4 +49,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(DummyViewModel::class)
     fun bindDummyViewModel(viewModel: DummyViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NewFeedDummyViewModel::class)
+    fun bindNewFeedDummyViewModel(viewModel: NewFeedDummyViewModel): ViewModel
 }

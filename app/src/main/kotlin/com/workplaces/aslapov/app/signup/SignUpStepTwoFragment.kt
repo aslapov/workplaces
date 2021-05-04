@@ -57,7 +57,7 @@ class SignUpStepTwoFragment @Inject constructor() : BaseFragment(R.layout.signup
             birthday.text = dateFormatter.format(Date(it)).toEditable()
         }
         toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.sign_up_first_dest)
+            findNavController().navigate(R.id.sign_up_to_step_one_action)
         }
         register.setOnClickListener {
             signUpViewModel.onSignUpClicked(

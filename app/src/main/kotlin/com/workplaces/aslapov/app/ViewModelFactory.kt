@@ -2,9 +2,11 @@ package com.workplaces.aslapov.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.MapKey
 import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlin.reflect.KClass
 
 class ViewModelFactory @Inject constructor(
     private val providers: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
@@ -16,9 +18,15 @@ class ViewModelFactory @Inject constructor(
             ?: error("Unknown ViewModel class $modelClass")
 
         return try {
+            @Suppress("UNCHECKED_CAST")
             provider.get() as T
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
     }
 }
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@MapKey
+annotation class ViewModelKey(val value: KClass<out ViewModel>)

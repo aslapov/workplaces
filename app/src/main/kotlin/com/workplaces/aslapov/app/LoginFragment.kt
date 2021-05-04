@@ -1,11 +1,16 @@
 package com.workplaces.aslapov.app
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
+import com.redmadrobot.extensions.viewbinding.inflateViewBinding
+import com.redmadrobot.extensions.viewbinding.viewBinding
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.databinding.LoginFragmentBinding
 import javax.inject.Inject
 
 class LoginFragment @Inject constructor() : BaseFragment(R.layout.login_fragment) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/feed_graph"
+    app:startDestination="@id/feed_empty_dest">
+
+    <fragment
+        android:id="@+id/feed_empty_dest"
+        android:name="com.workplaces.aslapov.app.feed.FeedEmptyFragment"
+        tools:layout="@layout/feed_empty_fragment" />
+
+</navigation>

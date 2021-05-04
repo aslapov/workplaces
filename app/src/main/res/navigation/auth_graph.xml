@@ -2,8 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/workplaces_navigation"
+    android:id="@+id/auth_graph"
     app:startDestination="@id/login_dest">
+
+    <include app:graph="@navigation/main_graph" />
+
+    <action
+        android:id="@+id/login_to_main_action"
+        app:destination="@+id/main_graph"/>
 
     <fragment
         android:id="@+id/login_dest"
@@ -77,16 +83,6 @@
         android:id="@+id/welcome_dest"
         android:name="com.workplaces.aslapov.app.WelcomeFragment"
         tools:layout="@layout/welcome_fragment">
-
-        <action
-            android:id="@+id/welcome_to_dummyy_action"
-            app:destination="@id/dummy_dest"/>
-
     </fragment>
-
-    <fragment
-        android:id="@+id/dummy_dest"
-        android:name="com.workplaces.aslapov.app.DummyFragment"
-        tools:layout="@layout/dummy_fragment" />
 
 </navigation>

@@ -2,10 +2,10 @@ package com.workplaces.aslapov.di
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
-import com.workplaces.aslapov.app.DummyFragment
-import com.workplaces.aslapov.app.FragmentsFactory
-import com.workplaces.aslapov.app.LoginFragment
-import com.workplaces.aslapov.app.WelcomeFragment
+import com.workplaces.aslapov.app.*
+import com.workplaces.aslapov.app.feed.FeedEmptyFragment
+import com.workplaces.aslapov.app.newfeed.NewFeedDummyFragment
+import com.workplaces.aslapov.app.profile.ProfileDummyFragment
 import com.workplaces.aslapov.app.signin.SignInFragment
 import com.workplaces.aslapov.app.signup.SignUpStepOneFragment
 import com.workplaces.aslapov.app.signup.SignUpStepTwoFragment
@@ -48,4 +48,19 @@ interface FragmentsModule {
     @IntoMap
     @FragmentKey(WelcomeFragment::class)
     fun welcomeFragment(fragment: WelcomeFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(FeedEmptyFragment::class)
+    fun feedEmptyFragment(fragment: FeedEmptyFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(ProfileDummyFragment::class)
+    fun dummyProfileFragment(fragment: ProfileDummyFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(NewFeedDummyFragment::class)
+    fun newFeedDummyFragment(fragment: NewFeedDummyFragment): Fragment
 }

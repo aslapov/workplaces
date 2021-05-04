@@ -48,7 +48,7 @@ class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup
         password.doAfterTextChanged { signUpStepOneViewModel.onPasswordEntered(it.toString()) }
 
         toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.login_dest)
+            findNavController().navigate(R.id.sign_up_to_login_action)
         }
         registered.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.sign_up_to_sign_in_action)
