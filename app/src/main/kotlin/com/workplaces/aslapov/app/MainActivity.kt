@@ -1,9 +1,10 @@
 package com.workplaces.aslapov.app
 
 import android.os.Bundle
-import android.view.View
 import android.widget.FrameLayout
-import androidx.fragment.app.FragmentFactory
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -16,16 +17,13 @@ import com.workplaces.aslapov.utils.extension.dispatchApplyWindowInsetsToChild
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
-
     @Inject
-    lateinit var fragmentFactory: FragmentFactory
-
-    @Inject
-    lateinit var mainViewModel: MainViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val mainViewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DI.appComponent.inject(this)
-        setFragmentFactory()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewById<FrameLayout>(R.id.activity_start_container_screens).dispatchApplyWindowInsetsToChild()
@@ -34,8 +32,8 @@ class MainActivity : BaseActivity() {
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment ?: return
 
-        host.findNavController().let {
-            bottomNavigation.setupWithNavController(it)
+        host.findNavController().run {
+            bottomNavigation.setupWithNavController(this)
         }
 
         val navController = host.navController
@@ -43,17 +41,11 @@ class MainActivity : BaseActivity() {
         setNavControllerGraph(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val bottomNavigationGoneCondition = destination.id == R.id.login_dest ||
-                destination.id == R.id.sign_in_dest ||
-                destination.id == R.id.sign_up_first_dest ||
-                destination.id == R.id.sign_up_second_dest ||
-                destination.id == R.id.welcome_dest
+            val isBottomNavigationVisible = destination.id == R.id.feed_empty_dest ||
+                destination.id == R.id.new_feed_dest ||
+                destination.id == R.id.profile_empty_dest
 
-            if (bottomNavigationGoneCondition) {
-                bottomNavigation.visibility = View.GONE
-            } else {
-                bottomNavigation.visibility = View.VISIBLE
-            }
+            bottomNavigation.isVisible = isBottomNavigationVisible
         }
     }
 
@@ -65,9 +57,5 @@ class MainActivity : BaseActivity() {
         }
         val graph = navController.navInflater.inflate(graphResId)
         navController.graph = graph
-    }
-
-    private fun setFragmentFactory() {
-        supportFragmentManager.fragmentFactory = fragmentFactory
     }
 }

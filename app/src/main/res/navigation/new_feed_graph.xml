@@ -5,13 +5,15 @@
     android:id="@+id/new_feed_graph"
     app:startDestination="@id/new_feed_dest">
 
-    <action
-        android:id="@+id/logout_action"
-        app:destination="@+id/auth_graph"/>
-
     <fragment
         android:id="@+id/new_feed_dest"
         android:name="com.workplaces.aslapov.app.newfeed.NewFeedDummyFragment"
-        tools:layout="@layout/new_feed_dummy_fragment"/>
+        tools:layout="@layout/new_feed_dummy_fragment">
+
+        <action
+            android:id="@+id/logout_action"
+            app:destination="@+id/auth_graph"/>
+
+    </fragment>
 
 </navigation>

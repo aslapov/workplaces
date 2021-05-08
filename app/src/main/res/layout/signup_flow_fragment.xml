@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_start_container_screens"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.login.signup.SignUpFlowFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/sign_up_nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:navGraph="@navigation/sign_up_graph"
+        app:defaultNavHost="true" />
+</FrameLayout>

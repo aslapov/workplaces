@@ -8,21 +8,20 @@
     tools:context=".app.profile.ProfileDummyFragment">
 
     <ImageView
-        android:id="@+id/emptinessImage"
+        android:id="@+id/profile_emptiness_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/emptiness"
-        app:layout_constraintBottom_toTopOf="@id/emptiness"
+        app:layout_constraintBottom_toTopOf="@id/profile_emptiness"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/emptiness"
-        style="@style/TextAppearance.App.H1"
+        android:id="@+id/profile_emptiness"
+        android:textAppearance="@style/TextAppearance.App.H1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginHorizontal="24dp"
         android:text="@string/profile_emptiness"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,28 +29,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/advise"
-        style="@style/TextAppearance.App.H2"
+        android:id="@+id/profile_advise"
+        android:textAppearance="@style/TextAppearance.App.H2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="60dp"
-        android:paddingEnd="60dp"
+        android:paddingHorizontal="60dp"
         android:textAlignment="center"
+        android:gravity="center"
         android:text="@string/profile_emptiness_advise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emptiness" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_emptiness" />
 
     <Button
-        android:id="@+id/findFriends"
+        android:id="@+id/profile_find_friends"
         style="@style/Widget.App.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:text="@string/profile_find_friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/advise" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_advise" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

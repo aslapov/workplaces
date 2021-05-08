@@ -6,14 +6,11 @@
     app:startDestination="@id/login_dest">
 
     <include app:graph="@navigation/main_graph" />
-
-    <action
-        android:id="@+id/login_to_main_action"
-        app:destination="@+id/main_graph"/>
+    <include app:graph="@navigation/sign_up_graph"/>
 
     <fragment
         android:id="@+id/login_dest"
-        android:name="com.workplaces.aslapov.app.LoginFragment"
+        android:name="com.workplaces.aslapov.app.login.LoginFragment"
         tools:layout="@layout/login_fragment">
 
         <action
@@ -22,22 +19,22 @@
 
         <action
             android:id="@+id/login_to_sign_up_action"
-            app:destination="@id/sign_up_first_dest"/>
+            app:destination="@id/sign_up_graph"/>
 
     </fragment>
 
     <fragment
         android:id="@+id/sign_in_dest"
-        android:name="com.workplaces.aslapov.app.signin.SignInFragment"
+        android:name="com.workplaces.aslapov.app.login.signin.SignInFragment"
         tools:layout="@layout/signin_fragment">
 
         <action
             android:id="@+id/sign_in_to_welcome_action"
-            app:destination="@id/welcome_dest"/>
+            app:destination="@id/welcome_dest" />
 
         <action
             android:id="@+id/sign_in_to_sign_up_action"
-            app:destination="@id/sign_up_first_dest"/>
+            app:destination="@id/sign_up_graph" />
 
         <action
             android:id="@+id/sign_in_to_login_action"
@@ -46,43 +43,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/sign_up_first_dest"
-        android:name="com.workplaces.aslapov.app.signup.SignUpStepOneFragment"
-        tools:layout="@layout/signup_one_fragment">
-
-        <action
-            android:id="@+id/sign_up_to_step_two_action"
-            app:destination="@id/sign_up_second_dest"/>
-
-        <action
-            android:id="@+id/sign_up_to_sign_in_action"
-            app:destination="@id/sign_in_dest"/>
-
-        <action
-            android:id="@+id/sign_up_to_login_action"
-            app:popUpTo="@id/login_dest"/>
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/sign_up_second_dest"
-        android:name="com.workplaces.aslapov.app.signup.SignUpStepTwoFragment"
-        tools:layout="@layout/signup_two_fragment">
-
-        <action
-            android:id="@+id/sign_up_to_welcome_action"
-            app:destination="@id/welcome_dest"/>
-
-        <action
-            android:id="@+id/sign_up_to_step_one_action"
-            app:destination="@id/sign_up_first_dest"/>
-
-    </fragment>
-
-    <fragment
         android:id="@+id/welcome_dest"
-        android:name="com.workplaces.aslapov.app.WelcomeFragment"
+        android:name="com.workplaces.aslapov.app.login.welcome.WelcomeFragment"
         tools:layout="@layout/welcome_fragment">
+
+        <action
+            android:id="@+id/login_to_main_action"
+            app:destination="@+id/main_graph"/>
     </fragment>
 
 </navigation>

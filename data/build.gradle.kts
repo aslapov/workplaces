@@ -56,6 +56,10 @@ android {
 dependencies {
     implementation(project(":domain"))
 
+    implementation(DataDependency.CORE)
+    implementation(DataDependency.COROUTINES)
+
+
     implementation(DataDependency.OKHTTP_LOGGING) {
         exclude("org.json", "json")
     }

@@ -9,7 +9,6 @@
         <item name="lineHeight">44sp</item>
         <item name="fontWeight">400</item>
         <item name="android:fontWeight">400</item>
-        <item name="android:gravity">center</item>
     </style>
 
     <style name="TextAppearance.App.H2" parent="TextAppearance.MaterialComponents.Headline2">
@@ -20,7 +19,6 @@
         <item name="lineHeight">20sp</item>
         <item name="fontWeight">400</item>
         <item name="android:fontWeight">400</item>
-        <item name="android:gravity">center</item>
     </style>
 
 </resources>

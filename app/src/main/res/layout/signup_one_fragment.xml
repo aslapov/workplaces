@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.signup.SignUpStepOneFragment">
+    tools:context=".app.login.signup.SignUpStepOneFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/sign_up_one_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/icon_back"
@@ -18,52 +18,46 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/sign_up_one_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_up_email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_one_toolbar" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/sign_up_one_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_up_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_one_email" />
 
     <Button
-        android:id="@+id/registerAlready"
+        android:id="@+id/sign_up_one_register_already"
         style="@style/Widget.App.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:text="@string/sign_up_register_already"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/next" />
+        app:layout_constraintBottom_toTopOf="@+id/sign_up_one_next" />
 
     <Button
-        android:id="@+id/next"
+        android:id="@+id/sign_up_one_next"
         style="@style/Widget.App.Button"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="40dp"
         android:text="@string/sign_up_next"
         android:enabled="false"

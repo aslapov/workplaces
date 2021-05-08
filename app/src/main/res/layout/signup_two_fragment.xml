@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.signup.SignUpStepOneFragment">
+    tools:context=".app.login.signup.SignUpStepOneFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/sign_up_two_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/icon_back"
@@ -18,68 +18,59 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/firstname"
+        android:id="@+id/sign_up_two_firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_up_firstname"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_two_toolbar" />
 
     <EditText
-        android:id="@+id/lastname"
+        android:id="@+id/sign_up_two_lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_up_lastname"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_firstname" />
 
     <EditText
-        android:id="@+id/nickname"
+        android:id="@+id/sign_up_two_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_up_nickname"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastname" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_lastname" />
 
     <EditText
-        android:id="@+id/birthday"
+        android:id="@+id/sign_up_two_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_up_birthday"
         android:inputType="date"
         android:drawableEnd="@drawable/icon_calendar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_nickname" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/sign_up_two_register"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="40dp"
         android:textAllCaps="false"
         android:text="@string/sign_up_register"

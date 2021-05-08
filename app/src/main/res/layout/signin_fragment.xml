@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.signin.SignInFragment">
+    tools:context=".app.login.signin.SignInFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/sign_in_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/icon_back"
@@ -18,52 +18,46 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/sign_in_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_in_email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/sign_in_toolbar" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/sign_in_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
         android:hint="@string/sign_in_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_email" />
 
     <Button
-        android:id="@+id/doRegister"
+        android:id="@+id/sign_in_do_register"
         style="@style/Widget.App.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginHorizontal="24dp"
         android:text="@string/sign_in_go_to_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/signIn" />
+        app:layout_constraintBottom_toTopOf="@+id/sign_in" />
 
     <Button
-        android:id="@+id/signIn"
+        android:id="@+id/sign_in"
         style="@style/Widget.App.Button"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="40dp"
         android:text="@string/sign_in_next"
         android:enabled="false"
