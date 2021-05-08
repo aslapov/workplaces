@@ -3,9 +3,9 @@ package com.workplaces.aslapov.app.signup
 import androidx.lifecycle.MutableLiveData
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
-import com.workplaces.aslapov.app.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.delegate
+import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.domain.isEmailValid
 import com.workplaces.aslapov.domain.isPasswordValid
 import javax.inject.Inject

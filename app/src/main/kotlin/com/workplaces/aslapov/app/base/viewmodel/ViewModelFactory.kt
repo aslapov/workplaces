@@ -1,8 +1,7 @@
-package com.workplaces.aslapov.app
+package com.workplaces.aslapov.app.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -13,12 +12,10 @@ class ViewModelFactory @Inject constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val provider = providers[modelClass]
             ?: providers.asIterable().find { modelClass.isAssignableFrom(it.key) }?.value
-            ?: error("Unknown ViewModel class $modelClass")
 
-        return try {
-            provider.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+        requireNotNull(provider) { "Unknown ViewModel class $modelClass" }
+
+        @Suppress("UNCHECKED_CAST")
+        return provider.get() as T
     }
 }

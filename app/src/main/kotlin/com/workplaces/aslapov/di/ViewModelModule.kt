@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.workplaces.aslapov.app.DummyViewModel
 import com.workplaces.aslapov.app.MainViewModel
-import com.workplaces.aslapov.app.ViewModelFactory
+import com.workplaces.aslapov.app.base.viewmodel.ViewModelFactory
 import com.workplaces.aslapov.app.signin.SignInViewModel
 import com.workplaces.aslapov.app.signup.SignUpStepOneViewModel
 import com.workplaces.aslapov.app.signup.SignUpStepTwoViewModel

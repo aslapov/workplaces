@@ -5,10 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
-import com.workplaces.aslapov.app.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.delegate
-import com.workplaces.aslapov.domain.*
+import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.delegate
+import com.workplaces.aslapov.domain.ResponseResultError
+import com.workplaces.aslapov.domain.ResponseResultSuccess
+import com.workplaces.aslapov.domain.UserRepository
+import com.workplaces.aslapov.domain.isEmailValid
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

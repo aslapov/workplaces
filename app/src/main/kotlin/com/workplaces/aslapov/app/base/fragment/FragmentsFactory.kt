@@ -1,4 +1,4 @@
-package com.workplaces.aslapov.app
+package com.workplaces.aslapov.app.base.fragment
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory

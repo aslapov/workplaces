@@ -3,9 +3,9 @@ package com.workplaces.aslapov.di
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.workplaces.aslapov.app.DummyFragment
-import com.workplaces.aslapov.app.FragmentsFactory
 import com.workplaces.aslapov.app.LoginFragment
 import com.workplaces.aslapov.app.WelcomeFragment
+import com.workplaces.aslapov.app.base.fragment.FragmentsFactory
 import com.workplaces.aslapov.app.signin.SignInFragment
 import com.workplaces.aslapov.app.signup.SignUpStepOneFragment
 import com.workplaces.aslapov.app.signup.SignUpStepTwoFragment

@@ -14,9 +14,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
-import com.workplaces.aslapov.app.ErrorMessageEvent
-import com.workplaces.aslapov.app.MessageEvent
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject

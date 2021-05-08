@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InternshipApp</string>
+    <string name="app_name">Aslapov</string>
 
     <!-- region Экран Логина -->
     <string name="login_workplaces">Workplaces</string>
