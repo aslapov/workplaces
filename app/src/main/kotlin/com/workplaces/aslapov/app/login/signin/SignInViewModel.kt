@@ -13,9 +13,10 @@ import com.workplaces.aslapov.domain.UserRepository
 import com.workplaces.aslapov.domain.isEmailValid
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 class SignInViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    @Named("Network") private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     private val liveState = MutableLiveData(createInitialState())

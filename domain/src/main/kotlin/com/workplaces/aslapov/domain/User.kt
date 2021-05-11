@@ -1,6 +1,7 @@
 package com.workplaces.aslapov.domain
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 data class User(
@@ -8,9 +9,7 @@ data class User(
     val lastName: String,
     val nickName: String?,
     val avatarUrl: String?,
-    val birthday: Date
+    val birthday: LocalDate
 )
 
 val userBirthdayFormatter = SimpleDateFormat("yyyy-MM-dd", Locale("ru"))
-
-val USER_DEFAULT_BIRTHDAY: Date = GregorianCalendar(1970, 1, 1).time

@@ -1,7 +1,6 @@
-package com.workplaces.aslapov.di
+package com.workplaces.aslapov.app.base.viewmodel
 
 import androidx.lifecycle.ViewModelProvider
-import com.workplaces.aslapov.app.base.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 

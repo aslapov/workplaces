@@ -9,9 +9,10 @@ import com.workplaces.aslapov.domain.ResponseResultSuccess
 import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 class NewFeedDummyViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    @Named("Network") private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     fun onLogout() {

@@ -4,12 +4,19 @@ import androidx.lifecycle.viewModelScope
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
-import com.workplaces.aslapov.data.UserRepositoryImpl
-import com.workplaces.aslapov.domain.*
+import com.workplaces.aslapov.domain.ResponseResultError
+import com.workplaces.aslapov.domain.ResponseResultSuccess
+import com.workplaces.aslapov.domain.User
+import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import javax.inject.Named
 
-class SignUpViewModel @Inject constructor(private val userRepository: UserRepositoryImpl) : BaseViewModel() {
+class SignUpViewModel @Inject constructor(
+    @Named("Network") private val userRepository: UserRepository
+) : BaseViewModel() {
     var email: String = ""
         private set
     var password: String = ""
@@ -41,7 +48,7 @@ class SignUpViewModel @Inject constructor(private val userRepository: UserReposi
             firstName = firstname,
             lastName = lastname,
             nickName = nickname,
-            birthday = userBirthdayFormatter.parse(birthday) ?: USER_DEFAULT_BIRTHDAY,
+            birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
             avatarUrl = null
         )
         when (userRepository.updateUser(user)) {

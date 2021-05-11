@@ -6,7 +6,7 @@ import java.util.regex.Pattern
 fun isEmailValid(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
 fun isPasswordValid(password: String): Boolean {
-    val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
+    val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}"
     val pattern = Pattern.compile(passwordPattern)
     return pattern.matcher(password).matches()
 }

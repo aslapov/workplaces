@@ -2,7 +2,7 @@ package com.workplaces.aslapov.app
 
 import androidx.lifecycle.ViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ViewModelKey
-import com.workplaces.aslapov.di.ViewModelModule
+import com.workplaces.aslapov.app.base.viewmodel.ViewModelModule
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
