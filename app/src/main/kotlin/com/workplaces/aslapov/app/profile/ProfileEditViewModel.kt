@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Named
 
+private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
 class ProfileEditViewModel @Inject constructor(
     @Named("Network") private val userRepository: UserRepository
 ) : BaseViewModel() {
@@ -77,7 +79,7 @@ class ProfileEditViewModel @Inject constructor(
                 firstName = firstname,
                 lastName = lastname,
                 nickName = nickname,
-                birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                birthday = LocalDate.parse(birthday, formatter),
                 avatarUrl = userRepository.getMyUser().avatarUrl
             )
             try {
@@ -99,7 +101,7 @@ class ProfileEditViewModel @Inject constructor(
         val firstname = user.firstName
         val lastName = user.lastName
         val nickName = user.nickName.orEmpty()
-        val birthDay = user.birthday.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) ?: ""
+        val birthDay = user.birthday.format(formatter)
         return ProfileEditViewState(
             firstName = firstname,
             isFirstNameValid = isFirstnameValid(firstname),
@@ -123,7 +125,7 @@ class ProfileEditViewModel @Inject constructor(
         val isUserFieldsChanged = state.firstName != user.firstName ||
             state.lastName != user.lastName ||
             state.nickName != user.nickName ||
-            state.birthDay != user.birthday.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            state.birthDay != user.birthday.format(formatter)
         state = state.copy(isSaveButtonEnabled = isUserFieldsValid && isUserFieldsChanged)
     }
 }

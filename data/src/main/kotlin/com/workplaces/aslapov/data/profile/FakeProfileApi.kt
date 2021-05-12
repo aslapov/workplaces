@@ -26,8 +26,8 @@ class FakeProfileApi @Inject constructor() {
         delay(SUSPEND_TIME_MILLIS)
         return UserNetwork(
             id = "63abe7f0-03d5-451b-a744-f517973987db",
-            firstName = user.firstName ?: "Unknown",
-            lastName = user.lastName ?: "Unknown",
+            firstName = user.firstName,
+            lastName = user.lastName,
             nickName = user.nickName,
             avatarUrl = user.avatarUrl,
             birthday = user.birthday

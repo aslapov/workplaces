@@ -35,7 +35,7 @@ class ProfileViewModel @Inject constructor(
                 liveState.value = ProfileViewState(
                     name = "$firstname $lastName",
                     nickName = nickName,
-                    age = "${period?.years.toString()} лет",
+                    age = if (period != null) "${period.years} лет" else "",
                 )
             } catch (e: NetworkException) {
                 eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
