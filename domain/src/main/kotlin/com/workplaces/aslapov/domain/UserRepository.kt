@@ -12,9 +12,5 @@ interface UserRepository {
     suspend fun updateUser(user: User)
     suspend fun logout()
     suspend fun refreshToken(): String
-    suspend fun getUser(): User?
+    suspend fun getMyUser(): User
 }
-
-sealed class ResponseResult
-object ResponseResultSuccess : ResponseResult()
-data class ResponseResultError(val error: String) : ResponseResult()

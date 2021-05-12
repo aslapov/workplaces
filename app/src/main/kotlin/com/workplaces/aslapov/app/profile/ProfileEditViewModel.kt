@@ -72,14 +72,14 @@ class ProfileEditViewModel @Inject constructor(
         navigateTo(ProfileEditFragmentDirections.profileEditToProfileAction())
     }
     fun onSaveClicked(firstname: String, lastname: String, nickname: String, birthday: String) {
-        val user = User(
-            firstName = firstname,
-            lastName = lastname,
-            nickName = nickname,
-            birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-            avatarUrl = userRepository.user?.avatarUrl
-        )
         viewModelScope.launch {
+            val user = User(
+                firstName = firstname,
+                lastName = lastname,
+                nickName = nickname,
+                birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                avatarUrl = userRepository.getMyUser().avatarUrl
+            )
             try {
                 userRepository.updateUser(user)
                 navigateTo(ProfileEditFragmentDirections.profileEditToProfileAction())
@@ -95,11 +95,11 @@ class ProfileEditViewModel @Inject constructor(
     }
 
     private fun createInitialState(): ProfileEditViewState {
-        val user = userRepository.user
-        val firstname = user?.firstName.orEmpty()
-        val lastName = user?.lastName.orEmpty()
-        val nickName = user?.nickName.orEmpty()
-        val birthDay = user?.birthday?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) ?: ""
+        val user = requireNotNull(userRepository.user)
+        val firstname = user.firstName
+        val lastName = user.lastName
+        val nickName = user.nickName.orEmpty()
+        val birthDay = user.birthday.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) ?: ""
         return ProfileEditViewState(
             firstName = firstname,
             isFirstNameValid = isFirstnameValid(firstname),
@@ -115,12 +115,12 @@ class ProfileEditViewModel @Inject constructor(
     }
 
     private fun checkSaveButtonEnable() {
-        val user = userRepository.user
+        val user = requireNotNull(userRepository.user)
         val isUserFieldsValid = state.isFirstNameValid &&
             state.isLastNameValid &&
             state.isNickNameValid &&
             state.isBirthDayValid
-        val isUserFieldsChanged = state.firstName != user?.firstName ||
+        val isUserFieldsChanged = state.firstName != user.firstName ||
             state.lastName != user.lastName ||
             state.nickName != user.nickName ||
             state.birthDay != user.birthday.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))

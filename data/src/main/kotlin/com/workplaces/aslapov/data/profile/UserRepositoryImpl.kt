@@ -39,7 +39,7 @@ class UserRepositoryImpl @Inject constructor(
         val userCredentials = UserCredentials(email, password)
         val token = authApi.login(userCredentials)
         saveToken(token)
-        user = getUser()
+        getMyUser()
     }
 
     override suspend fun updateUser(user: User) {
@@ -50,7 +50,7 @@ class UserRepositoryImpl @Inject constructor(
             avatarUrl = user.avatarUrl,
             birthday = user.birthday
         )
-        this.user = updatedUser.toUser()
+        saveUser(updatedUser.toUser())
     }
 
     override suspend fun logout() {
@@ -67,17 +67,19 @@ class UserRepositoryImpl @Inject constructor(
         return token.accessToken
     }
 
-    override suspend fun getUser(): User? {
-        val me: UserNetwork = profileApi.getMe()
-        val user = me.toUser()
-        this.user = user
-        return user
+    override suspend fun getMyUser(): User {
+        val me: User = profileApi.getMe().toUser()
+        saveUser(me)
+        return me
     }
 
     private fun saveToken(token: Token) {
         accessToken = token.accessToken
         refreshToken = token.refreshToken
         tokenSource.setTokens(token.accessToken, token.refreshToken)
+    }
+    private fun saveUser(user: User) {
+        this.user = user
     }
 }
 

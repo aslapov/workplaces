@@ -27,15 +27,15 @@ class ProfileViewModel @Inject constructor(
     fun initProfile() {
         viewModelScope.launch {
             try {
-                val user = userRepository.user ?: userRepository.getUser()
+                val user = userRepository.getMyUser()
                 val firstname = user.firstName
                 val lastName = user.lastName
-                val nickName = user.nickName.orEmpty()
+                val nickName = if (user.nickName != null) "@${user.nickName}" else ""
                 val period = Period.between(user.birthday, LocalDate.now())
                 liveState.value = ProfileViewState(
                     name = "$firstname $lastName",
                     nickName = nickName,
-                    age = period?.years.toString() + " лет",
+                    age = "${period?.years.toString()} лет",
                 )
             } catch (e: NetworkException) {
                 eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))

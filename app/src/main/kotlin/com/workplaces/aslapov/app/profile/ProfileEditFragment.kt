@@ -51,10 +51,19 @@ class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_
         observe(profileEditViewModel.viewState, ::onStateChanged)
         observe(profileEditViewModel.eventsQueue, ::onEvent)
 
-        firstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
-        lastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
-        nickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
-        birthday.doAfterTextChanged { profileEditViewModel.onBirthDayEntered(it.toString()) }
+        firstname.doAfterTextChanged {
+            if (firstname.hasFocus()) profileEditViewModel.onFirstNameEntered(it.toString())
+        }
+        lastname.doAfterTextChanged {
+            if (lastname.hasFocus()) profileEditViewModel.onLastNameEntered(it.toString())
+        }
+        nickname.doAfterTextChanged {
+            if (nickname.hasFocus()) profileEditViewModel.onNickNameEntered(it.toString())
+        }
+        birthday.doAfterTextChanged {
+            if (birthday.hasFocus()) profileEditViewModel.onBirthDayEntered(it.toString())
+        }
+
         birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
         datePicker.addOnPositiveButtonClickListener {
             birthday.text = userBirthdayFormatter.format(Date(it)).toEditable()
@@ -87,11 +96,23 @@ class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_
     private fun onStateChanged(state: ProfileEditViewState) {
         onLoading(state.isLoading)
         onSaveButtonEnableChanged(state.isSaveButtonEnabled)
-        firstname.text = state.firstName.toEditable()
-        lastname.text = state.lastName.toEditable()
-        nickname.text = state.nickName.toEditable()
-        birthday.text = state.birthDay.toEditable()
+        firstname.updateText(state.firstName)
+        lastname.updateText(state.lastName)
+        nickname.updateText(state.nickName)
+        birthday.updateText(state.birthDay)
     }
 }
 
 fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
+// TODO Костыль в обход бесконечного цикла изменения EditText и рендера формы
+fun EditText.updateText(text: String) {
+    val isFocussed = hasFocus()
+    if (isFocussed) {
+        clearFocus()
+    }
+    setText(text)
+    if (isFocussed) {
+        requestFocus()
+    }
+}

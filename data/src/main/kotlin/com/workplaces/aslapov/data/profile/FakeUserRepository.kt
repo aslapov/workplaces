@@ -50,8 +50,8 @@ class FakeUserRepository @Inject constructor(
         return ""
     }
 
-    override suspend fun getUser(): User? {
-        return this.user
+    override suspend fun getMyUser(): User {
+        return authApi.getMyUser()
     }
 
     private suspend fun saveUser() {
