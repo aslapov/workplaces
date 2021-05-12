@@ -1,14 +1,17 @@
 package com.workplaces.aslapov.app.login.signup
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.workplaces.aslapov.R
+import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
-import com.workplaces.aslapov.domain.ResponseResultError
-import com.workplaces.aslapov.domain.ResponseResultSuccess
+import com.workplaces.aslapov.app.base.viewmodel.delegate
+import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.domain.User
 import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.net.UnknownHostException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -17,14 +20,21 @@ import javax.inject.Named
 class SignUpViewModel @Inject constructor(
     @Named("Network") private val userRepository: UserRepository
 ) : BaseViewModel() {
+
+    companion object {
+        private const val TAG = "SignUpViewModel"
+    }
+    private val liveState = MutableLiveData(createInitialState())
+    private var state: SignUpViewState by liveState.delegate()
+    val isLoading = liveState.mapDistinct { it.isLoading }
     var email: String = ""
         private set
     var password: String = ""
         private set
-    var firstname: String = ""
-    var lastname: String = ""
-    var nickname: String = ""
-    var birthday: String = ""
+    private var firstname: String = ""
+    private var lastname: String = ""
+    private var nickname: String = ""
+    private var birthday: String = ""
 
     fun onGoNextClicked(email: String, password: String) {
         this.email = email
@@ -32,14 +42,22 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onSignUpClicked(firstname: String, lastname: String, nickname: String, birthday: String) {
+        state = state.copy(isLoading = true)
         this.nickname = nickname
         this.firstname = firstname
         this.lastname = lastname
         this.birthday = birthday
         viewModelScope.launch {
-            when (userRepository.register(email, password)) {
-                is ResponseResultSuccess -> updateUser()
-                is ResponseResultError -> eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_signup_fail))
+            try {
+                userRepository.register(email, password)
+                updateUser()
+            } catch (e: NetworkException) {
+                eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
+            } catch (e: UnknownHostException) {
+                Timber.tag(TAG).d(e)
+                eventsQueue.offerEvent(ErrorMessageEvent("Проверьте подключение к интернету"))
+            } finally {
+                state = state.copy(isLoading = false)
             }
         }
     }
@@ -51,9 +69,18 @@ class SignUpViewModel @Inject constructor(
             birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
             avatarUrl = null
         )
-        when (userRepository.updateUser(user)) {
-            is ResponseResultSuccess -> navigateTo(SignUpStepTwoFragmentDirections.signUpToWelcomeAction())
-            is ResponseResultError -> eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_signup_fail))
-        }
+
+        userRepository.updateUser(user)
+        navigateTo(SignUpStepTwoFragmentDirections.signUpToWelcomeAction())
+    }
+
+    private fun createInitialState(): SignUpViewState {
+        return SignUpViewState(
+            isLoading = false,
+        )
     }
 }
+
+data class SignUpViewState(
+    val isLoading: Boolean,
+)

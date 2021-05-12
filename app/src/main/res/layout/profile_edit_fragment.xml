@@ -5,88 +5,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.login.signup.SignUpStepOneFragment">
+    tools:context=".app.profile.ProfileEditFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/sign_up_two_toolbar"
+        android:id="@+id/profile_edit_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/icon_back"
-        app:title="@string/sign_up_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/sign_up_two_firstname"
+        android:id="@+id/profile_edit_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
-        android:hint="@string/sign_up_firstname"
+        android:hint="@string/profile_firstname"
+        android:text=""
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_two_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/profile_edit_toolbar" />
 
     <EditText
-        android:id="@+id/sign_up_two_lastname"
+        android:id="@+id/profile_edit_firstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
-        android:hint="@string/sign_up_lastname"
+        android:hint="@string/profile_lastname"
+        android:text=""
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_firstname" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_nickname" />
 
     <EditText
-        android:id="@+id/sign_up_two_nickname"
+        android:id="@+id/profile_edit_lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
-        android:hint="@string/sign_up_nickname"
+        android:hint="@string/profile_nickname"
+        android:text=""
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_lastname" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_firstname" />
 
     <EditText
-        android:id="@+id/sign_up_two_birthday"
+        android:id="@+id/profile_edit_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
         android:drawableEnd="@drawable/icon_calendar"
-        android:hint="@string/sign_up_birthday"
+        android:text=""
+        android:hint="@string/profile_birthday"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_nickname" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_lastname" />
 
     <Button
-        android:id="@+id/sign_up_two_register"
+        android:id="@+id/profile_edit_save"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="40dp"
         android:textAllCaps="false"
-        android:text="@string/sign_up_register"
+        android:text="@string/profile_save"
         android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ProgressBar
-        android:id="@+id/sign_up_two_spinner"
+        android:id="@+id/profile_edit_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/sign_up_two_register"
+        app:layout_constraintBottom_toTopOf="@+id/profile_edit_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_two_birthday"
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_birthday"
         app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

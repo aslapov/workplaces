@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.domain.isEmailValid
 import com.workplaces.aslapov.domain.isPasswordValid
@@ -21,7 +21,7 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel() {
             state = state.copy(email = email, isEmailValid = true)
         } else {
             state = state.copy(email = email, isEmailValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_email_invalid))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_up_email_invalid))
         }
         checkNextButtonEnable()
     }
@@ -31,7 +31,7 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel() {
             state = state.copy(password = password, isPasswordValid = true)
         } else {
             state = state.copy(password = password, isPasswordValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_password_invalid))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_up_password_invalid))
         }
         checkNextButtonEnable()
     }

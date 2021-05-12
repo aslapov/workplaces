@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,7 +19,12 @@ import javax.inject.Inject
 class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragment) {
 
     private val signInViewModel: SignInViewModel by viewModels { viewModelFactory }
+    private lateinit var email: EditText
+    private lateinit var password: EditText
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var register: Button
     private lateinit var signIn: Button
+    private lateinit var spinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +33,15 @@ class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val email = view.findViewById<EditText>(R.id.sign_in_email)
-        val password = view.findViewById<EditText>(R.id.sign_in_password)
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.sign_in_toolbar)
-        val register = view.findViewById<Button>(R.id.sign_in_do_register)
+        email = view.findViewById(R.id.sign_in_email)
+        password = view.findViewById(R.id.sign_in_password)
+        toolbar = view.findViewById(R.id.sign_in_toolbar)
+        register = view.findViewById(R.id.sign_in_do_register)
         signIn = view.findViewById(R.id.sign_in)
+        spinner = view.findViewById(R.id.sign_in_spinner)
 
         observe(signInViewModel.isNextButtonEnabled, ::onNextButtonEnableChanged)
+        observe(signInViewModel.isLoading, ::onLoading)
         observe(signInViewModel.eventsQueue, ::onEvent)
 
         email.doAfterTextChanged { signInViewModel.onEmailEntered(it.toString()) }
@@ -51,5 +60,13 @@ class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragme
 
     private fun onNextButtonEnableChanged(isEnabled: Boolean) {
         signIn.isEnabled = isEnabled
+    }
+    private fun onLoading(isLoading: Boolean) {
+        spinner.isVisible = isLoading
+        email.isEnabled = !isLoading
+        password.isEnabled = !isLoading
+        toolbar.isEnabled = !isLoading
+        register.isEnabled = !isLoading
+        signIn.isEnabled = !isLoading
     }
 }

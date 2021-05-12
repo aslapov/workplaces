@@ -14,6 +14,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+private const val BASE_URL = "https://interns2021.redmadrobot.com/"
+
 @Module
 class NetworkModule {
 
@@ -33,7 +35,7 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://interns2021.redmadrobot.com/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
@@ -58,10 +60,10 @@ class NetworkModule {
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
-            .addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
             .authenticator(userAuthenticator)
             .addInterceptor(tokenInterceptor)
             .addInterceptor(errorInterceptor)
+            .addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
             .build()
     }
 }

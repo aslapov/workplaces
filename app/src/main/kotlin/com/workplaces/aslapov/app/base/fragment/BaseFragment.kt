@@ -19,7 +19,7 @@ open class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayou
         when (event) {
             is Navigate -> findNavController().navigate(event.direction)
             is MessageEvent -> showMessage(getString(event.message))
-            is ErrorMessageEvent -> showError(getString(event.errorMessage))
+            is ErrorMessageEvent -> showError(event.errorMessage)
         }
     }
 

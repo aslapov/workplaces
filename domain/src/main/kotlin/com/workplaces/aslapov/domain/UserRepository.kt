@@ -7,11 +7,12 @@ interface UserRepository {
     var accessToken: String?
     var refreshToken: UUID?
     fun isUserLoggedIn(): Boolean
-    suspend fun register(email: String, password: String): ResponseResult
-    suspend fun login(email: String, password: String): ResponseResult
-    suspend fun updateUser(user: User): ResponseResult
-    suspend fun logout(): ResponseResult
+    suspend fun register(email: String, password: String)
+    suspend fun login(email: String, password: String)
+    suspend fun updateUser(user: User)
+    suspend fun logout()
     suspend fun refreshToken(): String
+    suspend fun getUser(): User?
 }
 
 sealed class ResponseResult

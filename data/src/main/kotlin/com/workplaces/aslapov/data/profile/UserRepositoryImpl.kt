@@ -1,20 +1,20 @@
 package com.workplaces.aslapov.data.profile
 
-import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.data.auth.AuthApi
 import com.workplaces.aslapov.data.auth.Token
+import com.workplaces.aslapov.data.auth.TokenSharedPreferenceSource
 import com.workplaces.aslapov.data.auth.UserCredentials
-import com.workplaces.aslapov.domain.*
-import java.net.ConnectException
+import com.workplaces.aslapov.domain.User
+import com.workplaces.aslapov.domain.UserRepository
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
-    private val userSource: UserSharedPreferencesSource,
     private val authApi: AuthApi,
-    private val profileApi: ProfileApi
+    private val profileApi: ProfileApi,
+    private val tokenSource: TokenSharedPreferenceSource
 ) : UserRepository {
 
     override var user: User? = null
@@ -23,59 +23,42 @@ class UserRepositoryImpl @Inject constructor(
 
     override var refreshToken: UUID? = null
 
+    override fun isUserLoggedIn(): Boolean = accessToken != null
     init {
-        user = userSource.getUser()?.toUser()
+        accessToken = tokenSource.getAccessToken()
+        refreshToken = tokenSource.getRefreshToken()
     }
 
-    override fun isUserLoggedIn(): Boolean = user != null
-
-    override suspend fun register(email: String, password: String): ResponseResult {
-        return try {
-            val userCredentials = UserCredentials(email, password)
-            val token = authApi.register(userCredentials)
-            saveToken(token)
-            saveUser()
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка регистрации")
-        }
+    override suspend fun register(email: String, password: String) {
+        val userCredentials = UserCredentials(email, password)
+        val token = authApi.register(userCredentials)
+        saveToken(token)
     }
 
-    override suspend fun login(email: String, password: String): ResponseResult {
-        return try {
-            val userCredentials = UserCredentials(email, password)
-            val token = authApi.login(userCredentials)
-            saveToken(token)
-            saveUser()
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка сети")
-        } catch (e: NetworkException) {
-            ResponseResultError(e.message ?: "Ошибка авторизации")
-        }
+    override suspend fun login(email: String, password: String) {
+        val userCredentials = UserCredentials(email, password)
+        val token = authApi.login(userCredentials)
+        saveToken(token)
+        user = getUser()
     }
 
-    override suspend fun updateUser(user: User): ResponseResult {
-        return try {
-            val updatedUser = profileApi.updateMe(user)
-            saveUser(updatedUser)
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка обновления профиля")
-        }
+    override suspend fun updateUser(user: User) {
+        val updatedUser = profileApi.updateMe(
+            firstName = user.firstName,
+            lastName = user.lastName,
+            nickName = user.nickName,
+            avatarUrl = user.avatarUrl,
+            birthday = user.birthday
+        )
+        this.user = updatedUser.toUser()
     }
 
-    override suspend fun logout(): ResponseResult {
-        return try {
-            authApi.logout()
-            userSource.logout()
-            user = null
-            accessToken = null
-            refreshToken = null
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка выхода из аккаунта")
-        }
+    override suspend fun logout() {
+        authApi.logout()
+        tokenSource.logout()
+        user = null
+        accessToken = null
+        refreshToken = null
     }
 
     override suspend fun refreshToken(): String {
@@ -84,17 +67,17 @@ class UserRepositoryImpl @Inject constructor(
         return token.accessToken
     }
 
-    private suspend fun saveUser() {
+    override suspend fun getUser(): User? {
         val me: UserNetwork = profileApi.getMe()
-        saveUser(me)
+        val user = me.toUser()
+        this.user = user
+        return user
     }
-    private fun saveUser(userNetwork: UserNetwork) {
-        userSource.setUser(userNetwork)
-        user = userNetwork.toUser()
-    }
+
     private fun saveToken(token: Token) {
         accessToken = token.accessToken
         refreshToken = token.refreshToken
+        tokenSource.setTokens(token.accessToken, token.refreshToken)
     }
 }
 

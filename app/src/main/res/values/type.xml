@@ -21,4 +21,8 @@
         <item name="android:fontWeight">400</item>
     </style>
 
+    <style name="TextAppearance.App.H2.Black" parent="TextAppearance.App.H2">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

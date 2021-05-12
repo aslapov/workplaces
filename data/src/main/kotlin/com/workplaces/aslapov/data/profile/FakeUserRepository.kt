@@ -1,8 +1,8 @@
 package com.workplaces.aslapov.data.profile
 
 import com.workplaces.aslapov.data.auth.FakeAuthApi
-import com.workplaces.aslapov.domain.*
-import java.net.ConnectException
+import com.workplaces.aslapov.domain.User
+import com.workplaces.aslapov.domain.UserRepository
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,49 +25,33 @@ class FakeUserRepository @Inject constructor(
 
     override fun isUserLoggedIn(): Boolean = user != null
 
-    override suspend fun register(email: String, password: String): ResponseResult {
-        return try {
-            authApi.register()
-            saveUser()
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка регистрации")
-        }
+    override suspend fun register(email: String, password: String) {
+        authApi.register()
+        saveUser()
     }
 
-    override suspend fun login(email: String, password: String): ResponseResult {
-        return try {
-            authApi.login()
-            saveUser()
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка авторизации")
-        }
+    override suspend fun login(email: String, password: String) {
+        authApi.login()
+        saveUser()
     }
 
-    override suspend fun updateUser(user: User): ResponseResult {
-        return try {
-            val updatedUser = profileApi.updateUser(user)
-            saveUser(updatedUser)
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка обновления профиля")
-        }
+    override suspend fun updateUser(user: User) {
+        val updatedUser = profileApi.updateUser(user)
+        saveUser(updatedUser)
     }
 
-    override suspend fun logout(): ResponseResult {
-        return try {
-            authApi.logout()
-            userSource.logout()
-            user = null
-            ResponseResultSuccess
-        } catch (e: ConnectException) {
-            ResponseResultError(e.message ?: "Ошибка выхода из аккаунта")
-        }
+    override suspend fun logout() {
+        authApi.logout()
+        userSource.logout()
+        user = null
     }
 
     override suspend fun refreshToken(): String {
-        TODO("Not yet implemented")
+        return ""
+    }
+
+    override suspend fun getUser(): User? {
+        return this.user
     }
 
     private suspend fun saveUser() {

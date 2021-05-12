@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.domain.isBirthdayValid
 import com.workplaces.aslapov.domain.isFirstnameValid
@@ -21,7 +21,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
             state = state.copy(firstName = firstName, isFirstNameValid = true)
         } else {
             state = state.copy(firstName = firstName, isFirstNameValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_firstname_error))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_up_firstname_error))
         }
         checkRegisterButtonEnable()
     }
@@ -31,7 +31,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
             state = state.copy(lastName = lastName, isLastNameValid = true)
         } else {
             state = state.copy(lastName = lastName, isLastNameValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_lastname_error))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_up_lastname_error))
         }
         checkRegisterButtonEnable()
     }
@@ -41,7 +41,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
             state = state.copy(nickName = nickName, isNickNameValid = true)
         } else {
             state = state.copy(nickName = nickName, isNickNameValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_nickname_error))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_up_nickname_error))
         }
         checkRegisterButtonEnable()
     }
@@ -51,7 +51,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
             state = state.copy(birthDay = birthDay, isBirthDayValid = true)
         } else {
             state = state.copy(birthDay = birthDay, isBirthDayValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_birthday_error))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_up_birthday_error))
         }
         checkRegisterButtonEnable()
     }
@@ -69,7 +69,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
             isNickNameValid = false,
             birthDay = "",
             isBirthDayValid = false,
-            isRegisterButtonEnabled = false
+            isRegisterButtonEnabled = false,
         )
     }
 
@@ -91,5 +91,5 @@ data class SignUpTwoViewState(
     val isNickNameValid: Boolean,
     val birthDay: String,
     val isBirthDayValid: Boolean,
-    val isRegisterButtonEnabled: Boolean
+    val isRegisterButtonEnabled: Boolean,
 )

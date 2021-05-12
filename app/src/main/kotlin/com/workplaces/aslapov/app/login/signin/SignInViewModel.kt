@@ -6,12 +6,14 @@ import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.delegate
-import com.workplaces.aslapov.domain.ResponseResultError
-import com.workplaces.aslapov.domain.ResponseResultSuccess
+import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.domain.UserRepository
 import com.workplaces.aslapov.domain.isEmailValid
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -19,16 +21,21 @@ class SignInViewModel @Inject constructor(
     @Named("Network") private val userRepository: UserRepository
 ) : BaseViewModel() {
 
+    companion object {
+        private const val TAG = "SignInViewModel"
+    }
+
     private val liveState = MutableLiveData(createInitialState())
     private var state: SignInViewState by liveState.delegate()
     val isNextButtonEnabled = liveState.mapDistinct { it.isNextButtonEnabled }
+    val isLoading = liveState.mapDistinct { it.isLoading }
 
     fun onEmailEntered(email: String) {
         if (isEmailValid(email)) {
             state = state.copy(email = email, isEmailValid = true)
         } else {
             state = state.copy(email = email, isEmailValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_in_email_invalid))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_in_email_invalid))
         }
         checkNextButtonEnable()
     }
@@ -38,15 +45,23 @@ class SignInViewModel @Inject constructor(
             state = state.copy(password = password, isPasswordValid = true)
         } else {
             state = state.copy(password = password, isPasswordValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_in_password_invalid))
+            eventsQueue.offerEvent(MessageEvent(R.string.sign_in_password_invalid))
         }
         checkNextButtonEnable()
     }
     fun onSignInClicked() {
+        state = state.copy(isLoading = true)
         viewModelScope.launch {
-            when (userRepository.login(state.email, state.password)) {
-                is ResponseResultSuccess -> navigateTo(SignInFragmentDirections.signInToWelcomeAction())
-                is ResponseResultError -> eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_in_signin_fail))
+            try {
+                userRepository.login(state.email, state.password)
+                navigateTo(SignInFragmentDirections.signInToWelcomeAction())
+            } catch (e: NetworkException) {
+                eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
+            } catch (e: UnknownHostException) {
+                Timber.tag(TAG).d(e)
+                eventsQueue.offerEvent(ErrorMessageEvent("Проверьте подключение к интернету"))
+            } finally {
+                state = state.copy(isLoading = false)
             }
         }
     }
@@ -59,7 +74,8 @@ class SignInViewModel @Inject constructor(
             isEmailValid = false,
             password = "",
             isPasswordValid = false,
-            isNextButtonEnabled = false
+            isNextButtonEnabled = false,
+            isLoading = false
         )
     }
 
@@ -74,5 +90,6 @@ data class SignInViewState(
     val isEmailValid: Boolean,
     val password: String,
     val isPasswordValid: Boolean,
-    val isNextButtonEnabled: Boolean
+    val isNextButtonEnabled: Boolean,
+    val isLoading: Boolean,
 )
