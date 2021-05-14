@@ -19,26 +19,21 @@ import javax.inject.Inject
 class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragment) {
 
     private val signInViewModel: SignInViewModel by viewModels { viewModelFactory }
-    private lateinit var email: EditText
-    private lateinit var password: EditText
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var register: Button
-    private lateinit var signIn: Button
-    private lateinit var spinner: ProgressBar
+
+    private val email: EditText get() = requireView().findViewById(R.id.sign_in_email)
+    private val password: EditText get() = requireView().findViewById(R.id.sign_in_password)
+    private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.sign_in_toolbar)
+    private val register: Button get() = requireView().findViewById(R.id.sign_in_do_register)
+    private val signIn: Button get() = requireView().findViewById(R.id.sign_in)
+    private val spinner: ProgressBar get() = requireView().findViewById(R.id.sign_in_spinner)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        email = view.findViewById(R.id.sign_in_email)
-        password = view.findViewById(R.id.sign_in_password)
-        toolbar = view.findViewById(R.id.sign_in_toolbar)
-        register = view.findViewById(R.id.sign_in_do_register)
-        signIn = view.findViewById(R.id.sign_in)
-        spinner = view.findViewById(R.id.sign_in_spinner)
 
         observe(signInViewModel.isNextButtonEnabled, ::onNextButtonEnableChanged)
         observe(signInViewModel.isLoading, ::onLoading)
@@ -47,15 +42,9 @@ class SignInFragment @Inject constructor() : BaseFragment(R.layout.signin_fragme
         email.doAfterTextChanged { signInViewModel.onEmailEntered(it.toString()) }
         password.doAfterTextChanged { signInViewModel.onPasswordEntered(it.toString()) }
 
-        toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.sign_in_to_login_action)
-        }
-        register.setOnClickListener {
-            signInViewModel.onRegisterClicked()
-        }
-        signIn.setOnClickListener {
-            signInViewModel.onSignInClicked()
-        }
+        toolbar.setNavigationOnClickListener { findNavController().navigate(R.id.sign_in_to_login_action) }
+        register.setOnClickListener { signInViewModel.onRegisterClicked() }
+        signIn.setOnClickListener { signInViewModel.onSignInClicked() }
     }
 
     private fun onNextButtonEnableChanged(isEnabled: Boolean) {

@@ -11,12 +11,14 @@ import com.workplaces.aslapov.di.DI
 import javax.inject.Inject
 
 class WelcomeFragment @Inject constructor() : BaseFragment(R.layout.welcome_fragment) {
+
     private val welcomeViewModel: WelcomeViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observe(welcomeViewModel.eventsQueue, ::onEvent)

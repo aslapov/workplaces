@@ -22,29 +22,24 @@ import javax.inject.Inject
 class SignUpStepTwoFragment @Inject constructor() : BaseFragment(R.layout.signup_two_fragment) {
 
     private val signUpViewModel: SignUpViewModel by navGraphViewModels(R.id.sign_up_graph) { viewModelFactory }
+
     private val signUpStepTwoViewModel: SignUpStepTwoViewModel by viewModels { viewModelFactory }
-    private lateinit var firstname: EditText
-    private lateinit var lastname: EditText
-    private lateinit var nickname: EditText
-    private lateinit var birthday: EditText
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var register: Button
-    private lateinit var spinner: ProgressBar
+    private val firstname: EditText get() = requireView().findViewById(R.id.sign_up_two_firstname)
+    private val lastname: EditText get() = requireView().findViewById(R.id.sign_up_two_lastname)
+    private val nickname: EditText get() = requireView().findViewById(R.id.sign_up_two_nickname)
+    private val birthday: EditText get() = requireView().findViewById(R.id.sign_up_two_birthday)
+    private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.sign_up_two_toolbar)
+    private val register: Button get() = requireView().findViewById(R.id.sign_up_two_register)
+    private val spinner: ProgressBar get() = requireView().findViewById(R.id.sign_up_two_spinner)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        firstname = view.findViewById(R.id.sign_up_two_firstname)
-        lastname = view.findViewById(R.id.sign_up_two_lastname)
-        nickname = view.findViewById(R.id.sign_up_two_nickname)
-        birthday = view.findViewById(R.id.sign_up_two_birthday)
-        toolbar = view.findViewById(R.id.sign_up_two_toolbar)
-        register = view.findViewById(R.id.sign_up_two_register)
-        spinner = view.findViewById(R.id.sign_up_two_spinner)
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.sign_up_calendar_title)
             .setSelection(Date().time)
@@ -59,11 +54,14 @@ class SignUpStepTwoFragment @Inject constructor() : BaseFragment(R.layout.signup
         lastname.doAfterTextChanged { signUpStepTwoViewModel.onLastNameEntered(it.toString()) }
         nickname.doAfterTextChanged { signUpStepTwoViewModel.onNickNameEntered(it.toString()) }
         birthday.doAfterTextChanged { signUpStepTwoViewModel.onBirthDayEntered(it.toString()) }
+
         birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
+        toolbar.setNavigationOnClickListener { signUpStepTwoViewModel.onBackClicked() }
+
         datePicker.addOnPositiveButtonClickListener {
             birthday.text = userBirthdayFormatter.format(Date(it)).toEditable()
         }
-        toolbar.setNavigationOnClickListener { signUpStepTwoViewModel.onBackClicked() }
+
         register.setOnClickListener {
             signUpViewModel.onSignUpClicked(
                 firstname = firstname.text.toString(),

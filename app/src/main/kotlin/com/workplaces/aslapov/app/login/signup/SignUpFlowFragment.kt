@@ -15,6 +15,7 @@ class SignUpFlowFragment : BaseFragment(R.layout.signup_flow_fragment) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<FrameLayout>(R.id.fragment_start_container_screens).dispatchApplyWindowInsetsToChild()

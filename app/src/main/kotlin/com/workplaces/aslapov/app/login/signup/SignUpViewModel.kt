@@ -7,6 +7,7 @@ import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.data.NetworkException
+import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.domain.User
 import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
@@ -15,22 +16,25 @@ import java.net.UnknownHostException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import javax.inject.Named
 
 class SignUpViewModel @Inject constructor(
-    @Named("Network") private val userRepository: UserRepository
+    @RepositoryInUse private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     companion object {
         private const val TAG = "SignUpViewModel"
     }
+
     private val liveState = MutableLiveData(createInitialState())
     private var state: SignUpViewState by liveState.delegate()
     val isLoading = liveState.mapDistinct { it.isLoading }
+
     var email: String = ""
         private set
+
     var password: String = ""
         private set
+
     private var firstname: String = ""
     private var lastname: String = ""
     private var nickname: String = ""
@@ -43,10 +47,12 @@ class SignUpViewModel @Inject constructor(
 
     fun onSignUpClicked(firstname: String, lastname: String, nickname: String, birthday: String) {
         state = state.copy(isLoading = true)
+
         this.nickname = nickname
         this.firstname = firstname
         this.lastname = lastname
         this.birthday = birthday
+
         viewModelScope.launch {
             try {
                 userRepository.register(email, password)
@@ -61,6 +67,7 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
+
     private suspend fun updateUser() {
         val user = User(
             firstName = firstname,

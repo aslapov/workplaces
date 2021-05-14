@@ -16,14 +16,17 @@ import com.workplaces.aslapov.di.DI
 import javax.inject.Inject
 
 class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup_one_fragment) {
+
     private val signUpViewModel: SignUpViewModel by navGraphViewModels(R.id.sign_up_graph) { viewModelFactory }
     private val signUpStepOneViewModel: SignUpStepOneViewModel by viewModels { viewModelFactory }
-    private lateinit var signUpNext: Button
+
+    private val signUpNext: Button get() = requireView().findViewById(R.id.sign_up_one_next)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,7 +37,6 @@ class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup
         val password = view.findViewById<EditText>(R.id.sign_up_one_password)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.sign_up_one_toolbar)
         val registered = view.findViewById<Button>(R.id.sign_up_one_register_already)
-        signUpNext = view.findViewById(R.id.sign_up_one_next)
 
         email.text = signUpViewModel.email.toEditable()
         password.text = signUpViewModel.password.toEditable()
@@ -44,6 +46,7 @@ class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup
 
         toolbar.setNavigationOnClickListener { signUpStepOneViewModel.onBackClicked() }
         registered.setOnClickListener { signUpStepOneViewModel.onRegisteredClicked() }
+
         signUpNext.setOnClickListener {
             signUpViewModel.onGoNextClicked(email.text.toString(), password.text.toString())
             signUpStepOneViewModel.onNextClicked()

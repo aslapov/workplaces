@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.data.NetworkException
+import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -13,10 +14,9 @@ import java.net.UnknownHostException
 import java.time.LocalDate
 import java.time.Period
 import javax.inject.Inject
-import javax.inject.Named
 
 class ProfileViewModel @Inject constructor(
-    @Named("Network") private val userRepository: UserRepository
+    @RepositoryInUse private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     companion object {
@@ -24,6 +24,7 @@ class ProfileViewModel @Inject constructor(
     }
     private val liveState = MutableLiveData(createInitialState())
     val state: LiveData<ProfileViewState> = liveState
+
     fun initProfile() {
         viewModelScope.launch {
             try {
@@ -45,6 +46,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
     fun onEdit() {
         navigateTo(ProfileFragmentDirections.profileToProfileEditAction())
     }

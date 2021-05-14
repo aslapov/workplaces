@@ -15,9 +15,10 @@ class ProfileFragment @Inject constructor() : BaseFragment(R.layout.profile_frag
 
     private val profileViewModel: ProfileViewModel by viewModels { viewModelFactory }
 
-    private lateinit var name: TextView
-    private lateinit var nickname: TextView
-    private lateinit var age: TextView
+    private val name: TextView get() = requireView().findViewById(R.id.profile_name)
+    private val nickname: TextView get() = requireView().findViewById(R.id.profile_nickname)
+    private val age: TextView get() = requireView().findViewById(R.id.profile_age)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
@@ -26,14 +27,10 @@ class ProfileFragment @Inject constructor() : BaseFragment(R.layout.profile_frag
         super.onViewCreated(view, savedInstanceState)
         profileViewModel.initProfile()
 
-        name = view.findViewById(R.id.profile_name)
-        nickname = view.findViewById(R.id.profile_nickname)
-        age = view.findViewById(R.id.profile_age)
-        val edit = view.findViewById<ImageView>(R.id.profile_edit)
-
         observe(profileViewModel.state, ::onStateChanged)
         observe(profileViewModel.eventsQueue, ::onEvent)
-        edit.setOnClickListener {
+
+        view.findViewById<ImageView>(R.id.profile_edit).setOnClickListener {
             profileViewModel.onEdit()
         }
     }

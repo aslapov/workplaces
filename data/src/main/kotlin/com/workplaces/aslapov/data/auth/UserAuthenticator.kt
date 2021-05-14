@@ -1,5 +1,6 @@
 package com.workplaces.aslapov.data.auth
 
+import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.domain.UserRepository
 import dagger.Lazy
 import kotlinx.coroutines.runBlocking
@@ -9,10 +10,9 @@ import okhttp3.Response
 import okhttp3.Route
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Named
 
 class UserAuthenticator @Inject constructor(
-    @Named("Network") private val repository: Lazy<UserRepository>
+    @RepositoryInUse private val repository: Lazy<UserRepository>
 ) : Authenticator {
 
     companion object {

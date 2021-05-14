@@ -4,6 +4,7 @@ import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor() : BaseViewModel() {
+
     fun onSignInClicked() {
         navigateTo(LoginFragmentDirections.loginToSignInAction())
     }

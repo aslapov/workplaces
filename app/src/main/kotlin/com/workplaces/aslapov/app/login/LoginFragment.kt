@@ -11,6 +11,7 @@ import com.workplaces.aslapov.di.DI
 import javax.inject.Inject
 
 class LoginFragment @Inject constructor() : BaseFragment(R.layout.login_fragment) {
+
     private val loginViewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,7 @@ class LoginFragment @Inject constructor() : BaseFragment(R.layout.login_fragment
         super.onViewCreated(view, savedInstanceState)
 
         observe(loginViewModel.eventsQueue, ::onEvent)
+
         view.findViewById<Button>(R.id.login_sign_in).setOnClickListener { loginViewModel.onSignInClicked() }
         view.findViewById<Button>(R.id.login_sign_up).setOnClickListener { loginViewModel.onSignUpClicked() }
     }

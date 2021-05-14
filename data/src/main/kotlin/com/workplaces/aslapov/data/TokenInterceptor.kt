@@ -6,10 +6,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Named
 
 class TokenInterceptor @Inject constructor(
-    @Named("Network") private val repository: Lazy<UserRepository>
+    @RepositoryInUse private val repository: Lazy<UserRepository>
 ) : Interceptor {
 
     companion object {

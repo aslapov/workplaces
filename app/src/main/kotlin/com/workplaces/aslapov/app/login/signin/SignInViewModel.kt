@@ -9,16 +9,16 @@ import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.data.NetworkException
+import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.domain.UserRepository
 import com.workplaces.aslapov.domain.isEmailValid
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
-import javax.inject.Named
 
 class SignInViewModel @Inject constructor(
-    @Named("Network") private val userRepository: UserRepository
+    @RepositoryInUse private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     companion object {
@@ -27,6 +27,7 @@ class SignInViewModel @Inject constructor(
 
     private val liveState = MutableLiveData(createInitialState())
     private var state: SignInViewState by liveState.delegate()
+
     val isNextButtonEnabled = liveState.mapDistinct { it.isNextButtonEnabled }
     val isLoading = liveState.mapDistinct { it.isLoading }
 
@@ -49,6 +50,7 @@ class SignInViewModel @Inject constructor(
         }
         checkNextButtonEnable()
     }
+
     fun onSignInClicked() {
         state = state.copy(isLoading = true)
         viewModelScope.launch {
@@ -65,9 +67,11 @@ class SignInViewModel @Inject constructor(
             }
         }
     }
+
     fun onRegisterClicked() {
         navigateTo(SignInFragmentDirections.signInToSignUpAction())
     }
+
     private fun createInitialState(): SignInViewState {
         return SignInViewState(
             email = "",

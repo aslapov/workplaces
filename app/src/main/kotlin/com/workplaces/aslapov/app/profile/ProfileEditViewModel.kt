@@ -9,6 +9,7 @@ import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.data.NetworkException
+import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.domain.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -16,17 +17,17 @@ import java.net.UnknownHostException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import javax.inject.Named
 
 private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
 class ProfileEditViewModel @Inject constructor(
-    @Named("Network") private val userRepository: UserRepository
+    @RepositoryInUse private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     companion object {
         private const val TAG = "ProfileEditViewModel"
     }
+
     private val liveState = MutableLiveData(createInitialState())
     private var state: ProfileEditViewState by liveState.delegate()
     val viewState: LiveData<ProfileEditViewState> = liveState
@@ -70,9 +71,11 @@ class ProfileEditViewModel @Inject constructor(
         }
         checkSaveButtonEnable()
     }
+
     fun onBackClicked() {
         navigateTo(ProfileEditFragmentDirections.profileEditToProfileAction())
     }
+
     fun onSaveClicked(firstname: String, lastname: String, nickname: String, birthday: String) {
         viewModelScope.launch {
             val user = User(

@@ -13,9 +13,11 @@ import com.workplaces.aslapov.domain.isNicknameValid
 import javax.inject.Inject
 
 class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
+
     private val liveState = MutableLiveData(createInitialState())
     private var state: SignUpTwoViewState by liveState.delegate()
     val isRegisterButtonEnabled = liveState.mapDistinct { it.isRegisterButtonEnabled }
+
     fun onFirstNameEntered(firstName: String) {
         if (isFirstnameValid(firstName)) {
             state = state.copy(firstName = firstName, isFirstNameValid = true)
@@ -55,6 +57,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
         }
         checkRegisterButtonEnable()
     }
+
     fun onBackClicked() {
         navigateTo(SignUpStepTwoFragmentDirections.signUpToStepOneAction())
     }

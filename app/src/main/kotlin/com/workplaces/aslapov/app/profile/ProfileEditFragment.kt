@@ -20,14 +20,17 @@ import java.util.*
 import javax.inject.Inject
 
 class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_edit_fragment) {
+
     private val profileEditViewModel: ProfileEditViewModel by viewModels { viewModelFactory }
-    private lateinit var firstname: EditText
-    private lateinit var lastname: EditText
-    private lateinit var nickname: EditText
-    private lateinit var birthday: EditText
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var save: Button
-    private lateinit var spinner: ProgressBar
+
+    private val firstname: EditText get() = requireView().findViewById(R.id.profile_edit_firstname)
+    private val lastname: EditText get() = requireView().findViewById(R.id.profile_edit_lastname)
+    private val nickname: EditText get() = requireView().findViewById(R.id.profile_edit_nickname)
+    private val birthday: EditText get() = requireView().findViewById(R.id.profile_edit_birthday)
+    private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.profile_edit_toolbar)
+    private val save: Button get() = requireView().findViewById(R.id.profile_edit_save)
+    private val spinner: ProgressBar get() = requireView().findViewById(R.id.profile_edit_spinner)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
@@ -36,13 +39,6 @@ class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        firstname = view.findViewById(R.id.profile_edit_firstname)
-        lastname = view.findViewById(R.id.profile_edit_lastname)
-        nickname = view.findViewById(R.id.profile_edit_nickname)
-        birthday = view.findViewById(R.id.profile_edit_birthday)
-        toolbar = view.findViewById(R.id.profile_edit_toolbar)
-        save = view.findViewById(R.id.profile_edit_save)
-        spinner = view.findViewById(R.id.profile_edit_spinner)
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.profile_edit_calendar_title)
             .setSelection(Date().time)
@@ -51,24 +47,18 @@ class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_
         observe(profileEditViewModel.viewState, ::onStateChanged)
         observe(profileEditViewModel.eventsQueue, ::onEvent)
 
-        firstname.doAfterTextChanged {
-            if (firstname.hasFocus()) profileEditViewModel.onFirstNameEntered(it.toString())
-        }
-        lastname.doAfterTextChanged {
-            if (lastname.hasFocus()) profileEditViewModel.onLastNameEntered(it.toString())
-        }
-        nickname.doAfterTextChanged {
-            if (nickname.hasFocus()) profileEditViewModel.onNickNameEntered(it.toString())
-        }
-        birthday.doAfterTextChanged {
-            if (birthday.hasFocus()) profileEditViewModel.onBirthDayEntered(it.toString())
-        }
+        firstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
+        lastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
+        nickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
+        birthday.doAfterTextChanged { profileEditViewModel.onBirthDayEntered(it.toString()) }
 
         birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
+        toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
+
         datePicker.addOnPositiveButtonClickListener {
             birthday.text = userBirthdayFormatter.format(Date(it)).toEditable()
         }
-        toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
+
         save.setOnClickListener {
             profileEditViewModel.onSaveClicked(
                 firstname = firstname.text.toString(),

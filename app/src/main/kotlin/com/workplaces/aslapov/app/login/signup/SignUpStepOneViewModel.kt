@@ -35,12 +35,15 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel() {
         }
         checkNextButtonEnable()
     }
+
     fun onNextClicked() {
         navigateTo(SignUpStepOneFragmentDirections.signUpToStepTwoAction())
     }
+
     fun onRegisteredClicked() {
         navigateTo(SignUpStepOneFragmentDirections.signUpToSignInAction())
     }
+
     fun onBackClicked() {
         navigateTo(SignUpStepOneFragmentDirections.signUpToLoginAction())
     }

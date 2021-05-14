@@ -22,6 +22,7 @@ class NewFeedDummyFragment @Inject constructor() : BaseFragment(R.layout.new_fee
         super.onViewCreated(view, savedInstanceState)
 
         observe(newFeedDummyViewModel.eventsQueue, ::onEvent)
+
         view.findViewById<Button>(R.id.logout).setOnClickListener {
             newFeedDummyViewModel.onLogout()
         }
