@@ -3,11 +3,10 @@ package com.workplaces.aslapov.data.profile
 import retrofit2.Response
 import retrofit2.http.*
 import java.time.LocalDate
-import java.util.*
 
 interface ProfileApi {
     @GET("me")
-    suspend fun getMe(): UserNetwork
+    suspend fun getCurrentUser(): UserNetwork
 
     @Multipart
     @PATCH("me")
@@ -23,10 +22,10 @@ interface ProfileApi {
     suspend fun getFriends(): List<UserNetwork>
 
     @POST("me/friends")
-    suspend fun addFriend(@Field("user_id") userId: UUID): Response<Unit>
+    suspend fun addFriend(@Field("user_id") userId: String): Response<Unit>
 
     @DELETE("me/friends/{id}")
-    suspend fun deleteFriend(@Path("id") userId: UUID): Response<Unit>
+    suspend fun deleteFriend(@Path("id") userId: String): Response<Unit>
 
     @GET("me/posts")
     suspend fun getPosts(): List<PostResponse>

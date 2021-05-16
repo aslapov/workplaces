@@ -13,13 +13,14 @@ import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
-import javax.inject.Inject
 
-class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup_one_fragment) {
+class SignUpStepOneFragment : BaseFragment(R.layout.signup_one_fragment) {
 
     private val signUpViewModel: SignUpViewModel by navGraphViewModels(R.id.sign_up_graph) { viewModelFactory }
     private val signUpStepOneViewModel: SignUpStepOneViewModel by viewModels { viewModelFactory }
 
+    private val email: EditText get() = requireView().findViewById(R.id.sign_up_one_email)
+    private val password: EditText get() = requireView().findViewById(R.id.sign_up_one_password)
     private val signUpNext: Button get() = requireView().findViewById(R.id.sign_up_one_next)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +31,10 @@ class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observe(signUpStepOneViewModel.isNextButtonEnabled, ::onNextButtonEnableChanged)
-        observe(signUpStepOneViewModel.eventsQueue, ::onEvent)
-
-        val email = view.findViewById<EditText>(R.id.sign_up_one_email)
-        val password = view.findViewById<EditText>(R.id.sign_up_one_password)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.sign_up_one_toolbar)
         val registered = view.findViewById<Button>(R.id.sign_up_one_register_already)
+
+        setViewModelObservers()
 
         email.text = signUpViewModel.email.toEditable()
         password.text = signUpViewModel.password.toEditable()
@@ -51,10 +49,27 @@ class SignUpStepOneFragment @Inject constructor() : BaseFragment(R.layout.signup
             signUpViewModel.onGoNextClicked(email.text.toString(), password.text.toString())
             signUpStepOneViewModel.onNextClicked()
         }
+
+        email.requestFocus()
+    }
+
+    private fun setViewModelObservers() {
+        observe(signUpStepOneViewModel.email) { setEditTextError(email, it) }
+        observe(signUpStepOneViewModel.password) { setEditTextError(password, it) }
+        observe(signUpStepOneViewModel.isNextButtonEnabled, ::onNextButtonEnableChanged)
+        observe(signUpStepOneViewModel.eventsQueue, ::onEvent)
     }
 
     private fun onNextButtonEnableChanged(isEnabled: Boolean) {
         signUpNext.isEnabled = isEnabled
+    }
+
+    private fun setEditTextError(editText: EditText, fieldState: SignUpOneFieldState) {
+        editText.error = if (fieldState.isValid) {
+            null
+        } else {
+            fieldState.errorId?.let { getString(it) }
+        }
     }
 }
 

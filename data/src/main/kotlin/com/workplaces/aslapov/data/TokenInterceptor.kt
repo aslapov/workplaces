@@ -1,14 +1,13 @@
 package com.workplaces.aslapov.data
 
-import com.workplaces.aslapov.domain.UserRepository
-import dagger.Lazy
+import com.workplaces.aslapov.domain.AuthRepository
 import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
 import javax.inject.Inject
 
 class TokenInterceptor @Inject constructor(
-    @RepositoryInUse private val repository: Lazy<UserRepository>
+    @RepositoryInUse private val repository: AuthRepository
 ) : Interceptor {
 
     companion object {
@@ -17,7 +16,7 @@ class TokenInterceptor @Inject constructor(
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val currentAccessToken = repository.get().accessToken
+        val currentAccessToken = repository.accessToken
 
         val request = if (currentAccessToken != null) {
             Timber.tag(TAG).i("Proceeding with current token")

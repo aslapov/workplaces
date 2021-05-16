@@ -1,33 +1,37 @@
 package com.workplaces.aslapov.app.login.signup
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redmadrobot.extensions.lifecycle.mapDistinct
+import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
-import com.workplaces.aslapov.app.base.viewmodel.delegate
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.data.RepositoryInUse
+import com.workplaces.aslapov.data.util.dateTimeFormatter
+import com.workplaces.aslapov.domain.AuthRepository
 import com.workplaces.aslapov.domain.User
 import com.workplaces.aslapov.domain.UserRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.UnknownHostException
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
+    @RepositoryInUse private val authRepository: AuthRepository,
     @RepositoryInUse private val userRepository: UserRepository
-) : BaseViewModel() {
+) : BaseViewModel<SignUpViewState>() {
 
     companion object {
         private const val TAG = "SignUpViewModel"
     }
 
-    private val liveState = MutableLiveData(createInitialState())
-    private var state: SignUpViewState by liveState.delegate()
-    val isLoading = liveState.mapDistinct { it.isLoading }
+    val isLoading = viewState.mapDistinct { it.isLoading }
+
+    init {
+        viewState.value = createInitialState()
+    }
 
     var email: String = ""
         private set
@@ -55,13 +59,13 @@ class SignUpViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                userRepository.register(email, password)
+                authRepository.register(email, password)
                 updateUser()
             } catch (e: NetworkException) {
                 eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
             } catch (e: UnknownHostException) {
                 Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(ErrorMessageEvent("Проверьте подключение к интернету"))
+                eventsQueue.offerEvent(MessageEvent(R.string.sign_up_network_connecction_error))
             } finally {
                 state = state.copy(isLoading = false)
             }
@@ -73,7 +77,7 @@ class SignUpViewModel @Inject constructor(
             firstName = firstname,
             lastName = lastname,
             nickName = nickname,
-            birthday = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+            birthday = LocalDate.parse(birthday, dateTimeFormatter),
             avatarUrl = null
         )
 
@@ -89,5 +93,5 @@ class SignUpViewModel @Inject constructor(
 }
 
 data class SignUpViewState(
-    val isLoading: Boolean,
+    val isLoading: Boolean
 )

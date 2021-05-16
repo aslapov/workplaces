@@ -5,7 +5,6 @@ import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -37,8 +36,11 @@ class MainActivity : BaseActivity() {
         }
 
         val navController = host.navController
+        navController.graph = navController.navInflater.inflate(R.navigation.root_graph)
 
-        setNavControllerGraph(navController)
+        if (mainViewModel.isUserLoggedIn()) {
+            navController.navigate(R.id.to_main_graph_action)
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isBottomNavigationVisible = destination.id == R.id.feed_empty_dest ||
@@ -47,15 +49,5 @@ class MainActivity : BaseActivity() {
 
             bottomNavigation.isVisible = isBottomNavigationVisible
         }
-    }
-
-    private fun setNavControllerGraph(navController: NavController) {
-        val graphResId = if (mainViewModel.isUserLoggedIn()) {
-            R.navigation.main_graph
-        } else {
-            R.navigation.auth_graph
-        }
-        val graph = navController.navInflater.inflate(graphResId)
-        navController.graph = graph
     }
 }

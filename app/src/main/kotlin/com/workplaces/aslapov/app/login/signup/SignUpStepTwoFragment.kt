@@ -14,12 +14,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
+import com.workplaces.aslapov.data.util.dateTimeFormatter
 import com.workplaces.aslapov.di.DI
-import com.workplaces.aslapov.domain.userBirthdayFormatter
 import java.util.*
-import javax.inject.Inject
 
-class SignUpStepTwoFragment @Inject constructor() : BaseFragment(R.layout.signup_two_fragment) {
+class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
 
     private val signUpViewModel: SignUpViewModel by navGraphViewModels(R.id.sign_up_graph) { viewModelFactory }
 
@@ -40,26 +40,21 @@ class SignUpStepTwoFragment @Inject constructor() : BaseFragment(R.layout.signup
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setViewModelObservers()
+        setEditTextWatchers()
+
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.sign_up_calendar_title)
             .setSelection(Date().time)
             .build()
 
-        observe(signUpStepTwoViewModel.isRegisterButtonEnabled, ::onRegisterButtonEnableChanged)
-        observe(signUpStepTwoViewModel.eventsQueue, ::onEvent)
-        observe(signUpViewModel.isLoading, ::onLoading)
-        observe(signUpViewModel.eventsQueue, ::onEvent)
-
-        firstname.doAfterTextChanged { signUpStepTwoViewModel.onFirstNameEntered(it.toString()) }
-        lastname.doAfterTextChanged { signUpStepTwoViewModel.onLastNameEntered(it.toString()) }
-        nickname.doAfterTextChanged { signUpStepTwoViewModel.onNickNameEntered(it.toString()) }
-        birthday.doAfterTextChanged { signUpStepTwoViewModel.onBirthDayEntered(it.toString()) }
-
         birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
         toolbar.setNavigationOnClickListener { signUpStepTwoViewModel.onBackClicked() }
 
         datePicker.addOnPositiveButtonClickListener {
-            birthday.text = userBirthdayFormatter.format(Date(it)).toEditable()
+            birthday.text = Date(it).convertToLocalDateViaInstant()
+                .format(dateTimeFormatter)
+                .toEditable()
         }
 
         register.setOnClickListener {
@@ -70,10 +65,38 @@ class SignUpStepTwoFragment @Inject constructor() : BaseFragment(R.layout.signup
                 birthday = birthday.text.toString()
             )
         }
+
+        firstname.requestFocus()
+    }
+
+    private fun setViewModelObservers() {
+        observe(signUpStepTwoViewModel.firstName) { setEditTextError(firstname, it) }
+        observe(signUpStepTwoViewModel.lastName) { setEditTextError(lastname, it) }
+        observe(signUpStepTwoViewModel.nickName) { setEditTextError(nickname, it) }
+        observe(signUpStepTwoViewModel.birthDay) { setEditTextError(birthday, it) }
+        observe(signUpStepTwoViewModel.isRegisterButtonEnabled, ::onRegisterButtonEnableChanged)
+        observe(signUpStepTwoViewModel.eventsQueue, ::onEvent)
+        observe(signUpViewModel.isLoading, ::onLoading)
+        observe(signUpViewModel.eventsQueue, ::onEvent)
+    }
+
+    private fun setEditTextWatchers() {
+        firstname.doAfterTextChanged { signUpStepTwoViewModel.onFirstNameEntered(it.toString()) }
+        lastname.doAfterTextChanged { signUpStepTwoViewModel.onLastNameEntered(it.toString()) }
+        nickname.doAfterTextChanged { signUpStepTwoViewModel.onNickNameEntered(it.toString()) }
+        birthday.doAfterTextChanged { signUpStepTwoViewModel.onBirthDayEntered(it.toString()) }
     }
 
     private fun onRegisterButtonEnableChanged(isEnabled: Boolean) {
         register.isEnabled = isEnabled
+    }
+
+    private fun setEditTextError(editText: EditText, fieldState: SignUpTwoFieldState) {
+        editText.error = if (fieldState.isValid) {
+            null
+        } else {
+            fieldState.errorId?.let { getString(it) }
+        }
     }
 
     private fun onLoading(isLoading: Boolean) {

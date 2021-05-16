@@ -2,8 +2,8 @@ package com.workplaces.aslapov.data.profile
 
 import android.content.Context
 import androidx.core.content.edit
+import com.workplaces.aslapov.data.util.dateTimeFormatter
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class UserSharedPreferencesSource @Inject constructor(context: Context) {
@@ -19,7 +19,6 @@ class UserSharedPreferencesSource @Inject constructor(context: Context) {
     }
 
     private val sharedPreferences = context.getSharedPreferences(USER_SHARED_PREFS_FILE, Context.MODE_PRIVATE)
-    private val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     fun getUser(): UserNetwork? {
         val id = sharedPreferences.getString(ID_KEY, null)

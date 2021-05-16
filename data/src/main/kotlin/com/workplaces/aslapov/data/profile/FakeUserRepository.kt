@@ -1,75 +1,36 @@
 package com.workplaces.aslapov.data.profile
 
-import com.workplaces.aslapov.data.auth.FakeAuthApi
 import com.workplaces.aslapov.domain.User
 import com.workplaces.aslapov.domain.UserRepository
-import java.util.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class FakeUserRepository @Inject constructor(
     private val userSource: UserSharedPreferencesSource,
-    private val authApi: FakeAuthApi,
     private val profileApi: FakeProfileApi
 ) : UserRepository {
-    override var user: User? = null
 
-    override var accessToken: String? = null
+    override var user: User? = userSource.getUser()?.toUser()
 
-    override var refreshToken: UUID? = null
+    override suspend fun updateUser(user: User): Flow<User> {
+        return flow {
+            val updatedUser = profileApi.updateUser(user)
+                .also { saveUser(it) }
 
-    init {
-        user = userSource.getUser()?.toUser()
+            emit(updatedUser.toUser())
+        }
     }
 
-    override fun isUserLoggedIn(): Boolean = user != null
-
-    override suspend fun register(email: String, password: String) {
-        authApi.register()
-        saveUser()
+    override suspend fun getCurrentUser(): Flow<User> {
+        return flow {
+            val user = profileApi.getMe()
+                .also { saveUser(it) }
+            emit(user.toUser())
+        }
     }
 
-    override suspend fun login(email: String, password: String) {
-        authApi.login()
-        saveUser()
-    }
-
-    override suspend fun updateUser(user: User) {
-        val updatedUser = profileApi.updateUser(user)
-        saveUser(updatedUser)
-    }
-
-    override suspend fun logout() {
-        authApi.logout()
-        userSource.logout()
-        user = null
-    }
-
-    override suspend fun refreshToken(): String {
-        return ""
-    }
-
-    override suspend fun getMyUser(): User {
-        return authApi.getMyUser()
-    }
-
-    private suspend fun saveUser() {
-        val me: UserNetwork = profileApi.getMe()
-        saveUser(me)
-    }
     private fun saveUser(userNetwork: UserNetwork) {
         userSource.setUser(userNetwork)
-        user = userNetwork.toUser()
     }
-}
-
-private fun UserNetwork.toUser(): User {
-    return User(
-        firstName = this.firstName,
-        lastName = this.lastName,
-        nickName = this.nickName,
-        avatarUrl = this.avatarUrl,
-        birthday = this.birthday
-    )
 }

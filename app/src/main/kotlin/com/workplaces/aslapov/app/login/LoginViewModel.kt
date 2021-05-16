@@ -3,7 +3,7 @@ package com.workplaces.aslapov.app.login
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor() : BaseViewModel() {
+class LoginViewModel @Inject constructor() : BaseViewModel<Nothing>() {
 
     fun onSignInClicked() {
         navigateTo(LoginFragmentDirections.loginToSignInAction())

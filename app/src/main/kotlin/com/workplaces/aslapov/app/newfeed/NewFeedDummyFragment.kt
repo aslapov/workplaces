@@ -8,9 +8,8 @@ import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
-import javax.inject.Inject
 
-class NewFeedDummyFragment @Inject constructor() : BaseFragment(R.layout.new_feed_dummy_fragment) {
+class NewFeedDummyFragment : BaseFragment(R.layout.new_feed_dummy_fragment) {
 
     private val newFeedDummyViewModel: NewFeedDummyViewModel by viewModels { viewModelFactory }
 

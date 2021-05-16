@@ -8,4 +8,5 @@ data class ErrorMessageEvent(val errorMessage: String) : Event
 
 sealed class NavigationEvent : Event
 data class Navigate(val direction: NavDirections) : NavigationEvent()
+data class NavigateAction(val action: Int) : NavigationEvent()
 object NavigateUp : NavigationEvent()

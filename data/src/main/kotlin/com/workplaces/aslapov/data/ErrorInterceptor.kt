@@ -4,19 +4,22 @@ import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ErrorInterceptor @Inject constructor() : Interceptor {
+class ErrorInterceptor @Inject constructor(
+    private val moshi: Moshi
+) : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
+
         if (!response.isSuccessful) {
             val responseBody = requireNotNull(response.body?.string())
-            val apiErrorJsonAdapter = Moshi.Builder().build().adapter(ApiError::class.java)
-            val error = apiErrorJsonAdapter.fromJson(responseBody)
+            val error = moshi.adapter(ApiError::class.java)
+                .fromJson(responseBody)
             requireNotNull(error)
             throw NetworkException(error.message, error.code)
         }
+
         return response
     }
 }

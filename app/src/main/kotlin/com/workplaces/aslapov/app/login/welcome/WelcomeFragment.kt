@@ -8,9 +8,8 @@ import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
-import javax.inject.Inject
 
-class WelcomeFragment @Inject constructor() : BaseFragment(R.layout.welcome_fragment) {
+class WelcomeFragment : BaseFragment(R.layout.welcome_fragment) {
 
     private val welcomeViewModel: WelcomeViewModel by viewModels { viewModelFactory }
 

@@ -14,12 +14,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
+import com.workplaces.aslapov.data.util.dateTimeFormatter
 import com.workplaces.aslapov.di.DI
-import com.workplaces.aslapov.domain.userBirthdayFormatter
 import java.util.*
-import javax.inject.Inject
 
-class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_edit_fragment) {
+class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     private val profileEditViewModel: ProfileEditViewModel by viewModels { viewModelFactory }
 
@@ -54,22 +54,16 @@ class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_
 
         birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
         toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
+        save.setOnClickListener { profileEditViewModel.onSaveClicked() }
 
         datePicker.addOnPositiveButtonClickListener {
-            birthday.text = userBirthdayFormatter.format(Date(it)).toEditable()
-        }
-
-        save.setOnClickListener {
-            profileEditViewModel.onSaveClicked(
-                firstname = firstname.text.toString(),
-                lastname = lastname.text.toString(),
-                nickname = nickname.text.toString(),
-                birthday = birthday.text.toString()
-            )
+            birthday.text = Date(it).convertToLocalDateViaInstant()
+                .format(dateTimeFormatter)
+                .toEditable()
         }
     }
 
-    private fun onSaveButtonEnableChanged(isEnabled: Boolean) {
+    private fun onSaveButtonEnabledChanged(isEnabled: Boolean) {
         save.isEnabled = isEnabled
     }
 
@@ -85,24 +79,12 @@ class ProfileEditFragment @Inject constructor() : BaseFragment(R.layout.profile_
 
     private fun onStateChanged(state: ProfileEditViewState) {
         onLoading(state.isLoading)
-        onSaveButtonEnableChanged(state.isSaveButtonEnabled)
-        firstname.updateText(state.firstName)
-        lastname.updateText(state.lastName)
-        nickname.updateText(state.nickName)
-        birthday.updateText(state.birthDay)
+        onSaveButtonEnabledChanged(state.isSaveButtonEnabled)
+        firstname.setText(state.firstName.value)
+        lastname.setText(state.lastName.value)
+        nickname.setText(state.nickName.value)
+        birthday.setText(state.birthDay.value)
     }
 }
 
 fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
-
-// TODO Костыль в обход бесконечного цикла изменения EditText и рендера формы
-fun EditText.updateText(text: String) {
-    val isFocussed = hasFocus()
-    if (isFocussed) {
-        clearFocus()
-    }
-    setText(text)
-    if (isFocussed) {
-        requestFocus()
-    }
-}

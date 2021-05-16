@@ -21,10 +21,6 @@
         android:name="com.workplaces.aslapov.app.profile.ProfileEditFragment"
         tools:layout="@layout/profile_edit_fragment">
 
-        <action
-            android:id="@+id/profile_edit_to_profile_action"
-            app:popUpTo="@id/profile_dest"/>
-
     </fragment>
 
 </navigation>

@@ -1,13 +1,12 @@
 package com.workplaces.aslapov.data.profile
 
+import com.workplaces.aslapov.data.util.dateTimeFormatter
 import com.workplaces.aslapov.domain.User
 import kotlinx.coroutines.delay
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 private const val SUSPEND_TIME_MILLIS = 500L
-private val dateFormatter = DateTimeFormatter.ISO_DATE_TIME
 
 class FakeProfileApi @Inject constructor() {
     suspend fun getMe(): UserNetwork {
@@ -18,7 +17,7 @@ class FakeProfileApi @Inject constructor() {
             lastName = "Aslapov",
             nickName = null,
             avatarUrl = null,
-            birthday = LocalDate.parse("1970-01-01", dateFormatter)
+            birthday = LocalDate.parse("1970-01-01", dateTimeFormatter)
         )
     }
 

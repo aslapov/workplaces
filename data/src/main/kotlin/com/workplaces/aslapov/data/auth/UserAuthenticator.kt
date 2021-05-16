@@ -1,8 +1,7 @@
 package com.workplaces.aslapov.data.auth
 
 import com.workplaces.aslapov.data.RepositoryInUse
-import com.workplaces.aslapov.domain.UserRepository
-import dagger.Lazy
+import com.workplaces.aslapov.domain.AuthRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -12,7 +11,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class UserAuthenticator @Inject constructor(
-    @RepositoryInUse private val repository: Lazy<UserRepository>
+    @RepositoryInUse private val repository: AuthRepository
 ) : Authenticator {
 
     companion object {
@@ -22,7 +21,7 @@ class UserAuthenticator @Inject constructor(
 
     @Synchronized
     override fun authenticate(route: Route?, response: Response): Request? {
-        val currentAccessToken = repository.get().accessToken
+        val currentAccessToken = repository.accessToken
         val header = response.request.header(HEADER_AUTHORIZATION)
         val requestAccessToken = header?.substring("Bearer ".length)
 
@@ -40,10 +39,10 @@ class UserAuthenticator @Inject constructor(
     private fun refreshTokenSynchronously(): String? {
         return runBlocking {
             try {
-                repository.get().refreshToken()
+                repository.refreshToken()
             } catch (exception: Exception) {
                 Timber.tag(TAG).d(exception, "An error occurred while token updating")
-                repository.get().logout()
+                repository.logout()
                 null
             }
         }

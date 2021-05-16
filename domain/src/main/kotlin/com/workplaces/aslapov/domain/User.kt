@@ -1,8 +1,6 @@
 package com.workplaces.aslapov.domain
 
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.*
 
 data class User(
     val firstName: String,
@@ -11,5 +9,3 @@ data class User(
     val avatarUrl: String?,
     val birthday: LocalDate
 )
-
-val userBirthdayFormatter = SimpleDateFormat("yyyy-MM-dd", Locale("ru"))

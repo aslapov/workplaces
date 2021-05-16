@@ -2,8 +2,10 @@ package com.workplaces.aslapov.di
 
 import com.workplaces.aslapov.data.Mock
 import com.workplaces.aslapov.data.RepositoryInUse
+import com.workplaces.aslapov.data.auth.AuthRepositoryImpl
 import com.workplaces.aslapov.data.profile.FakeUserRepository
 import com.workplaces.aslapov.data.profile.UserRepositoryImpl
+import com.workplaces.aslapov.domain.AuthRepository
 import com.workplaces.aslapov.domain.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -11,6 +13,11 @@ import javax.inject.Singleton
 
 @Module
 interface AppModule {
+
+    @Singleton
+    @RepositoryInUse
+    @Binds
+    fun bindAuthRepository(authRepository: AuthRepositoryImpl): AuthRepository
 
     @Singleton
     @RepositoryInUse

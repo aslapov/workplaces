@@ -9,9 +9,8 @@ import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
-import javax.inject.Inject
 
-class ProfileFragment @Inject constructor() : BaseFragment(R.layout.profile_fragment) {
+class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
 
     private val profileViewModel: ProfileViewModel by viewModels { viewModelFactory }
 
@@ -23,16 +22,14 @@ class ProfileFragment @Inject constructor() : BaseFragment(R.layout.profile_frag
         super.onCreate(savedInstanceState)
         DI.appComponent.inject(this)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel.initProfile()
 
-        observe(profileViewModel.state, ::onStateChanged)
+        observe(profileViewModel.viewState, ::onStateChanged)
         observe(profileViewModel.eventsQueue, ::onEvent)
 
-        view.findViewById<ImageView>(R.id.profile_edit).setOnClickListener {
-            profileViewModel.onEdit()
-        }
+        view.findViewById<ImageView>(R.id.profile_edit).setOnClickListener { profileViewModel.onEdit() }
     }
 
     private fun onStateChanged(state: ProfileViewState) {

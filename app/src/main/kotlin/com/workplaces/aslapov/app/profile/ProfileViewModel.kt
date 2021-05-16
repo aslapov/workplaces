@@ -1,13 +1,15 @@
 package com.workplaces.aslapov.app.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.data.RepositoryInUse
+import com.workplaces.aslapov.domain.User
 import com.workplaces.aslapov.domain.UserRepository
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.UnknownHostException
@@ -17,45 +19,38 @@ import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     @RepositoryInUse private val userRepository: UserRepository
-) : BaseViewModel() {
+) : BaseViewModel<ProfileViewState>() {
 
     companion object {
         private const val TAG = "ProfileViewModel"
     }
-    private val liveState = MutableLiveData(createInitialState())
-    val state: LiveData<ProfileViewState> = liveState
 
-    fun initProfile() {
+    init {
         viewModelScope.launch {
             try {
-                val user = userRepository.getMyUser()
-                val firstname = user.firstName
-                val lastName = user.lastName
-                val nickName = if (user.nickName != null) "@${user.nickName}" else ""
-                val period = Period.between(user.birthday, LocalDate.now())
-                liveState.value = ProfileViewState(
-                    name = "$firstname $lastName",
-                    nickName = nickName,
-                    age = if (period != null) "${period.years} лет" else "",
-                )
+                userRepository.getCurrentUser().collect { createViewStateFromUser(it) }
             } catch (e: NetworkException) {
+                Timber.tag(TAG).d(e)
                 eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
             } catch (e: UnknownHostException) {
                 Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(ErrorMessageEvent("Проверьте подключение к интернету"))
+                eventsQueue.offerEvent(MessageEvent(R.string.profile_network_connecction_error))
             }
         }
     }
 
-    fun onEdit() {
-        navigateTo(ProfileFragmentDirections.profileToProfileEditAction())
-    }
+    fun onEdit() { navigateTo(ProfileFragmentDirections.profileToProfileEditAction()) }
 
-    private fun createInitialState(): ProfileViewState {
-        return ProfileViewState(
-            name = "",
-            nickName = "",
-            age = "",
+    private fun createViewStateFromUser(user: User) {
+        val firstname = user.firstName
+        val lastName = user.lastName
+        val nickName = user.nickName?.let { "@${user.nickName}" }.orEmpty()
+        val period = Period.between(user.birthday, LocalDate.now())
+
+        viewState.value = ProfileViewState(
+            name = "$firstname $lastName",
+            nickName = nickName,
+            age = "${period.years} лет",
         )
     }
 }

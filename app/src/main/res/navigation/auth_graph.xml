@@ -5,7 +5,6 @@
     android:id="@+id/auth_graph"
     app:startDestination="@id/login_dest">
 
-    <include app:graph="@navigation/main_graph" />
     <include app:graph="@navigation/sign_up_graph"/>
 
     <fragment
@@ -30,15 +29,14 @@
 
         <action
             android:id="@+id/sign_in_to_welcome_action"
-            app:destination="@id/welcome_dest" />
+            app:destination="@id/welcome_dest"
+            app:popUpTo="@id/login_dest"
+            app:popUpToInclusive="true"/>
 
         <action
             android:id="@+id/sign_in_to_sign_up_action"
-            app:destination="@id/sign_up_graph" />
-
-        <action
-            android:id="@+id/sign_in_to_login_action"
-            app:popUpTo="@id/login_dest"/>
+            app:destination="@id/sign_up_graph"
+            app:popUpTo="@id/login_dest" />
 
     </fragment>
 
@@ -47,9 +45,11 @@
         android:name="com.workplaces.aslapov.app.login.welcome.WelcomeFragment"
         tools:layout="@layout/welcome_fragment">
 
-        <action
+        <!--<action
             android:id="@+id/login_to_main_action"
-            app:destination="@+id/main_graph"/>
+            app:destination="@+id/main_graph"
+            app:popUpTo="@id/login_dest"
+            app:popUpToInclusive="true" />-->
     </fragment>
 
 </navigation>

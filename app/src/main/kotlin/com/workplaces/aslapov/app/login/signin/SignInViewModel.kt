@@ -1,99 +1,90 @@
 package com.workplaces.aslapov.app.login.signin
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
-import com.workplaces.aslapov.app.base.viewmodel.delegate
 import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.data.RepositoryInUse
-import com.workplaces.aslapov.domain.UserRepository
-import com.workplaces.aslapov.domain.isEmailValid
+import com.workplaces.aslapov.domain.AuthRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 
 class SignInViewModel @Inject constructor(
-    @RepositoryInUse private val userRepository: UserRepository
-) : BaseViewModel() {
+    @RepositoryInUse private val authRepository: AuthRepository
+) : BaseViewModel<SignInViewState>() {
 
     companion object {
         private const val TAG = "SignInViewModel"
     }
 
-    private val liveState = MutableLiveData(createInitialState())
-    private var state: SignInViewState by liveState.delegate()
+    val email = viewState.mapDistinct { it.email }
+    val password = viewState.mapDistinct { it.password }
+    val isNextButtonEnabled = viewState.mapDistinct { it.email.isValid && it.password.isValid }
+    val isLoading = viewState.mapDistinct { it.isLoading }
 
-    val isNextButtonEnabled = liveState.mapDistinct { it.isNextButtonEnabled }
-    val isLoading = liveState.mapDistinct { it.isLoading }
+    init {
+        viewState.value = createInitialState()
+    }
 
     fun onEmailEntered(email: String) {
-        if (isEmailValid(email)) {
-            state = state.copy(email = email, isEmailValid = true)
+        state = if (email.isNotEmpty()) {
+            state.copy(email = SignInFieldState(email, true, null))
         } else {
-            state = state.copy(email = email, isEmailValid = false)
-            eventsQueue.offerEvent(MessageEvent(R.string.sign_in_email_invalid))
+            state.copy(email = SignInFieldState(email, false, R.string.sign_in_email_invalid))
         }
-        checkNextButtonEnable()
     }
 
     fun onPasswordEntered(password: String) {
-        if (password.isNotEmpty()) {
-            state = state.copy(password = password, isPasswordValid = true)
+        state = if (password.isNotEmpty()) {
+            state.copy(password = SignInFieldState(password, true, null))
         } else {
-            state = state.copy(password = password, isPasswordValid = false)
-            eventsQueue.offerEvent(MessageEvent(R.string.sign_in_password_invalid))
+            state.copy(password = SignInFieldState(password, false, R.string.sign_in_password_invalid))
         }
-        checkNextButtonEnable()
     }
 
     fun onSignInClicked() {
         state = state.copy(isLoading = true)
         viewModelScope.launch {
             try {
-                userRepository.login(state.email, state.password)
+                authRepository.login(state.email.value, state.password.value)
                 navigateTo(SignInFragmentDirections.signInToWelcomeAction())
             } catch (e: NetworkException) {
-                eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
+                Timber.tag(TAG).d(e)
+                eventsQueue.offerEvent(MessageEvent(R.string.invalid_credentials))
             } catch (e: UnknownHostException) {
                 Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(ErrorMessageEvent("Проверьте подключение к интернету"))
+                eventsQueue.offerEvent(MessageEvent(R.string.sign_in_network_connecction_error))
             } finally {
                 state = state.copy(isLoading = false)
             }
         }
     }
 
-    fun onRegisterClicked() {
-        navigateTo(SignInFragmentDirections.signInToSignUpAction())
-    }
+    fun onRegisterClicked() { navigateTo(SignInFragmentDirections.signInToSignUpAction()) }
+
+    fun onBackClicked() { navigateUp() }
 
     private fun createInitialState(): SignInViewState {
         return SignInViewState(
-            email = "",
-            isEmailValid = false,
-            password = "",
-            isPasswordValid = false,
-            isNextButtonEnabled = false,
-            isLoading = false
+            email = SignInFieldState("", false, null),
+            password = SignInFieldState("", false, null),
+            isLoading = false,
         )
-    }
-
-    private fun checkNextButtonEnable() {
-        val isNextButtonEnabled = state.isEmailValid && state.isPasswordValid
-        state = state.copy(isNextButtonEnabled = isNextButtonEnabled)
     }
 }
 
 data class SignInViewState(
-    val email: String,
-    val isEmailValid: Boolean,
-    val password: String,
-    val isPasswordValid: Boolean,
-    val isNextButtonEnabled: Boolean,
+    val email: SignInFieldState,
+    val password: SignInFieldState,
     val isLoading: Boolean,
+)
+
+data class SignInFieldState(
+    val value: String,
+    val isValid: Boolean,
+    val errorId: Int?,
 )
