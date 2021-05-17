@@ -31,7 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
         saveToken(token)
     }
 
-    override suspend fun logout(): Flow<Unit> {
+    override fun logout(): Flow<Unit> {
         return flow {
             try {
                 requireNotNull(accessToken)

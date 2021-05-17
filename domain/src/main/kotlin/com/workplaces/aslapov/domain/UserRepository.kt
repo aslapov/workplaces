@@ -1,11 +1,13 @@
 package com.workplaces.aslapov.domain
 
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 
 interface UserRepository {
 
-    val user: User?
+    @ExperimentalCoroutinesApi
+    val user: MutableStateFlow<User?>
 
-    suspend fun getCurrentUser(): Flow<User>
-    suspend fun updateUser(user: User): Flow<User>
+    suspend fun getCurrentUser(): User
+    suspend fun updateUser(user: User): User
 }

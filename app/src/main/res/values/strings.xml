@@ -69,20 +69,25 @@
     <string name="profile_posts">Посты</string>
     <string name="profile_likes">Лайки</string>
     <string name="profile_friends">Друзья</string>
-    <string name="profile_firstname">Имя</string>
-    <string name="profile_lastname">Фамилия</string>
-    <string name="profile_nickname">Никнейм</string>
-    <string name="profile_birthday">Дата рождения</string>
     <string name="profile_emptiness">Пустота</string>
     <string name="profile_emptiness_advise">Вы пока одиноки в сервисе, но это можно исправить</string>
     <string name="profile_find_friends">Найти друзей</string>
-    <string name="profile_firstname_error">Проверьте, что используются только латинские символы</string>
-    <string name="profile_lastname_error">Проверьте, что используются только латинские символы</string>
-    <string name="profile_nickname_error">Проверьте, что используются только латинские символы и цифры</string>
-    <string name="profile_birthday_error">Дата должна быть введена в формате ГГГГ-ММ-ДД</string>
+    <string name="profile_network_connection_error">Проверьте подключение к интернету</string>
+    <!-- endregion -->
+
+    <!-- region Экран Редактирования Профиля -->
+    <string name="profile_edit_title">Редактирование профиля</string>
+    <string name="profile_edit_firstname">Имя</string>
+    <string name="profile_edit_lastname">Фамилия</string>
+    <string name="profile_edit_nickname">Никнейм</string>
+    <string name="profile_edit_birthday">Дата рождения</string>
+    <string name="profile_edit_firstname_error">Проверьте, что используются только латинские символы</string>
+    <string name="profile_edit_lastname_error">Проверьте, что используются только латинские символы</string>
+    <string name="profile_edit_nickname_error">Проверьте, что используются только латинские символы и цифры</string>
+    <string name="profile_edit_birthday_error">Дата должна быть введена в формате ГГГГ-ММ-ДД</string>
     <string name="profile_edit_calendar_title">Выберите дату</string>
-    <string name="profile_save">Сохранить</string>
-    <string name="profile_network_connecction_error">Проверьте подключение к интернету</string>
+    <string name="profile_edit_save">Сохранить</string>
+    <string name="profile_edit_network_connection_error">Проверьте подключение к интернету</string>
     <!-- endregion -->
 
     <!-- region Ошибки сервера -->

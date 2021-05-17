@@ -5,7 +5,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
 fun Date.convertToLocalDateViaInstant(): LocalDate {
     return this.toInstant()

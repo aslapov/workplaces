@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/icon_back"
+        app:title="@string/profile_edit_title"
+        app:titleTextAppearance="@style/TextAppearance.App.Toolbar.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -22,11 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
-        android:hint="@string/profile_firstname"
+        android:hint="@string/profile_edit_nickname"
         android:inputType="text"
+        android:textAppearance="@style/TextAppearance.App.EditText.Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_edit_toolbar" />
 
     <EditText
         android:id="@+id/profile_edit_firstname"
@@ -34,11 +37,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
-        android:hint="@string/profile_lastname"
+        android:hint="@string/profile_edit_firstname"
         android:inputType="text"
+        android:textAppearance="@style/TextAppearance.App.EditText.Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_edit_nickname" />
+        app:layout_constraintTop_toBottomOf="@id/profile_edit_nickname" />
 
     <EditText
         android:id="@+id/profile_edit_lastname"
@@ -46,8 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
-        android:hint="@string/profile_nickname"
+        android:hint="@string/profile_edit_lastname"
         android:inputType="text"
+        android:textAppearance="@style/TextAppearance.App.EditText.Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_edit_firstname" />
@@ -59,20 +64,22 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="24dp"
         android:drawableEnd="@drawable/icon_calendar"
-        android:hint="@string/profile_birthday"
+        android:hint="@string/profile_edit_birthday"
         android:inputType="date"
+        android:textAppearance="@style/TextAppearance.App.EditText.Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_edit_lastname" />
 
     <Button
         android:id="@+id/profile_edit_save"
+        style="@style/Widget.App.Button"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="40dp"
         android:textAllCaps="false"
-        android:text="@string/profile_save"
+        android:text="@string/profile_edit_save"
         android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

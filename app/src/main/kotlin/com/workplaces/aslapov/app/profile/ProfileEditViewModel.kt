@@ -1,6 +1,7 @@
 package com.workplaces.aslapov.app.profile
 
 import androidx.lifecycle.viewModelScope
+import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
@@ -10,12 +11,15 @@ import com.workplaces.aslapov.data.NetworkException
 import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.data.util.dateTimeFormatter
 import com.workplaces.aslapov.domain.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.UnknownHostException
 import java.time.LocalDate
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class ProfileEditViewModel @Inject constructor(
     @RepositoryInUse private val userRepository: UserRepository
 ) : BaseViewModel<ProfileEditViewState>() {
@@ -24,46 +28,51 @@ class ProfileEditViewModel @Inject constructor(
         private const val TAG = "ProfileEditViewModel"
     }
 
+    val firstName = viewState.mapDistinct { it.firstName }
+    val lastName = viewState.mapDistinct { it.lastName }
+    val nickName = viewState.mapDistinct { it.nickName }
+    val birthDay = viewState.mapDistinct { it.birthDay }
+    val isSaveButtonEnabled = viewState.mapDistinct { it.isSaveButtonEnabled }
+    val isLoading = viewState.mapDistinct { it.isLoading }
+
+    private lateinit var user: User
+
     init {
-        viewState.value = createInitialState()
+        observeViewState()
     }
 
     fun onFirstNameEntered(firstName: String) {
-        if (isFirstnameValid(firstName)) {
-            state = state.copy(firstName = ProfileFieldState(firstName, true))
+        state = if (isFirstnameValid(firstName)) {
+            state.copy(firstName = ProfileFieldState(firstName, true, null))
         } else {
-            state = state.copy(firstName = ProfileFieldState(firstName, false))
-            eventsQueue.offerEvent(MessageEvent(R.string.profile_firstname_error))
+            state.copy(firstName = ProfileFieldState(firstName, false, R.string.profile_edit_firstname_error))
         }
         checkSaveButtonEnable()
     }
 
     fun onLastNameEntered(lastName: String) {
-        if (isLastnameValid(lastName)) {
-            state = state.copy(lastName = ProfileFieldState(lastName, true))
+        state = if (isLastnameValid(lastName)) {
+            state.copy(lastName = ProfileFieldState(lastName, true, null))
         } else {
-            state = state.copy(lastName = ProfileFieldState(lastName, false))
-            eventsQueue.offerEvent(MessageEvent(R.string.profile_lastname_error))
+            state.copy(lastName = ProfileFieldState(lastName, false, R.string.profile_edit_lastname_error))
         }
         checkSaveButtonEnable()
     }
 
     fun onNickNameEntered(nickName: String) {
-        if (isNicknameValid(nickName)) {
-            state = state.copy(nickName = ProfileFieldState(nickName, true))
+        state = if (isNicknameValid(nickName)) {
+            state.copy(nickName = ProfileFieldState(nickName, true, null))
         } else {
-            state = state.copy(nickName = ProfileFieldState(nickName, false))
-            eventsQueue.offerEvent(MessageEvent(R.string.profile_nickname_error))
+            state.copy(nickName = ProfileFieldState(nickName, false, R.string.profile_edit_nickname_error))
         }
         checkSaveButtonEnable()
     }
 
     fun onBirthDayEntered(birthDay: String) {
-        if (isBirthdayValid(birthDay)) {
-            state = state.copy(birthDay = ProfileFieldState(birthDay, true))
+        state = if (isBirthdayValid(birthDay)) {
+            state.copy(birthDay = ProfileFieldState(birthDay, true, null))
         } else {
-            state = state.copy(birthDay = ProfileFieldState(birthDay, false))
-            eventsQueue.offerEvent(MessageEvent(R.string.profile_birthday_error))
+            state.copy(birthDay = ProfileFieldState(birthDay, false, R.string.profile_edit_birthday_error))
         }
         checkSaveButtonEnable()
     }
@@ -77,7 +86,7 @@ class ProfileEditViewModel @Inject constructor(
                 lastName = state.lastName.value,
                 nickName = state.nickName.value,
                 birthday = LocalDate.parse(state.birthDay.value, dateTimeFormatter),
-                avatarUrl = userRepository.user?.avatarUrl
+                avatarUrl = user.avatarUrl
             )
             try {
                 userRepository.updateUser(user)
@@ -87,34 +96,36 @@ class ProfileEditViewModel @Inject constructor(
                 eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
             } catch (e: UnknownHostException) {
                 Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(MessageEvent(R.string.profile_network_connecction_error))
+                eventsQueue.offerEvent(MessageEvent(R.string.profile_edit_network_connection_error))
             } finally {
                 state = state.copy(isLoading = false)
             }
         }
     }
 
-    private fun createInitialState(): ProfileEditViewState {
-        val user = userRepository.user
-        requireNotNull(user)
-        val firstname = user.firstName
-        val lastName = user.lastName
-        val nickName = user.nickName.orEmpty()
-        val birthDay = user.birthday.format(dateTimeFormatter)
+    private fun observeViewState() {
+        viewModelScope.launch {
+            userRepository.user
+                .collect {
+                    user = requireNotNull(it)
+                    val firstname = user.firstName
+                    val lastName = user.lastName
+                    val nickName = user.nickName.orEmpty()
+                    val birthDay = user.birthday.format(dateTimeFormatter)
 
-        return ProfileEditViewState(
-            firstName = ProfileFieldState(firstname, isFirstnameValid(firstname)),
-            lastName = ProfileFieldState(lastName, isLastnameValid(lastName)),
-            nickName = ProfileFieldState(nickName, isNicknameValid(nickName)),
-            birthDay = ProfileFieldState(birthDay, isBirthdayValid(birthDay)),
-            isSaveButtonEnabled = false,
-            isLoading = false,
-        )
+                    viewState.value = ProfileEditViewState(
+                        firstName = ProfileFieldState(firstname, isFirstnameValid(firstname), null),
+                        lastName = ProfileFieldState(lastName, isLastnameValid(lastName), null),
+                        nickName = ProfileFieldState(nickName, isNicknameValid(nickName), null),
+                        birthDay = ProfileFieldState(birthDay, isBirthdayValid(birthDay), null),
+                        isSaveButtonEnabled = false,
+                        isLoading = false,
+                    )
+                }
+        }
     }
 
     private fun checkSaveButtonEnable() {
-        val user = requireNotNull(userRepository.user)
-
         val isUserFieldsValid = state.firstName.isValid &&
             state.lastName.isValid &&
             state.nickName.isValid &&
@@ -141,4 +152,5 @@ data class ProfileEditViewState(
 data class ProfileFieldState(
     val value: String,
     val isValid: Boolean,
+    val errorId: Int?,
 )

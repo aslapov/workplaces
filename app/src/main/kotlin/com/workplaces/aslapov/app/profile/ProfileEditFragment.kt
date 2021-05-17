@@ -17,8 +17,10 @@ import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
 import com.workplaces.aslapov.data.util.dateTimeFormatter
 import com.workplaces.aslapov.di.DI
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
+@ExperimentalCoroutinesApi
 class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     private val profileEditViewModel: ProfileEditViewModel by viewModels { viewModelFactory }
@@ -39,18 +41,13 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setViewModelObservers()
+        setEditTextWatchers()
+
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.profile_edit_calendar_title)
             .setSelection(Date().time)
             .build()
-
-        observe(profileEditViewModel.viewState, ::onStateChanged)
-        observe(profileEditViewModel.eventsQueue, ::onEvent)
-
-        firstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
-        lastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
-        nickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
-        birthday.doAfterTextChanged { profileEditViewModel.onBirthDayEntered(it.toString()) }
 
         birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
         toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
@@ -61,6 +58,23 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
                 .format(dateTimeFormatter)
                 .toEditable()
         }
+    }
+
+    private fun setViewModelObservers() {
+        observe(profileEditViewModel.firstName) { setEditTextError(firstname, it) }
+        observe(profileEditViewModel.lastName) { setEditTextError(lastname, it) }
+        observe(profileEditViewModel.nickName) { setEditTextError(nickname, it) }
+        observe(profileEditViewModel.birthDay) { setEditTextError(birthday, it) }
+        observe(profileEditViewModel.isSaveButtonEnabled, ::onSaveButtonEnabledChanged)
+        observe(profileEditViewModel.isLoading, ::onLoading)
+        observe(profileEditViewModel.eventsQueue, ::onEvent)
+    }
+
+    private fun setEditTextWatchers() {
+        firstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
+        lastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
+        nickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
+        birthday.doAfterTextChanged { profileEditViewModel.onBirthDayEntered(it.toString()) }
     }
 
     private fun onSaveButtonEnabledChanged(isEnabled: Boolean) {
@@ -77,13 +91,14 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         save.isEnabled = !isLoading
     }
 
-    private fun onStateChanged(state: ProfileEditViewState) {
-        onLoading(state.isLoading)
-        onSaveButtonEnabledChanged(state.isSaveButtonEnabled)
-        firstname.setText(state.firstName.value)
-        lastname.setText(state.lastName.value)
-        nickname.setText(state.nickName.value)
-        birthday.setText(state.birthDay.value)
+    private fun setEditTextError(editText: EditText, fieldState: ProfileFieldState) {
+        editText.setText(fieldState.value)
+        editText.setSelection(editText.text.toString().length)
+        editText.error = if (fieldState.isValid) {
+            null
+        } else {
+            fieldState.errorId?.let { getString(it) }
+        }
     }
 }
 
