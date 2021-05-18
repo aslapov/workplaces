@@ -154,4 +154,7 @@ dependencies {
     testImplementation(TestDependency.MOCKITO)
     testImplementation(TestDependency.ASSERTJ)
     testImplementation(TestDependency.ANDROIDX)
+    testImplementation(TestDependency.KOTEST)
+    testImplementation(TestDependency.KOTEST_ASSERTS)
+    testImplementation(TestDependency.COROUTINES)
 }

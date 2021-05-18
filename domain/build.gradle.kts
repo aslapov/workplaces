@@ -64,5 +64,9 @@ dependencies {
     api(DomainDependency.TIMBER)
     api(DomainDependency.LOGGER)
 
+    testApi(TestDependency.KOTEST)
+    testApi(TestDependency.KOTEST_ASSERTS)
+    testApi(TestDependency.COROUTINES)
+
     kapt(DomainDependency.MOSHI_COMPILER)
 }
