@@ -1,7 +1,11 @@
 package com.workplaces.aslapov.data.profile
 
-import com.workplaces.aslapov.domain.User
-import com.workplaces.aslapov.domain.UserRepository
+import com.workplaces.aslapov.data.profile.localstore.UserSharedPreferencesSource
+import com.workplaces.aslapov.data.profile.network.FakeProfileApi
+import com.workplaces.aslapov.data.profile.network.model.UserNetwork
+import com.workplaces.aslapov.data.profile.network.model.toUser
+import com.workplaces.aslapov.domain.profile.User
+import com.workplaces.aslapov.domain.profile.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject

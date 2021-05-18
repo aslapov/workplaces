@@ -3,10 +3,10 @@ package com.workplaces.aslapov.app.login.signup
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.domain.isBirthdayValid
-import com.workplaces.aslapov.domain.isFirstnameValid
-import com.workplaces.aslapov.domain.isLastnameValid
-import com.workplaces.aslapov.domain.isNicknameValid
+import com.workplaces.aslapov.domain.profile.isBirthdayValid
+import com.workplaces.aslapov.domain.profile.isFirstnameValid
+import com.workplaces.aslapov.domain.profile.isLastnameValid
+import com.workplaces.aslapov.domain.profile.isNicknameValid
 import javax.inject.Inject
 
 class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel<SignUpTwoViewState>() {

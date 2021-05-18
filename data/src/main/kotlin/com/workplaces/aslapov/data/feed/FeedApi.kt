@@ -1,6 +1,6 @@
 package com.workplaces.aslapov.data.feed
 
-import com.workplaces.aslapov.data.profile.PostResponse
+import com.workplaces.aslapov.data.profile.network.model.PostResponse
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST

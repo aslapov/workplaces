@@ -3,8 +3,8 @@ package com.workplaces.aslapov.app.login.signup
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.domain.isEmailValid
-import com.workplaces.aslapov.domain.isPasswordValid
+import com.workplaces.aslapov.domain.profile.isEmailValid
+import com.workplaces.aslapov.domain.profile.isPasswordValid
 import javax.inject.Inject
 
 class SignUpStepOneViewModel @Inject constructor() : BaseViewModel<SignUpOneViewState>() {

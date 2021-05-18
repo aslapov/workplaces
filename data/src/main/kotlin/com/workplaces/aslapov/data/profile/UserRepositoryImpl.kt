@@ -1,7 +1,10 @@
 package com.workplaces.aslapov.data.profile
 
-import com.workplaces.aslapov.domain.User
-import com.workplaces.aslapov.domain.UserRepository
+import com.workplaces.aslapov.data.AppCache
+import com.workplaces.aslapov.data.profile.network.ProfileApi
+import com.workplaces.aslapov.data.profile.network.model.toUser
+import com.workplaces.aslapov.domain.profile.User
+import com.workplaces.aslapov.domain.profile.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -11,7 +14,7 @@ class UserRepositoryImpl @Inject constructor(
     private val profileApi: ProfileApi,
     private val cache: AppCache
 ) : UserRepository {
-    override var user: MutableStateFlow<User?> = MutableStateFlow(cache.getUser())
+    override val user: MutableStateFlow<User?> = MutableStateFlow(cache.getUser())
 
     override suspend fun getCurrentUser(): User {
         return profileApi.getCurrentUser()

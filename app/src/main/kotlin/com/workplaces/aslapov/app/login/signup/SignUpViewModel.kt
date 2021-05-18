@@ -2,30 +2,17 @@ package com.workplaces.aslapov.app.login.signup
 
 import androidx.lifecycle.viewModelScope
 import com.redmadrobot.extensions.lifecycle.mapDistinct
-import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
-import com.workplaces.aslapov.data.NetworkException
-import com.workplaces.aslapov.data.RepositoryInUse
-import com.workplaces.aslapov.data.util.dateTimeFormatter
-import com.workplaces.aslapov.domain.AuthRepository
-import com.workplaces.aslapov.domain.User
-import com.workplaces.aslapov.domain.UserRepository
+import com.workplaces.aslapov.domain.login.UserCredentials
+import com.workplaces.aslapov.domain.login.signup.SignUpException
+import com.workplaces.aslapov.domain.login.signup.SignUpUseCase
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.net.UnknownHostException
-import java.time.LocalDate
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
-    @RepositoryInUse private val authRepository: AuthRepository,
-    @RepositoryInUse private val userRepository: UserRepository
+    private val signUpUseCase: SignUpUseCase
 ) : BaseViewModel<SignUpViewState>() {
-
-    companion object {
-        private const val TAG = "SignUpViewModel"
-    }
 
     val isLoading = viewState.mapDistinct { it.isLoading }
 
@@ -39,11 +26,6 @@ class SignUpViewModel @Inject constructor(
     var password: String = ""
         private set
 
-    private var firstname: String = ""
-    private var lastname: String = ""
-    private var nickname: String = ""
-    private var birthday: String = ""
-
     fun onGoNextClicked(email: String, password: String) {
         this.email = email
         this.password = password
@@ -52,37 +34,23 @@ class SignUpViewModel @Inject constructor(
     fun onSignUpClicked(firstname: String, lastname: String, nickname: String, birthday: String) {
         state = state.copy(isLoading = true)
 
-        this.nickname = nickname
-        this.firstname = firstname
-        this.lastname = lastname
-        this.birthday = birthday
-
         viewModelScope.launch {
             try {
-                authRepository.register(email, password)
-                updateUser()
-            } catch (e: NetworkException) {
-                eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
-            } catch (e: UnknownHostException) {
-                Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(MessageEvent(R.string.sign_up_network_connecction_error))
+                val userCredentials = UserCredentials(email, password)
+                signUpUseCase.signUp(
+                    userCredentials = userCredentials,
+                    firstname = firstname,
+                    lastname = lastname,
+                    nickname = nickname,
+                    birthday = birthday,
+                )
+                navigateTo(SignUpStepTwoFragmentDirections.signUpToWelcomeAction())
+            } catch (e: SignUpException) {
+                eventsQueue.offerEvent(MessageEvent(e.messageId))
             } finally {
                 state = state.copy(isLoading = false)
             }
         }
-    }
-
-    private suspend fun updateUser() {
-        val user = User(
-            firstName = firstname,
-            lastName = lastname,
-            nickName = nickname,
-            birthday = LocalDate.parse(birthday, dateTimeFormatter),
-            avatarUrl = null
-        )
-
-        userRepository.updateUser(user)
-        navigateTo(SignUpStepTwoFragmentDirections.signUpToWelcomeAction())
     }
 
     private fun createInitialState(): SignUpViewState {

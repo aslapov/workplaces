@@ -4,24 +4,19 @@ import androidx.lifecycle.viewModelScope
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.NavigateUp
-import com.workplaces.aslapov.data.NetworkException
-import com.workplaces.aslapov.data.RepositoryInUse
-import com.workplaces.aslapov.data.util.dateTimeFormatter
-import com.workplaces.aslapov.domain.*
+import com.workplaces.aslapov.domain.profile.*
+import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.net.UnknownHostException
 import java.time.LocalDate
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class ProfileEditViewModel @Inject constructor(
-    @RepositoryInUse private val userRepository: UserRepository
+    private val profileUseCase: ProfileUseCase
 ) : BaseViewModel<ProfileEditViewState>() {
 
     companion object {
@@ -89,14 +84,10 @@ class ProfileEditViewModel @Inject constructor(
                 avatarUrl = user.avatarUrl
             )
             try {
-                userRepository.updateUser(user)
+                profileUseCase.updateProfile(user)
                 eventsQueue.offerEvent(NavigateUp)
-            } catch (e: NetworkException) {
-                Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(ErrorMessageEvent(e.parseMessage))
-            } catch (e: UnknownHostException) {
-                Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(MessageEvent(R.string.profile_edit_network_connection_error))
+            } catch (e: ProfileException) {
+                eventsQueue.offerEvent(MessageEvent(e.messageId))
             } finally {
                 state = state.copy(isLoading = false)
             }
@@ -105,9 +96,9 @@ class ProfileEditViewModel @Inject constructor(
 
     private fun observeViewState() {
         viewModelScope.launch {
-            userRepository.user
-                .collect {
-                    user = requireNotNull(it)
+            profileUseCase.getCurrentProfile().collect {
+                try {
+                    user = it
                     val firstname = user.firstName
                     val lastName = user.lastName
                     val nickName = user.nickName.orEmpty()
@@ -121,7 +112,10 @@ class ProfileEditViewModel @Inject constructor(
                         isSaveButtonEnabled = false,
                         isLoading = false,
                     )
+                } catch (e: ProfileException) {
+                    eventsQueue.offerEvent(MessageEvent(e.messageId))
                 }
+            }
         }
     }
 

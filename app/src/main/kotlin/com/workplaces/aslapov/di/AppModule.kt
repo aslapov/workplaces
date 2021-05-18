@@ -1,12 +1,12 @@
 package com.workplaces.aslapov.di
 
-import com.workplaces.aslapov.data.Mock
-import com.workplaces.aslapov.data.RepositoryInUse
 import com.workplaces.aslapov.data.auth.AuthRepositoryImpl
 import com.workplaces.aslapov.data.profile.FakeUserRepository
 import com.workplaces.aslapov.data.profile.UserRepositoryImpl
-import com.workplaces.aslapov.domain.AuthRepository
-import com.workplaces.aslapov.domain.UserRepository
+import com.workplaces.aslapov.domain.di.Mock
+import com.workplaces.aslapov.domain.di.RepositoryInUse
+import com.workplaces.aslapov.domain.login.AuthRepository
+import com.workplaces.aslapov.domain.profile.UserRepository
 import dagger.Binds
 import dagger.Module
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -5,21 +5,14 @@ import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
-import com.workplaces.aslapov.data.NetworkException
-import com.workplaces.aslapov.data.RepositoryInUse
-import com.workplaces.aslapov.domain.AuthRepository
+import com.workplaces.aslapov.domain.login.signin.SignInException
+import com.workplaces.aslapov.domain.login.signin.SignInUseCase
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 class SignInViewModel @Inject constructor(
-    @RepositoryInUse private val authRepository: AuthRepository
+    private val signInUseCase: SignInUseCase
 ) : BaseViewModel<SignInViewState>() {
-
-    companion object {
-        private const val TAG = "SignInViewModel"
-    }
 
     val email = viewState.mapDistinct { it.email }
     val password = viewState.mapDistinct { it.password }
@@ -50,14 +43,10 @@ class SignInViewModel @Inject constructor(
         state = state.copy(isLoading = true)
         viewModelScope.launch {
             try {
-                authRepository.login(state.email.value, state.password.value)
+                signInUseCase.signIn(state.email.value, state.password.value)
                 navigateTo(SignInFragmentDirections.signInToWelcomeAction())
-            } catch (e: NetworkException) {
-                Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(MessageEvent(R.string.invalid_credentials))
-            } catch (e: UnknownHostException) {
-                Timber.tag(TAG).d(e)
-                eventsQueue.offerEvent(MessageEvent(R.string.sign_in_network_connecction_error))
+            } catch (e: SignInException) {
+                eventsQueue.offerEvent(MessageEvent(e.messageId))
             } finally {
                 state = state.copy(isLoading = false)
             }

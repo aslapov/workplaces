@@ -18,7 +18,7 @@ open class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayou
         when (event) {
             is Navigate -> findNavController().navigate(event.direction)
             is NavigateAction -> findNavController().navigate(event.action)
-            is NavigateUp -> findNavController().navigateUp()
+            is NavigateUp -> findNavController().popBackStack()
             is MessageEvent -> showMessage(getString(event.message))
             is ErrorMessageEvent -> showMessage(event.errorMessage)
         }

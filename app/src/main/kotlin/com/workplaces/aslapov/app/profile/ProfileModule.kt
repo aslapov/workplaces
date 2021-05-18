@@ -6,7 +6,9 @@ import com.workplaces.aslapov.app.base.viewmodel.ViewModelModule
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Module(includes = [ViewModelModule::class])
 interface ProfileModule {
 

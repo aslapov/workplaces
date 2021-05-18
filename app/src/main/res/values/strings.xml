@@ -22,8 +22,6 @@
     <string name="sign_in_login">Вход</string>
     <string name="sign_in_email_invalid">E-mail не должен быть пустым</string>
     <string name="sign_in_password_invalid">Пароль не должен быть пустым</string>
-    <string name="sign_in_signin_fail">Ошибка авторизации</string>
-    <string name="sign_in_network_connecction_error">Проверьте подключение к интернету</string>
     <!-- endregion -->
 
     <!-- region Экран Регистрации -->
@@ -44,8 +42,6 @@
     <string name="sign_up_nickname_error">Проверьте, что используются только латинские символы и цифры</string>
     <string name="sign_up_birthday_error">Дата должна быть введена в формате ГГГГ-ММ-ДД</string>
     <string name="sign_up_calendar_title">Выберите дату</string>
-    <string name="sign_up_signup_fail">Ошибка регистрации</string>
-    <string name="sign_up_network_connecction_error">Проверьте подключение к интернету</string>
     <!-- endregion -->
 
     <!-- region Экран Приветствия -->

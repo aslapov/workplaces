@@ -9,8 +9,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.activity.BaseActivity
+import com.workplaces.aslapov.app.base.viewmodel.NavigateAction
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.utils.extension.dispatchApplyWindowInsetsToChild
 import javax.inject.Inject
@@ -48,6 +50,10 @@ class MainActivity : BaseActivity() {
                 destination.id == R.id.profile_dest
 
             bottomNavigation.isVisible = isBottomNavigationVisible
+        }
+
+        observe(mainViewModel.eventsQueue) {
+            if (it is NavigateAction) navController.navigate(it.action)
         }
     }
 }
