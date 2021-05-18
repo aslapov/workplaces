@@ -8,6 +8,7 @@ import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.profile.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -16,7 +17,8 @@ class FakeUserRepository @Inject constructor(
     private val profileApi: FakeProfileApi
 ) : UserRepository {
 
-    override var user: MutableStateFlow<User?> = MutableStateFlow(userSource.getUser()?.toUser())
+    private val _user: MutableStateFlow<User?> = MutableStateFlow(userSource.getUser()?.toUser())
+    override val user: StateFlow<User?> = _user
 
     override suspend fun updateUser(user: User): User {
         return profileApi.updateUser(user)
@@ -30,7 +32,13 @@ class FakeUserRepository @Inject constructor(
             .toUser()
     }
 
+    override fun logout() {
+        userSource.logout()
+        _user.value = null
+    }
+
     private fun saveUser(userNetwork: UserNetwork) {
         userSource.setUser(userNetwork)
+        _user.value = userNetwork.toUser()
     }
 }

@@ -5,10 +5,9 @@ import com.workplaces.aslapov.domain.NetworkException
 import com.workplaces.aslapov.domain.R
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -25,7 +24,9 @@ class ProfileUseCase @Inject constructor(
 
     fun getCurrentProfile(): Flow<User> {
         return userRepository.user
+            .filter { authRepository.isUserLoggedIn() }
             .map { user -> user ?: userRepository.getCurrentUser() }
+            .flowOn(Dispatchers.IO)
             .catch { handleError(it) }
     }
 
@@ -41,7 +42,10 @@ class ProfileUseCase @Inject constructor(
         }
     }
 
-    suspend fun logout() { authRepository.logout() }
+    suspend fun logout() {
+        authRepository.logout()
+        userRepository.logout()
+    }
 
     private fun handleError(error: Throwable) {
         Timber.tag(TAG).d(error)

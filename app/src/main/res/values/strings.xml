@@ -100,4 +100,12 @@
     <string name="unknown_error">Что-то пошло не так</string>
     <!-- endregion -->
 
+    <plurals name="age">
+        <item quantity="zero">%d год</item>
+        <item quantity="one">%d год</item>
+        <item quantity="few">%d года</item>
+        <item quantity="many">%d лет</item>
+        <item quantity="other">%d лет</item>
+    </plurals>
+
 </resources>

@@ -1,7 +1,7 @@
 package com.workplaces.aslapov.domain.login
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @ExperimentalCoroutinesApi
 interface AuthRepository {
@@ -9,7 +9,7 @@ interface AuthRepository {
     val accessToken: String?
     val refreshToken: String?
 
-    val logoutEvent: MutableStateFlow<Boolean>
+    val logoutEvent: StateFlow<Boolean>
 
     fun isUserLoggedIn(): Boolean
 

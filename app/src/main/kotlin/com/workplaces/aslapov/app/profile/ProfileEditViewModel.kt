@@ -19,10 +19,6 @@ class ProfileEditViewModel @Inject constructor(
     private val profileUseCase: ProfileUseCase
 ) : BaseViewModel<ProfileEditViewState>() {
 
-    companion object {
-        private const val TAG = "ProfileEditViewModel"
-    }
-
     val firstName = viewState.mapDistinct { it.firstName }
     val lastName = viewState.mapDistinct { it.lastName }
     val nickName = viewState.mapDistinct { it.nickName }

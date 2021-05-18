@@ -38,6 +38,6 @@ class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
     private fun onStateChanged(state: ProfileViewState) {
         name.text = state.name
         nickname.text = state.nickName
-        age.text = state.age
+        age.text = resources.getQuantityString(R.plurals.age, state.age, state.age)
     }
 }

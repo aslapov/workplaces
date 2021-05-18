@@ -1,6 +1,7 @@
 package com.workplaces.aslapov.app.profile
 
 import androidx.lifecycle.viewModelScope
+import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.domain.profile.ProfileException
@@ -50,7 +51,7 @@ class ProfileViewModel @Inject constructor(
         viewState.value = ProfileViewState(
             name = "$firstname $lastName",
             nickName = nickName,
-            age = "${period.years} лет",
+            age = period.years,
         )
     }
 }
@@ -58,5 +59,5 @@ class ProfileViewModel @Inject constructor(
 data class ProfileViewState(
     val name: String,
     val nickName: String,
-    val age: String,
+    val age: Int,
 )
