@@ -1,6 +1,8 @@
 package com.workplaces.aslapov.domain.profile
 
 import android.util.Patterns
+import com.workplaces.aslapov.domain.util.dateTimeFormatter
+import java.time.LocalDate
 import java.util.regex.Pattern
 
 fun isEmailValid(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -32,5 +34,9 @@ fun isLastnameValid(lastname: String): Boolean {
 fun isBirthdayValid(birthday: String): Boolean {
     val birthdayPattern = "(19|20)\\d\\d-((0[1-9]|1[012])-(0[1-9]|[12]\\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)"
     val pattern = Pattern.compile(birthdayPattern)
-    return pattern.matcher(birthday).matches()
+    val isBirthdayMatchesPattern = pattern.matcher(birthday).matches()
+
+    return isBirthdayMatchesPattern &&
+        LocalDate.parse(birthday, dateTimeFormatter)
+            .isBefore(LocalDate.now())
 }
