@@ -26,6 +26,10 @@ subprojects {
         }
     }
 
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
+
     tasks.withType<Detekt>().configureEach {
         jvmTarget = "1.8"
     }

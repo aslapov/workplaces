@@ -1,5 +1,7 @@
 package com.workplaces.aslapov.di
 
+import com.workplaces.aslapov.ApplicationResourceProvider
+import com.workplaces.aslapov.ResourceProvider
 import com.workplaces.aslapov.data.auth.AuthRepositoryImpl
 import com.workplaces.aslapov.data.profile.FakeUserRepository
 import com.workplaces.aslapov.data.profile.UserRepositoryImpl
@@ -30,4 +32,8 @@ interface AppModule {
     @Mock
     @Binds
     fun bindFakeUserRepository(userRepository: FakeUserRepository): UserRepository
+
+    @Singleton
+    @Binds
+    fun bindResourceProvider(resourceProvider: ApplicationResourceProvider): ResourceProvider
 }

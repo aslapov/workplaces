@@ -1,21 +1,15 @@
 package com.workplaces.aslapov.app
 
 import io.kotest.core.listeners.TestListener
-import io.kotest.core.test.Description
-import io.kotest.core.test.TestCase
-import io.kotest.core.test.TestResult
+import io.kotest.core.spec.Spec
 
-class TestLiveDataListener(
-    private val featureDescription: Description,
-    private val beforeEachScenario: (() -> Unit)? = null,
-    private val afterEachScenario: (() -> Unit)? = null
-) : TestListener {
+class TestLiveDataListener : TestListener {
 
-    override suspend fun beforeContainer(testCase: TestCase) {
-
+    override suspend fun beforeSpec(spec: Spec) {
+        TestLiveDataExecutionController.enableTestMode()
     }
 
-    override suspend fun afterContainer(testCase: TestCase, result: TestResult) {
-
+    override suspend fun afterSpec(spec: Spec) {
+        TestLiveDataExecutionController.disableTestMode()
     }
 }

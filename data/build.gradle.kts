@@ -72,6 +72,7 @@ dependencies {
     testImplementation(TestDependency.ASSERTJ)
     testImplementation(TestDependency.KOTEST)
     testImplementation(TestDependency.KOTEST_ASSERTS)
+    testImplementation(TestDependency.KOTEST_DATASET)
     testImplementation(TestDependency.COROUTINES)
     kaptTest(DataDependency.MOSHI_COMPILER)
 }

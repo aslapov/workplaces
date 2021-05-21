@@ -1,4 +1,4 @@
-package com.workplaces.aslapov.app
+package com.workplaces.aslapov.domain
 
 import io.kotest.core.listeners.TestListener
 import io.kotest.core.test.TestCase

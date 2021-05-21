@@ -66,6 +66,7 @@ dependencies {
 
     testApi(TestDependency.KOTEST)
     testApi(TestDependency.KOTEST_ASSERTS)
+    testApi(TestDependency.KOTEST_DATASET)
     testApi(TestDependency.COROUTINES)
 
     kapt(DomainDependency.MOSHI_COMPILER)

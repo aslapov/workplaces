@@ -1,9 +1,18 @@
 package com.workplaces.aslapov.domain.profile
 
-import android.util.Patterns
 import java.util.regex.Pattern
 
-fun isEmailValid(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+fun isEmailValid(email: String): Boolean {
+    val emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+        "\\@" +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+        "(" +
+        "\\." +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+        ")+"
+    val pattern = Pattern.compile(emailPattern)
+    return pattern.matcher(email).matches()
+}
 
 fun isPasswordValid(password: String): Boolean {
     val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}"
