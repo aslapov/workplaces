@@ -2,6 +2,7 @@ package com.workplaces.aslapov.data.auth
 
 import com.workplaces.aslapov.data.auth.localstore.TokenSharedPreferenceSource
 import com.workplaces.aslapov.data.auth.network.AuthApi
+import com.workplaces.aslapov.data.auth.network.model.RefreshTokenRequest
 import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
 import com.workplaces.aslapov.domain.login.AuthRepository
@@ -54,7 +55,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshToken(): String {
-        val token = authApi.refresh(requireNotNull(refreshToken))
+        val refreshToken = requireNotNull(refreshToken)
+        val token = authApi.refresh(RefreshTokenRequest(refreshToken))
         saveToken(token)
         return token.accessToken
     }
