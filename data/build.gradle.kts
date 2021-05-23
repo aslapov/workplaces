@@ -55,6 +55,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    testImplementation(project(":testbase"))
 
     implementation(DataDependency.CORE)
     implementation(DataDependency.COROUTINES)
@@ -74,5 +75,6 @@ dependencies {
     testImplementation(TestDependency.KOTEST_ASSERTS)
     testImplementation(TestDependency.KOTEST_DATASET)
     testImplementation(TestDependency.COROUTINES)
+    testImplementation(TestDependency.MOCKK)
     kaptTest(DataDependency.MOSHI_COMPILER)
 }

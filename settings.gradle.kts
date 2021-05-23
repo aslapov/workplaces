@@ -22,5 +22,6 @@ rootProject.name = "Workplaces"
 include(
     "app",
     "data",
-    "domain"
+    "domain",
+    "testbase"
 )

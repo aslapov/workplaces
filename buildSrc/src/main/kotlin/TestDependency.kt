@@ -5,6 +5,7 @@ private object TestVersions {
     const val ANDROIDX = "2.1.0"
     const val KOTEST = "4.6.0"
     const val COROUTINES = "1.5.0"
+    const val MOCKK = "1.10.6"
 }
 
 object TestDependency {
@@ -16,4 +17,5 @@ object TestDependency {
     const val KOTEST_ASSERTS = "io.kotest:kotest-assertions-core-jvm:${TestVersions.KOTEST}"
     const val KOTEST_DATASET = "io.kotest:kotest-framework-datatest:${TestVersions.KOTEST}"
     const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${TestVersions.COROUTINES}"
+    const val MOCKK = "io.mockk:mockk:${TestVersions.MOCKK}"
 }

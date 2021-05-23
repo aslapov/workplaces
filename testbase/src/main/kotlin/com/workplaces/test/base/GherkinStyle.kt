@@ -1,5 +1,5 @@
 @file:Suppress("TestFunctionName")
-package com.workplaces.aslapov.domain
+package com.workplaces.test.base
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.core.spec.style.scopes.ContainerContext

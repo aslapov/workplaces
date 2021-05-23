@@ -133,6 +133,7 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
+    testImplementation(project(":testbase"))
 
     implementation(AppDependency.CORE)
     implementation(AppDependency.APPCOMPAT)
@@ -158,4 +159,5 @@ dependencies {
     testImplementation(TestDependency.KOTEST_ASSERTS)
     testImplementation(TestDependency.KOTEST_DATASET)
     testImplementation(TestDependency.COROUTINES)
+    testImplementation(TestDependency.MOCKK)
 }

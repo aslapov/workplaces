@@ -3,6 +3,8 @@ package com.workplaces.aslapov.di
 import com.workplaces.aslapov.ApplicationResourceProvider
 import com.workplaces.aslapov.ResourceProvider
 import com.workplaces.aslapov.data.auth.AuthRepositoryImpl
+import com.workplaces.aslapov.data.auth.localstore.TokenSharedPreferenceSource
+import com.workplaces.aslapov.data.auth.localstore.TokenStore
 import com.workplaces.aslapov.data.profile.FakeUserRepository
 import com.workplaces.aslapov.data.profile.UserRepositoryImpl
 import com.workplaces.aslapov.domain.di.Mock
@@ -36,4 +38,8 @@ interface AppModule {
     @Singleton
     @Binds
     fun bindResourceProvider(resourceProvider: ApplicationResourceProvider): ResourceProvider
+
+    @Singleton
+    @Binds
+    fun bindTokenStore(tokenStore: TokenSharedPreferenceSource): TokenStore
 }

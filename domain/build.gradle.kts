@@ -64,10 +64,12 @@ dependencies {
     api(DomainDependency.TIMBER)
     api(DomainDependency.LOGGER)
 
+    testApi(project(":testbase"))
     testApi(TestDependency.KOTEST)
     testApi(TestDependency.KOTEST_ASSERTS)
     testApi(TestDependency.KOTEST_DATASET)
     testApi(TestDependency.COROUTINES)
+    testApi(TestDependency.MOCKK)
 
     kapt(DomainDependency.MOSHI_COMPILER)
 }

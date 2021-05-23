@@ -1,6 +1,6 @@
 package com.workplaces.aslapov.data.auth
 
-import com.workplaces.aslapov.data.auth.localstore.TokenSharedPreferenceSource
+import com.workplaces.aslapov.data.auth.localstore.TokenStore
 import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
@@ -13,11 +13,11 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
-    private val tokenSource: TokenSharedPreferenceSource
+    private val tokenSource: TokenStore
 ) : AuthRepository {
 
-    override var accessToken: String? = tokenSource.getAccessToken()
-    override var refreshToken: String? = tokenSource.getRefreshToken()
+    override val accessToken: String? get() = tokenSource.getAccessToken()
+    override val refreshToken: String? get() = tokenSource.getRefreshToken()
 
     private val _logoutEvent = MutableStateFlow(false)
     override val logoutEvent: StateFlow<Boolean> = _logoutEvent
@@ -47,8 +47,6 @@ class AuthRepositoryImpl @Inject constructor(
             authApi.logout("Bearer $accessToken")
         } finally {
             tokenSource.logout()
-            accessToken = null
-            refreshToken = null
             _logoutEvent.value = true
         }
     }
@@ -61,7 +59,5 @@ class AuthRepositoryImpl @Inject constructor(
 
     private fun saveToken(token: Token) {
         tokenSource.setTokens(token.accessToken, token.refreshToken)
-        accessToken = token.accessToken
-        refreshToken = token.refreshToken
     }
 }

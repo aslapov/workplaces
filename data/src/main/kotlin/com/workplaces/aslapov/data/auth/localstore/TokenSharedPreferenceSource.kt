@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import javax.inject.Inject
 
-class TokenSharedPreferenceSource @Inject constructor(context: Context) {
+class TokenSharedPreferenceSource @Inject constructor(context: Context) : TokenStore {
 
     companion object {
         private const val TOKEN_SHARED_PREFS_FILE: String = "TOKEN_SHARED_PREFS_FILE"
@@ -14,11 +14,11 @@ class TokenSharedPreferenceSource @Inject constructor(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(TOKEN_SHARED_PREFS_FILE, Context.MODE_PRIVATE)
 
-    fun getAccessToken(): String? = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
+    override fun getAccessToken(): String? = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
 
-    fun getRefreshToken(): String? = sharedPreferences.getString(REFRESH_TOKEN_KEY, null)
+    override fun getRefreshToken(): String? = sharedPreferences.getString(REFRESH_TOKEN_KEY, null)
 
-    fun setTokens(accessToken: String, refreshToken: String) {
+    override fun setTokens(accessToken: String, refreshToken: String) {
         sharedPreferences.edit {
             putString(ACCESS_TOKEN_KEY, accessToken)
             putString(REFRESH_TOKEN_KEY, refreshToken.toString())
@@ -27,7 +27,7 @@ class TokenSharedPreferenceSource @Inject constructor(context: Context) {
         }
     }
 
-    fun logout() {
+    override fun logout() {
         sharedPreferences.edit {
             putString(ACCESS_TOKEN_KEY, null)
             putString(REFRESH_TOKEN_KEY, null)
