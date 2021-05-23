@@ -17,10 +17,8 @@ import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
-@ExperimentalCoroutinesApi
 class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     private val profileEditViewModel: ProfileEditViewModel by viewModels { viewModelFactory }

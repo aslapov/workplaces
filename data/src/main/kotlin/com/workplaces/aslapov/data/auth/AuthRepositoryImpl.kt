@@ -5,12 +5,10 @@ import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
     private val tokenSource: TokenStore

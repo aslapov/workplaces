@@ -6,13 +6,11 @@ import com.workplaces.aslapov.domain.R
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class ProfileUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository,
     @RepositoryInUse private val userRepository: UserRepository

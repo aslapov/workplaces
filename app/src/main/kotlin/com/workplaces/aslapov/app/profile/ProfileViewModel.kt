@@ -8,14 +8,12 @@ import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.domain.profile.ProfileException
 import com.workplaces.aslapov.domain.profile.ProfileUseCase
 import com.workplaces.aslapov.domain.profile.User
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.Period
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class ProfileViewModel @Inject constructor(
     private val profileUseCase: ProfileUseCase,
     private val resources: ResourceProvider

@@ -9,9 +9,7 @@ import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
 class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
 
     private val profileViewModel: ProfileViewModel by viewModels { viewModelFactory }

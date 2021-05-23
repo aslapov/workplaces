@@ -8,9 +8,7 @@ import com.workplaces.test.base.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
 class TestAuthRepository : FreeSpec({
     Feature("Logout") {
         lateinit var mockAuthApi: AuthApi

@@ -1,6 +1,7 @@
 package com.workplaces.aslapov.app.login.signup
 
 import com.redmadrobot.extensions.lifecycle.Event
+import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.TestLiveDataListener
 import com.workplaces.aslapov.app.base.viewmodel.Navigate
 import com.workplaces.aslapov.domain.login.signup.SignUpUseCase
@@ -9,13 +10,11 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
 @ExperimentalTime
 class TestSignUpTwoViewModel : FreeSpec({
     listener(TestLiveDataListener())
@@ -36,27 +35,52 @@ class TestSignUpTwoViewModel : FreeSpec({
             Dispatchers.resetMain()
         }
 
-        Scenario("User entered email") {
+        Scenario("User entered first name") {
+            val validFirstName = "egor"
+            val notValidFirstName = "123"
 
             Given("Initialization Step 2 Sign-up ViewModel") {
                 signUpStepTwoViewModel = SignUpStepTwoViewModel()
                 signUpStepTwoViewModel.firstName.observeForever {}
             }
 
-            When("Email entered") {
-                signUpStepTwoViewModel.onFirstNameEntered("egor")
+            When("First name entered") {
+                signUpStepTwoViewModel.onFirstNameEntered(validFirstName)
             }
 
-            Then("Email livedata triggered to be value of email input value") {
-                signUpStepTwoViewModel.firstName.value?.value shouldBe "egor"
+            Then("First name livedata triggered to be value of first name input value") {
+                signUpStepTwoViewModel.firstName.value?.value shouldBe validFirstName
             }
 
             And("should be valid") {
                 signUpStepTwoViewModel.firstName.value?.isValid shouldBe true
             }
+
+            When("Not valid first name entered") {
+                signUpStepTwoViewModel.onFirstNameEntered(notValidFirstName)
+            }
+
+            Then("First name livedata triggered to be value of email input value") {
+                signUpStepTwoViewModel.firstName.value?.value shouldBe notValidFirstName
+            }
+
+            And("should be not valid") {
+                signUpStepTwoViewModel.firstName.value?.isValid shouldBe false
+            }
+
+            And("show error message") {
+                signUpStepTwoViewModel.firstName.value?.errorId shouldBe R.string.sign_up_firstname_error
+            }
         }
 
         Scenario("User entered all user data on the form of step 2 of sign up") {
+
+            val validFirstName = "egor"
+            val validLastName = "egorov"
+            val validNickName = "egorius"
+            val validBirthDay = "1994-02-19"
+
+            val notValidFirstName = "123"
 
             Given("Initialization Step 2 Sign-up ViewModel") {
                 signUpStepTwoViewModel = SignUpStepTwoViewModel()
@@ -68,14 +92,25 @@ class TestSignUpTwoViewModel : FreeSpec({
             }
 
             When("User entered all valid user data on the form") {
-                signUpStepTwoViewModel.onFirstNameEntered("egor")
-                signUpStepTwoViewModel.onLastNameEntered("egorov")
-                signUpStepTwoViewModel.onNickNameEntered("egorius")
-                signUpStepTwoViewModel.onBirthDayEntered("1994-02-19")
+                signUpStepTwoViewModel.onFirstNameEntered(validFirstName)
+                signUpStepTwoViewModel.onLastNameEntered(validLastName)
+                signUpStepTwoViewModel.onNickNameEntered(validNickName)
+                signUpStepTwoViewModel.onBirthDayEntered(validBirthDay)
             }
 
             Then("Register button is enabled") {
                 signUpStepTwoViewModel.isRegisterButtonEnabled.value shouldBe true
+            }
+
+            When("User entered all user data on the form and first name field is not valid") {
+                signUpStepTwoViewModel.onFirstNameEntered(notValidFirstName)
+                signUpStepTwoViewModel.onLastNameEntered(validLastName)
+                signUpStepTwoViewModel.onNickNameEntered(validNickName)
+                signUpStepTwoViewModel.onBirthDayEntered(validBirthDay)
+            }
+
+            Then("Register button is not enabled") {
+                signUpStepTwoViewModel.isRegisterButtonEnabled.value shouldBe false
             }
         }
 

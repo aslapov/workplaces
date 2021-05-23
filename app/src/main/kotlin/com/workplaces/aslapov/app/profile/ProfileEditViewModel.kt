@@ -8,13 +8,11 @@ import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.NavigateUp
 import com.workplaces.aslapov.domain.profile.*
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class ProfileEditViewModel @Inject constructor(
     private val profileUseCase: ProfileUseCase
 ) : BaseViewModel<ProfileEditViewState>() {

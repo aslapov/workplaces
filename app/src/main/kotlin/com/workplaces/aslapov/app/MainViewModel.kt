@@ -5,12 +5,10 @@ import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModel @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository
 ) : BaseViewModel<Nothing>() {

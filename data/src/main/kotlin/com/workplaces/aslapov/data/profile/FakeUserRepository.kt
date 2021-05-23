@@ -6,12 +6,10 @@ import com.workplaces.aslapov.data.profile.network.model.UserNetwork
 import com.workplaces.aslapov.data.profile.network.model.toUser
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.profile.UserRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class FakeUserRepository @Inject constructor(
     private val userSource: UserSharedPreferencesSource,
     private val profileApi: FakeProfileApi

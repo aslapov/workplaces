@@ -1,9 +1,7 @@
 package com.workplaces.aslapov.domain.login
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
-@ExperimentalCoroutinesApi
 interface AuthRepository {
 
     val accessToken: String?
