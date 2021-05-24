@@ -15,12 +15,9 @@
             app:destination="@id/sign_up_second_dest" />
 
         <action
-            android:id="@+id/sign_up_to_login_action"
-            app:popUpTo="@id/login_dest" />
-
-        <action
             android:id="@+id/sign_up_to_sign_in_action"
-            app:destination="@id/sign_in_dest" />
+            app:destination="@id/sign_in_dest"
+            app:popUpTo="@id/login_dest" />
 
     </fragment>
 
@@ -30,12 +27,10 @@
         tools:layout="@layout/signup_two_fragment">
 
         <action
-            android:id="@+id/sign_up_to_step_one_action"
-            app:popUpTo="@id/sign_up_first_dest" />
-
-        <action
             android:id="@+id/sign_up_to_welcome_action"
-            app:destination="@id/welcome_dest" />
+            app:destination="@id/welcome_dest"
+            app:popUpTo="@id/login_dest"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_graph"
-    app:startDestination="@id/profile_empty_dest">
+    app:startDestination="@id/profile_dest">
 
     <fragment
-        android:id="@+id/profile_empty_dest"
-        android:name="com.workplaces.aslapov.app.profile.ProfileDummyFragment"
-        tools:layout="@layout/profile_dummy_fragment" />
+        android:id="@+id/profile_dest"
+        android:name="com.workplaces.aslapov.app.profile.ProfileFragment"
+        tools:layout="@layout/profile_fragment">
+
+        <action
+            android:id="@+id/profile_to_profile_edit_action"
+            app:destination="@+id/profile_edit_dest"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_edit_dest"
+        android:name="com.workplaces.aslapov.app.profile.ProfileEditFragment"
+        tools:layout="@layout/profile_edit_fragment" />
 
 </navigation>

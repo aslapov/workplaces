@@ -1,95 +1,83 @@
 package com.workplaces.aslapov.app.login.signup
 
-import androidx.lifecycle.MutableLiveData
 import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
-import com.workplaces.aslapov.app.base.viewmodel.delegate
-import com.workplaces.aslapov.domain.isBirthdayValid
-import com.workplaces.aslapov.domain.isFirstnameValid
-import com.workplaces.aslapov.domain.isLastnameValid
-import com.workplaces.aslapov.domain.isNicknameValid
+import com.workplaces.aslapov.domain.profile.isBirthdayValid
+import com.workplaces.aslapov.domain.profile.isFirstnameValid
+import com.workplaces.aslapov.domain.profile.isLastnameValid
+import com.workplaces.aslapov.domain.profile.isNicknameValid
 import javax.inject.Inject
 
-class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel() {
-    private val liveState = MutableLiveData(createInitialState())
-    private var state: SignUpTwoViewState by liveState.delegate()
-    val isRegisterButtonEnabled = liveState.mapDistinct { it.isRegisterButtonEnabled }
+class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel<SignUpTwoViewState>() {
+
+    val firstName = viewState.mapDistinct { it.firstName }
+    val lastName = viewState.mapDistinct { it.lastName }
+    val nickName = viewState.mapDistinct { it.nickName }
+    val birthDay = viewState.mapDistinct { it.birthDay }
+    val isRegisterButtonEnabled = viewState.mapDistinct {
+        it.firstName.isValid && it.lastName.isValid && it.nickName.isValid && it.birthDay.isValid
+    }
+
+    init {
+        state = createInitialState()
+    }
+
     fun onFirstNameEntered(firstName: String) {
-        if (isFirstnameValid(firstName)) {
-            state = state.copy(firstName = firstName, isFirstNameValid = true)
+        state = if (isFirstnameValid(firstName)) {
+            state.copy(firstName = SignUpTwoFieldState(firstName, true, null))
         } else {
-            state = state.copy(firstName = firstName, isFirstNameValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_firstname_error))
+            state.copy(firstName = SignUpTwoFieldState(firstName, false, R.string.sign_up_firstname_error))
         }
-        checkRegisterButtonEnable()
     }
 
     fun onLastNameEntered(lastName: String) {
-        if (isLastnameValid(lastName)) {
-            state = state.copy(lastName = lastName, isLastNameValid = true)
+        state = if (isLastnameValid(lastName)) {
+            state.copy(lastName = SignUpTwoFieldState(lastName, true, null))
         } else {
-            state = state.copy(lastName = lastName, isLastNameValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_lastname_error))
+            state.copy(lastName = SignUpTwoFieldState(lastName, false, R.string.sign_up_lastname_error))
         }
-        checkRegisterButtonEnable()
     }
 
     fun onNickNameEntered(nickName: String) {
-        if (isNicknameValid(nickName)) {
-            state = state.copy(nickName = nickName, isNickNameValid = true)
+        state = if (isNicknameValid(nickName)) {
+            state.copy(nickName = SignUpTwoFieldState(nickName, true, null))
         } else {
-            state = state.copy(nickName = nickName, isNickNameValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_nickname_error))
+            state.copy(nickName = SignUpTwoFieldState(nickName, false, R.string.sign_up_nickname_error))
         }
-        checkRegisterButtonEnable()
     }
 
     fun onBirthDayEntered(birthDay: String) {
-        if (isBirthdayValid(birthDay)) {
-            state = state.copy(birthDay = birthDay, isBirthDayValid = true)
+        state = if (isBirthdayValid(birthDay)) {
+            state.copy(birthDay = SignUpTwoFieldState(birthDay, true, null))
         } else {
-            state = state.copy(birthDay = birthDay, isBirthDayValid = false)
-            eventsQueue.offerEvent(ErrorMessageEvent(R.string.sign_up_birthday_error))
+            state.copy(birthDay = SignUpTwoFieldState(birthDay, false, R.string.sign_up_birthday_error))
         }
-        checkRegisterButtonEnable()
     }
+
     fun onBackClicked() {
-        navigateTo(SignUpStepTwoFragmentDirections.signUpToStepOneAction())
+        navigateUp()
     }
 
     private fun createInitialState(): SignUpTwoViewState {
         return SignUpTwoViewState(
-            firstName = "",
-            isFirstNameValid = false,
-            lastName = "",
-            isLastNameValid = false,
-            nickName = "",
-            isNickNameValid = false,
-            birthDay = "",
-            isBirthDayValid = false,
-            isRegisterButtonEnabled = false
+            firstName = SignUpTwoFieldState("", false, null),
+            lastName = SignUpTwoFieldState("", false, null),
+            nickName = SignUpTwoFieldState("", false, null),
+            birthDay = SignUpTwoFieldState("", false, null),
         )
-    }
-
-    private fun checkRegisterButtonEnable() {
-        val isRegisterButtonEnabled = state.isFirstNameValid &&
-            state.isLastNameValid &&
-            state.isNickNameValid &&
-            state.isBirthDayValid
-        state = state.copy(isRegisterButtonEnabled = isRegisterButtonEnabled)
     }
 }
 
 data class SignUpTwoViewState(
-    val firstName: String,
-    val isFirstNameValid: Boolean,
-    val lastName: String,
-    val isLastNameValid: Boolean,
-    val nickName: String,
-    val isNickNameValid: Boolean,
-    val birthDay: String,
-    val isBirthDayValid: Boolean,
-    val isRegisterButtonEnabled: Boolean
+    val firstName: SignUpTwoFieldState,
+    val lastName: SignUpTwoFieldState,
+    val nickName: SignUpTwoFieldState,
+    val birthDay: SignUpTwoFieldState,
+)
+
+data class SignUpTwoFieldState(
+    val value: String,
+    val isValid: Boolean,
+    val errorId: Int?,
 )

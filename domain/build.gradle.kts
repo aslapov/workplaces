@@ -53,6 +53,7 @@ dependencies {
     api(DomainDependency.KOTLIN)
 
     api(DomainDependency.DAGGER)
+    api(DomainDependency.COROUTINES)
 
     api(DomainDependency.MOSHI)
     api(DomainDependency.MOSHI_ADAPTERS)

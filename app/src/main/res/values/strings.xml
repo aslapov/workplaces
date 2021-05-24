@@ -20,9 +20,8 @@
     <string name="sign_in_go_to_register">Перейти к регистрации</string>
     <string name="sign_in_next">Далее</string>
     <string name="sign_in_login">Вход</string>
-    <string name="sign_in_email_invalid">E-mail не распознан</string>
+    <string name="sign_in_email_invalid">E-mail не должен быть пустым</string>
     <string name="sign_in_password_invalid">Пароль не должен быть пустым</string>
-    <string name="sign_in_signin_fail">Ошибка авторизации</string>
     <!-- endregion -->
 
     <!-- region Экран Регистрации -->
@@ -43,7 +42,6 @@
     <string name="sign_up_nickname_error">Проверьте, что используются только латинские символы и цифры</string>
     <string name="sign_up_birthday_error">Дата должна быть введена в формате ГГГГ-ММ-ДД</string>
     <string name="sign_up_calendar_title">Выберите дату</string>
-    <string name="sign_up_signup_fail">Ошибка регистрации</string>
     <!-- endregion -->
 
     <!-- region Экран Приветствия -->
@@ -70,6 +68,30 @@
     <string name="profile_emptiness">Пустота</string>
     <string name="profile_emptiness_advise">Вы пока одиноки в сервисе, но это можно исправить</string>
     <string name="profile_find_friends">Найти друзей</string>
+    <string name="profile_network_connection_error">Проверьте подключение к интернету</string>
     <!-- endregion -->
+
+    <!-- region Экран Редактирования Профиля -->
+    <string name="profile_edit_title">Редактирование профиля</string>
+    <string name="profile_edit_firstname">Имя</string>
+    <string name="profile_edit_lastname">Фамилия</string>
+    <string name="profile_edit_nickname">Никнейм</string>
+    <string name="profile_edit_birthday">Дата рождения</string>
+    <string name="profile_edit_firstname_error">Проверьте, что используются только латинские символы</string>
+    <string name="profile_edit_lastname_error">Проверьте, что используются только латинские символы</string>
+    <string name="profile_edit_nickname_error">Проверьте, что используются только латинские символы и цифры</string>
+    <string name="profile_edit_birthday_error">Дата должна быть введена в формате ГГГГ-ММ-ДД</string>
+    <string name="profile_edit_calendar_title">Выберите дату</string>
+    <string name="profile_edit_save">Сохранить</string>
+    <string name="profile_edit_network_connection_error">Проверьте подключение к интернету</string>
+    <!-- endregion -->
+
+    <plurals name="age">
+        <item quantity="zero">%d год</item>
+        <item quantity="one">%d год</item>
+        <item quantity="few">%d года</item>
+        <item quantity="many">%d лет</item>
+        <item quantity="other">%d лет</item>
+    </plurals>
 
 </resources>

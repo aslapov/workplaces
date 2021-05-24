@@ -8,6 +8,6 @@
 
     <include app:graph="@navigation/new_feed_graph" />
 
-    <include app:graph="@navigation/profile_graph"/>
+    <include app:graph="@navigation/profile_graph" />
 
 </navigation>

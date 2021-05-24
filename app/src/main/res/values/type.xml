@@ -21,4 +21,24 @@
         <item name="android:fontWeight">400</item>
     </style>
 
+    <style name="TextAppearance.App.H2.Black" parent="TextAppearance.App.H2">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.App.Toolbar.Title" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/blackTextToolbar</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">20sp</item>
+    </style>
+
+    <style name="TextAppearance.App.EditText.Text" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">20sp</item>
+    </style>
+
 </resources>

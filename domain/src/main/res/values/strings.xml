@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- region Авторизация -->
+    <string name="sign_in_fail">Ошибка авторизации</string>
+    <string name="sign_in_network_connection_error">Проверьте подключение к интернету</string>
+    <string name="sign_in_invalid_credentials">Email или пароль указаны неверно</string>
+    <string name="sign_in_duplicate_user_error">Пользователь с введенной почтой уже зарегистрирован</string>
+    <string name="sign_in_email_validation_error">Email имеет недопустимый формат</string>
+    <string name="sign_in_password_validation_error">Пароль имеет недопустимый формат</string>
+    <!-- endregion -->
+
+    <!-- region Регистрация -->
+    <string name="sign_up_fail">Ошибка регистрации</string>
+    <string name="sign_up_network_connection_error">Проверьте подключение к интернету</string>
+    <string name="sign_up_invalid_credentials">Email или пароль указаны неверно</string>
+    <string name="sign_up_duplicate_user_error">Пользователь с введенной почтой уже зарегистрирован</string>
+    <string name="sign_up_email_validation_error">Email имеет недопустимый формат</string>
+    <string name="sign_up_password_validation_error">Пароль имеет недопустимый формат</string>
+    <!-- endregion -->
+
+    <!-- region Профиль -->
+    <string name="profile_fail">Упс, что-то пошло не так!</string>
+    <string name="profile_network_connection_error">Проверьте подключение к интернету</string>
+    <string name="profile_bad_file_extension_error">Изображение имеет недопустимый формат</string>
+    <string name="profile_file_not_found_error">Запрошенное изображение не найдено</string>
+    <string name="profile_too_big_file_error">Загружаемое изображение больше 5 Мб</string>
+    <string name="profile_invalid_token">Сессия устарела</string>
+    <!-- endregion -->
+
+</resources>
