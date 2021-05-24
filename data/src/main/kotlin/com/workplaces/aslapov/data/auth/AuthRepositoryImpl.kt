@@ -5,6 +5,7 @@ import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.data.auth.network.model.RefreshTokenRequest
 import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
+import com.workplaces.aslapov.data.util.extensions.checkIsSuccessful
 import com.workplaces.aslapov.domain.login.AuthRepository
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -43,6 +44,7 @@ class AuthRepositoryImpl @Inject constructor(
         try {
             requireNotNull(accessToken)
             authApi.logout("Bearer $accessToken")
+                .checkIsSuccessful()
         } finally {
             tokenSource.logout()
             _logoutFlow.emit(Unit)

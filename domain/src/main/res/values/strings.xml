@@ -25,6 +25,7 @@
     <string name="profile_bad_file_extension_error">Изображение имеет недопустимый формат</string>
     <string name="profile_file_not_found_error">Запрошенное изображение не найдено</string>
     <string name="profile_too_big_file_error">Загружаемое изображение больше 5 Мб</string>
+    <string name="profile_invalid_token">Сессия устарела</string>
     <!-- endregion -->
 
 </resources>

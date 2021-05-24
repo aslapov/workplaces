@@ -41,9 +41,15 @@ class ProfileUseCase @Inject constructor(
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun logout() {
-        authRepository.logout()
-        userRepository.logout()
+        try {
+            authRepository.logout()
+        } catch (e: Throwable) {
+            Timber.tag(TAG).d(e)
+        } finally {
+            userRepository.logout()
+        }
     }
 
     private fun handleError(error: Throwable) {
@@ -59,6 +65,7 @@ class ProfileUseCase @Inject constructor(
             ErrorCode.BAD_FILE_EXTENSION_ERROR -> R.string.profile_bad_file_extension_error
             ErrorCode.FILE_NOT_FOUND_ERROR -> R.string.profile_file_not_found_error
             ErrorCode.TOO_BIG_FILE_ERROR -> R.string.profile_too_big_file_error
+            ErrorCode.INVALID_TOKEN -> R.string.profile_invalid_token
             else -> R.string.profile_fail
         }
     }

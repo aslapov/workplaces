@@ -20,7 +20,7 @@ import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.Navigate
 import com.workplaces.aslapov.app.base.viewmodel.NavigateUp
-import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
+import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.util.*

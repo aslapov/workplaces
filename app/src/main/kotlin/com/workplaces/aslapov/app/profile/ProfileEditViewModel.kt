@@ -35,6 +35,7 @@ class ProfileEditViewModel @Inject constructor(
     private lateinit var user: User
 
     init {
+        createInitialState()
         observeViewState()
     }
 
@@ -136,6 +137,17 @@ class ProfileEditViewModel @Inject constructor(
             state.birthDay.value != user.birthday.format(dateTimeFormatter)
 
         state = state.copy(isSaveButtonEnabled = isUserFieldsValid && isUserFieldsChanged)
+    }
+
+    private fun createInitialState() {
+        state = ProfileEditViewState(
+            firstName = ProfileFieldState("", true, null),
+            lastName = ProfileFieldState("", true, null),
+            nickName = ProfileFieldState("", true, null),
+            birthDay = ProfileFieldState("", true, null),
+            isSaveButtonEnabled = false,
+            isLoading = true,
+        )
     }
 
     private fun createViewStateFromUser(user: User) {

@@ -14,7 +14,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
-import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
+import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.util.*
