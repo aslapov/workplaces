@@ -5,14 +5,14 @@ import com.workplaces.aslapov.domain.NetworkException
 import com.workplaces.aslapov.domain.R
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class ProfileUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository,
     @RepositoryInUse private val userRepository: UserRepository
@@ -24,9 +24,8 @@ class ProfileUseCase @Inject constructor(
 
     fun getCurrentProfile(): Flow<User> {
         return userRepository.user
-            .filter { authRepository.isUserLoggedIn() }
-            .map { user -> user ?: userRepository.getCurrentUser() }
-            .flowOn(Dispatchers.IO)
+            .filterNotNull()
+            .onStart { userRepository.getCurrentUser() }
             .catch { handleError(it) }
     }
 

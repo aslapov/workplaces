@@ -19,8 +19,6 @@
     <fragment
         android:id="@+id/profile_edit_dest"
         android:name="com.workplaces.aslapov.app.profile.ProfileEditFragment"
-        tools:layout="@layout/profile_edit_fragment">
-
-    </fragment>
+        tools:layout="@layout/profile_edit_fragment" />
 
 </navigation>

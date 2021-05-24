@@ -55,7 +55,9 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel<SignUpTwoView
         }
     }
 
-    fun onBackClicked() { navigateUp() }
+    fun onBackClicked() {
+        navigateUp()
+    }
 
     private fun createInitialState(): SignUpTwoViewState {
         return SignUpTwoViewState(

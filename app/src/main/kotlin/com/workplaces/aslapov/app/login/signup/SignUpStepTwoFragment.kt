@@ -106,6 +106,5 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
         nickname.isEnabled = !isLoading
         birthday.isEnabled = !isLoading
         toolbar.isEnabled = !isLoading
-        register.isEnabled = !isLoading
     }
 }

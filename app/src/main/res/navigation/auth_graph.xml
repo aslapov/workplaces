@@ -43,13 +43,6 @@
     <fragment
         android:id="@+id/welcome_dest"
         android:name="com.workplaces.aslapov.app.login.welcome.WelcomeFragment"
-        tools:layout="@layout/welcome_fragment">
-
-        <!--<action
-            android:id="@+id/login_to_main_action"
-            app:destination="@+id/main_graph"
-            app:popUpTo="@id/login_dest"
-            app:popUpToInclusive="true" />-->
-    </fragment>
+        tools:layout="@layout/welcome_fragment" />
 
 </navigation>

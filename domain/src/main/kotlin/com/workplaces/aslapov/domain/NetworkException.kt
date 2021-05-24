@@ -2,7 +2,7 @@ package com.workplaces.aslapov.domain
 
 import java.io.IOException
 
-class NetworkException(override val message: String, val code: ErrorCode) : IOException(message)
+class NetworkException(override val message: String?, val code: ErrorCode) : IOException(message)
 
 enum class ErrorCode {
     INVALID_CREDENTIALS,

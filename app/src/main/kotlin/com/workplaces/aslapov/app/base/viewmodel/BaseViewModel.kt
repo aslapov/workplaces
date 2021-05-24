@@ -9,15 +9,11 @@ open class BaseViewModel<T : Any> : ViewModel() {
 
     val eventsQueue = EventQueue()
 
-    var viewState: MutableLiveData<T> = MutableLiveData()
+    val viewState: MutableLiveData<T> = MutableLiveData()
     protected var state: T by viewState.delegate()
 
     fun navigateTo(direction: NavDirections) {
         eventsQueue.offerEvent(Navigate(direction))
-    }
-
-    fun navigateAction(action: Int) {
-        eventsQueue.offerEvent(NavigateAction(action))
     }
 
     fun navigateUp() {

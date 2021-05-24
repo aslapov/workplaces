@@ -9,18 +9,22 @@ import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
+import com.workplaces.aslapov.app.base.viewmodel.Navigate
+import com.workplaces.aslapov.app.base.viewmodel.NavigateUp
 import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
-@ExperimentalCoroutinesApi
 class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     private val profileEditViewModel: ProfileEditViewModel by viewModels { viewModelFactory }
@@ -88,16 +92,28 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         nickname.isEnabled = !isLoading
         birthday.isEnabled = !isLoading
         toolbar.isEnabled = !isLoading
-        save.isEnabled = !isLoading
     }
 
     private fun setEditTextError(editText: EditText, fieldState: ProfileFieldState) {
-        editText.setText(fieldState.value)
-        editText.setSelection(editText.text.toString().length)
         editText.error = if (fieldState.isValid) {
             null
         } else {
             fieldState.errorId?.let { getString(it) }
+        }
+    }
+
+    override fun onEvent(event: Event) {
+        when (event) {
+            is Navigate -> findNavController().navigate(event.direction)
+            is NavigateUp -> findNavController().popBackStack()
+            is MessageEvent -> showMessage(getString(event.message))
+            is ErrorMessageEvent -> showMessage(event.errorMessage)
+            is SetProfileFieldsEvent -> {
+                firstname.setText(event.firstName)
+                lastname.setText(event.lastName)
+                nickname.setText(event.nickName)
+                birthday.setText(event.birthDay)
+            }
         }
     }
 }

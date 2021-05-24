@@ -9,9 +9,7 @@ import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
 class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
 
     private val profileViewModel: ProfileViewModel by viewModels { viewModelFactory }
@@ -31,7 +29,7 @@ class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
         observe(profileViewModel.viewState, ::onStateChanged)
         observe(profileViewModel.eventsQueue, ::onEvent)
 
-        view.findViewById<ImageView>(R.id.profile_edit).setOnClickListener { profileViewModel.onEdit() }
+        view.findViewById<ImageView>(R.id.profile_edit).setOnClickListener { profileViewModel.onEditClicked() }
         view.findViewById<ImageView>(R.id.profile_logout).setOnClickListener { profileViewModel.onLogout() }
     }
 

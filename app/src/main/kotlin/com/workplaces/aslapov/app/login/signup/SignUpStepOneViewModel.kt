@@ -33,11 +33,17 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel<SignUpOneView
         }
     }
 
-    fun onNextClicked() { navigateTo(SignUpStepOneFragmentDirections.signUpToStepTwoAction()) }
+    fun onNextClicked() {
+        navigateTo(SignUpStepOneFragmentDirections.signUpToStepTwoAction())
+    }
 
-    fun onRegisteredClicked() { navigateTo(SignUpStepOneFragmentDirections.signUpToSignInAction()) }
+    fun onRegisteredClicked() {
+        navigateTo(SignUpStepOneFragmentDirections.signUpToSignInAction())
+    }
 
-    fun onBackClicked() { navigateUp() }
+    fun onBackClicked() {
+        navigateUp()
+    }
 
     private fun createInitialState(): SignUpOneViewState {
         return SignUpOneViewState(

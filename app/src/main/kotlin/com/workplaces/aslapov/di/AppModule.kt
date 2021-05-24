@@ -11,10 +11,8 @@ import com.workplaces.aslapov.domain.login.AuthRepository
 import com.workplaces.aslapov.domain.profile.UserRepository
 import dagger.Binds
 import dagger.Module
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
-@ExperimentalCoroutinesApi
 @Module
 interface AppModule {
 

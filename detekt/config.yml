@@ -206,6 +206,9 @@ exceptions:
       - NumberFormatException
       - ParseException
       - MalformedURLException
+      - NetworkException
+      - Exception
+      - Throwable
     allowedExceptionNameRegex: '_|(ignore|expected).*'
   ThrowingExceptionFromFinally:
     active: true

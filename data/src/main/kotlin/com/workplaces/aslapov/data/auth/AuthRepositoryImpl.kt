@@ -6,22 +6,24 @@ import com.workplaces.aslapov.data.auth.network.model.RefreshTokenRequest
 import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
     private val tokenSource: TokenSharedPreferenceSource
 ) : AuthRepository {
 
-    override var accessToken: String? = tokenSource.getAccessToken()
-    override var refreshToken: String? = tokenSource.getRefreshToken()
+    override val accessToken: String? get() = tokenSource.getAccessToken()
+    override val refreshToken: String? get() = tokenSource.getRefreshToken()
 
-    private val _logoutEvent = MutableStateFlow(false)
-    override val logoutEvent: StateFlow<Boolean> = _logoutEvent
+    private val _logoutFlow = MutableSharedFlow<Unit>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    override val logoutFlow: SharedFlow<Unit> = _logoutFlow
 
     override fun isUserLoggedIn(): Boolean = accessToken != null
 
@@ -39,18 +41,11 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         try {
-            /* TODO из-за "хака" в виде сброса состояния
-                для успешного отлавливания события logout'а в нижней строке
-                следует перейти на SharedFlow */
-            _logoutEvent.value = false
-
             requireNotNull(accessToken)
             authApi.logout("Bearer $accessToken")
         } finally {
             tokenSource.logout()
-            accessToken = null
-            refreshToken = null
-            _logoutEvent.value = true
+            _logoutFlow.emit(Unit)
         }
     }
 
@@ -63,7 +58,5 @@ class AuthRepositoryImpl @Inject constructor(
 
     private fun saveToken(token: Token) {
         tokenSource.setTokens(token.accessToken, token.refreshToken)
-        accessToken = token.accessToken
-        refreshToken = token.refreshToken
     }
 }

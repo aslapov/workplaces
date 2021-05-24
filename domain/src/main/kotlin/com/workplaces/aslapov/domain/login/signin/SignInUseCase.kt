@@ -5,12 +5,10 @@ import com.workplaces.aslapov.domain.NetworkException
 import com.workplaces.aslapov.domain.R
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class SignInUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository
 ) {
