@@ -43,19 +43,8 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(R.string.sign_up_calendar_title)
-            .setSelection(Date().time)
-            .build()
-
-        birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
+        birthday.setOnClickListener { showDatePicker() }
         toolbar.setNavigationOnClickListener { signUpStepTwoViewModel.onBackClicked() }
-
-        datePicker.addOnPositiveButtonClickListener {
-            birthday.text = Date(it).convertToLocalDateViaInstant()
-                .format(dateTimeFormatter)
-                .toEditable()
-        }
 
         register.setOnClickListener {
             signUpViewModel.onSignUpClicked(
@@ -106,5 +95,20 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
         nickname.isEnabled = !isLoading
         birthday.isEnabled = !isLoading
         toolbar.isEnabled = !isLoading
+    }
+
+    private fun showDatePicker() {
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(R.string.sign_up_calendar_title)
+            .setSelection(Date().time)
+            .build()
+            .apply {
+                addOnPositiveButtonClickListener {
+                    birthday.text = Date(it).convertToLocalDateViaInstant()
+                        .format(dateTimeFormatter)
+                        .toEditable()
+                }
+            }
+            .show(parentFragmentManager, "tag")
     }
 }

@@ -40,10 +40,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun observeViewState() {
         profileUseCase.getCurrentProfile()
-            .onEach {
-                val user = it
-                createViewStateFromUser(user)
-            }
+            .onEach { user -> createViewStateFromUser(user) }
             .catch { handleError(it) }
             .launchIn(viewModelScope)
     }

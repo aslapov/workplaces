@@ -20,7 +20,7 @@ class SignInViewModel @Inject constructor(
     val isLoading = viewState.mapDistinct { it.isLoading }
 
     init {
-        viewState.value = createInitialState()
+        state = createInitialState()
     }
 
     fun onEmailEntered(email: String) {

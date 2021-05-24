@@ -17,7 +17,7 @@ open class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayou
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    open fun onEvent(event: Event) {
+    protected open fun onEvent(event: Event) {
         when (event) {
             is Navigate -> findNavController().navigate(event.direction)
             is NavigateUp -> findNavController().popBackStack()
@@ -26,7 +26,7 @@ open class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayou
         }
     }
 
-    open fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 }

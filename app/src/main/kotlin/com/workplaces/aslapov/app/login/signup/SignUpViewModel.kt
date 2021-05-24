@@ -17,7 +17,7 @@ class SignUpViewModel @Inject constructor(
     val isLoading = viewState.mapDistinct { it.isLoading }
 
     init {
-        viewState.value = createInitialState()
+        state = createInitialState()
     }
 
     var email: String = ""

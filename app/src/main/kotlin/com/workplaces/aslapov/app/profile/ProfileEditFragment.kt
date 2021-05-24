@@ -48,20 +48,9 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(R.string.profile_edit_calendar_title)
-            .setSelection(Date().time)
-            .build()
-
-        birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
+        birthday.setOnClickListener { showDatePicker() }
         toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
         save.setOnClickListener { profileEditViewModel.onSaveClicked() }
-
-        datePicker.addOnPositiveButtonClickListener {
-            birthday.text = Date(it).convertToLocalDateViaInstant()
-                .format(dateTimeFormatter)
-                .toEditable()
-        }
     }
 
     private fun setViewModelObservers() {
@@ -102,18 +91,29 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         }
     }
 
-    override fun onEvent(event: Event) {
-        when (event) {
-            is Navigate -> findNavController().navigate(event.direction)
-            is NavigateUp -> findNavController().popBackStack()
-            is MessageEvent -> showMessage(getString(event.message))
-            is ErrorMessageEvent -> showMessage(event.errorMessage)
-            is SetProfileFieldsEvent -> {
-                firstname.setText(event.firstName)
-                lastname.setText(event.lastName)
-                nickname.setText(event.nickName)
-                birthday.setText(event.birthDay)
+    private fun showDatePicker() {
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(R.string.profile_edit_calendar_title)
+            .setSelection(Date().time)
+            .build()
+            .apply {
+                addOnPositiveButtonClickListener {
+                    birthday.text = Date(it).convertToLocalDateViaInstant()
+                        .format(dateTimeFormatter)
+                        .toEditable()
+                }
             }
+            .show(parentFragmentManager, "tag")
+    }
+
+    override fun onEvent(event: Event) {
+        if (event is SetProfileFieldsEvent) {
+            firstname.setText(event.firstName)
+            lastname.setText(event.lastName)
+            nickname.setText(event.nickName)
+            birthday.setText(event.birthDay)
+        } else {
+            super.onEvent(event)
         }
     }
 }

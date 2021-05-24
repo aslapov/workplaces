@@ -7,7 +7,6 @@ import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
 import com.workplaces.aslapov.data.util.extensions.checkIsSuccessful
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
@@ -20,10 +19,7 @@ class AuthRepositoryImpl @Inject constructor(
     override val accessToken: String? get() = tokenSource.getAccessToken()
     override val refreshToken: String? get() = tokenSource.getRefreshToken()
 
-    private val _logoutFlow = MutableSharedFlow<Unit>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST,
-    )
+    private val _logoutFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
     override val logoutFlow: SharedFlow<Unit> = _logoutFlow
 
     override fun isUserLoggedIn(): Boolean = accessToken != null

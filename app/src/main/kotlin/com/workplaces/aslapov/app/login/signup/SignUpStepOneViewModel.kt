@@ -14,7 +14,7 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel<SignUpOneView
     val isNextButtonEnabled = viewState.mapDistinct { it.email.isValid && it.password.isValid }
 
     init {
-        viewState.value = createInitialState()
+        state = createInitialState()
     }
 
     fun onEmailEntered(email: String) {
