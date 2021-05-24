@@ -9,17 +9,12 @@ import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
-import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
-import com.workplaces.aslapov.app.base.viewmodel.Navigate
-import com.workplaces.aslapov.app.base.viewmodel.NavigateUp
 import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter

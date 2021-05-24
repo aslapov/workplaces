@@ -17,15 +17,17 @@ class ErrorInterceptor @Inject constructor(
         val response = chain.proceed(chain.request())
 
         if (!response.isSuccessful) {
-            try {
-                val responseBody = requireNotNull(response.body?.string())
-                val error = moshi.adapter(ApiError::class.java)
+            val responseBody = requireNotNull(response.body?.string())
+            val error = try {
+                moshi.adapter(ApiError::class.java)
                     .fromJson(responseBody)
-                requireNotNull(error)
-                throw NetworkException(error.message, error.code)
             } catch (e: Throwable) {
-                throw NetworkException(e.message, ErrorCode.UNKNOWN_ERROR)
+                val exception = NetworkException(e.message, ErrorCode.UNKNOWN_ERROR, e.cause)
+                throw exception
             }
+
+            requireNotNull(error)
+            throw NetworkException(error.message, error.code)
         }
 
         return response
