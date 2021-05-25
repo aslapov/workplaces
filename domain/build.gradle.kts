@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    testImplementation(project(":base-test"))
+
     api(DomainDependency.KOTLIN)
 
     api(DomainDependency.DAGGER)
@@ -63,13 +65,6 @@ dependencies {
 
     api(DomainDependency.TIMBER)
     api(DomainDependency.LOGGER)
-
-    testApi(project(":testbase"))
-    testApi(TestDependency.KOTEST)
-    testApi(TestDependency.KOTEST_ASSERTS)
-    testApi(TestDependency.KOTEST_DATASET)
-    testApi(TestDependency.COROUTINES)
-    testApi(TestDependency.MOCKK)
 
     kapt(DomainDependency.MOSHI_COMPILER)
 }

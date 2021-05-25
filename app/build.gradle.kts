@@ -133,7 +133,7 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
-    testImplementation(project(":testbase"))
+    testImplementation(project(":base-test"))
 
     implementation(AppDependency.CORE)
     implementation(AppDependency.APPCOMPAT)
@@ -150,14 +150,4 @@ dependencies {
     implementation(AppDependency.NAVIGATION_UI_KTX)
 
     kapt(AppDependency.DAGGER_COMPILER)
-
-    testImplementation(TestDependency.JUNIT)
-    testImplementation(TestDependency.MOCKITO)
-    testImplementation(TestDependency.ASSERTJ)
-    testImplementation(TestDependency.ANDROIDX)
-    testImplementation(TestDependency.KOTEST)
-    testImplementation(TestDependency.KOTEST_ASSERTS)
-    testImplementation(TestDependency.KOTEST_DATASET)
-    testImplementation(TestDependency.COROUTINES)
-    testImplementation(TestDependency.MOCKK)
 }

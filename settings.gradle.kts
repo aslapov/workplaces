@@ -23,5 +23,5 @@ include(
     "app",
     "data",
     "domain",
-    "testbase"
+    "base-test"
 )

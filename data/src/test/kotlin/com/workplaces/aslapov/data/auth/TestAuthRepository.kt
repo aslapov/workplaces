@@ -1,10 +1,10 @@
 package com.workplaces.aslapov.data.auth
 
+import com.workplaces.aslapov.base.test.*
 import com.workplaces.aslapov.data.auth.localstore.TokenStore
 import com.workplaces.aslapov.data.auth.localstore.TokenStoreStub
 import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.domain.login.AuthRepository
-import com.workplaces.test.base.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk

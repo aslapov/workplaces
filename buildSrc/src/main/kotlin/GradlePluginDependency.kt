@@ -14,6 +14,7 @@ object GradlePluginId {
     const val SAFE_ARGS = "androidx.navigation.safeargs"
 
     const val KOTLIN_ANDROID = "android"
+    const val KOTLIN_JVM = "jvm"
     const val KAPT = "kapt"
 
     const val DETEKT = "io.gitlab.arturbosch.detekt"

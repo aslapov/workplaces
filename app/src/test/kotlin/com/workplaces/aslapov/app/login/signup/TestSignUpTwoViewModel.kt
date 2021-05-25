@@ -4,8 +4,8 @@ import com.redmadrobot.extensions.lifecycle.Event
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.TestLiveDataListener
 import com.workplaces.aslapov.app.base.viewmodel.Navigate
+import com.workplaces.aslapov.base.test.*
 import com.workplaces.aslapov.domain.login.signup.SignUpUseCase
-import com.workplaces.test.base.*
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk

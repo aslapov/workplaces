@@ -1,4 +1,4 @@
-package com.workplaces.test.base
+package com.workplaces.aslapov.base.test
 
 import io.kotest.core.listeners.TestListener
 import io.kotest.core.test.TestCase
