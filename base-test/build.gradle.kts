@@ -7,7 +7,6 @@ dependencies {
 
     api(TestDependency.KOTEST_RUNNER)
     api(TestDependency.KOTEST_ASSERTIONS)
-    api(TestDependency.KOTEST_PROPERTY)
     api(TestDependency.KOTEST_DATASET)
     api(TestDependency.COROUTINES)
     api(TestDependency.MOCKK)

@@ -1,6 +1,6 @@
 package com.workplaces.aslapov.data.auth.localstore
 
-class TokenStoreStub : TokenStore {
+class StubTokenStore : TokenStore {
 
     private var _accessToken: String? = null
     private var _refreshToken: String? = null
