@@ -1,13 +1,13 @@
 package com.workplaces.aslapov.domain.login
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharedFlow
 
 interface AuthRepository {
 
     val accessToken: String?
     val refreshToken: String?
 
-    val logoutEvent: StateFlow<Boolean>
+    val logoutFlow: SharedFlow<Unit>
 
     fun isUserLoggedIn(): Boolean
 

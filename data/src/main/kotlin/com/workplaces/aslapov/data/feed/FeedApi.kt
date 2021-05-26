@@ -5,17 +5,16 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import java.util.*
 
 interface FeedApi {
     @GET("feed")
     suspend fun getFeed(): List<PostResponse>
 
     @POST("feed/{id}/like")
-    suspend fun like(@Path("id") id: UUID)
+    suspend fun like(@Path("id") id: String)
 
     @DELETE("feed/{id}/like")
-    suspend fun removeLike(@Path("id") id: UUID)
+    suspend fun removeLike(@Path("id") id: String)
 
     @GET("feed/favorite")
     suspend fun getLikedFeed(): List<PostResponse>

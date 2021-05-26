@@ -58,8 +58,6 @@ dependencies {
     testImplementation(project(":base-test"))
 
     implementation(DataDependency.CORE)
-    implementation(DataDependency.COROUTINES)
-
 
     implementation(DataDependency.OKHTTP_LOGGING) {
         exclude("org.json", "json")

@@ -11,10 +11,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
-import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
+import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.util.*
@@ -42,20 +43,9 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(R.string.profile_edit_calendar_title)
-            .setSelection(Date().time)
-            .build()
-
-        birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
+        birthday.setOnClickListener { showDatePicker() }
         toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
         save.setOnClickListener { profileEditViewModel.onSaveClicked() }
-
-        datePicker.addOnPositiveButtonClickListener {
-            birthday.text = Date(it).convertToLocalDateViaInstant()
-                .format(dateTimeFormatter)
-                .toEditable()
-        }
     }
 
     private fun setViewModelObservers() {
@@ -86,16 +76,39 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         nickname.isEnabled = !isLoading
         birthday.isEnabled = !isLoading
         toolbar.isEnabled = !isLoading
-        save.isEnabled = !isLoading
     }
 
     private fun setEditTextError(editText: EditText, fieldState: ProfileFieldState) {
-        editText.setText(fieldState.value)
-        editText.setSelection(editText.text.toString().length)
         editText.error = if (fieldState.isValid) {
             null
         } else {
             fieldState.errorId?.let { getString(it) }
+        }
+    }
+
+    private fun showDatePicker() {
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(R.string.profile_edit_calendar_title)
+            .setSelection(Date().time)
+            .build()
+            .apply {
+                addOnPositiveButtonClickListener {
+                    birthday.text = Date(it).convertToLocalDateViaInstant()
+                        .format(dateTimeFormatter)
+                        .toEditable()
+                }
+            }
+            .show(parentFragmentManager, "tag")
+    }
+
+    override fun onEvent(event: Event) {
+        if (event is SetProfileFieldsEvent) {
+            firstname.setText(event.firstName)
+            lastname.setText(event.lastName)
+            nickname.setText(event.nickName)
+            birthday.setText(event.birthDay)
+        } else {
+            super.onEvent(event)
         }
     }
 }

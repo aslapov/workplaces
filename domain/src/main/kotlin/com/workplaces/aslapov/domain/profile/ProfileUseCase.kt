@@ -5,8 +5,10 @@ import com.workplaces.aslapov.domain.NetworkException
 import com.workplaces.aslapov.domain.R
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -22,9 +24,8 @@ class ProfileUseCase @Inject constructor(
 
     fun getCurrentProfile(): Flow<User> {
         return userRepository.user
-            .filter { authRepository.isUserLoggedIn() }
-            .map { user -> user ?: userRepository.getCurrentUser() }
-            .flowOn(Dispatchers.IO)
+            .filterNotNull()
+            .onStart { userRepository.getCurrentUser() }
             .catch { handleError(it) }
     }
 
@@ -40,9 +41,15 @@ class ProfileUseCase @Inject constructor(
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun logout() {
-        authRepository.logout()
-        userRepository.logout()
+        try {
+            authRepository.logout()
+        } catch (e: Throwable) {
+            Timber.tag(TAG).d(e)
+        } finally {
+            userRepository.logout()
+        }
     }
 
     private fun handleError(error: Throwable) {
@@ -58,6 +65,7 @@ class ProfileUseCase @Inject constructor(
             ErrorCode.BAD_FILE_EXTENSION_ERROR -> R.string.profile_bad_file_extension_error
             ErrorCode.FILE_NOT_FOUND_ERROR -> R.string.profile_file_not_found_error
             ErrorCode.TOO_BIG_FILE_ERROR -> R.string.profile_too_big_file_error
+            ErrorCode.INVALID_TOKEN -> R.string.profile_invalid_token
             else -> R.string.profile_fail
         }
     }

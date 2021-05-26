@@ -14,7 +14,7 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel<SignUpOneView
     val isNextButtonEnabled = viewState.mapDistinct { it.email.isValid && it.password.isValid }
 
     init {
-        viewState.value = createInitialState()
+        state = createInitialState()
     }
 
     fun onEmailEntered(email: String) {
@@ -33,11 +33,17 @@ class SignUpStepOneViewModel @Inject constructor() : BaseViewModel<SignUpOneView
         }
     }
 
-    fun onNextClicked() { navigateTo(SignUpStepOneFragmentDirections.signUpToStepTwoAction()) }
+    fun onNextClicked() {
+        navigateTo(SignUpStepOneFragmentDirections.signUpToStepTwoAction())
+    }
 
-    fun onRegisteredClicked() { navigateTo(SignUpStepOneFragmentDirections.signUpToSignInAction()) }
+    fun onRegisteredClicked() {
+        navigateTo(SignUpStepOneFragmentDirections.signUpToSignInAction())
+    }
 
-    fun onBackClicked() { navigateUp() }
+    fun onBackClicked() {
+        navigateUp()
+    }
 
     private fun createInitialState(): SignUpOneViewState {
         return SignUpOneViewState(

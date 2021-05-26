@@ -1,5 +1,6 @@
 package com.workplaces.aslapov.data.auth.network
 
+import com.workplaces.aslapov.data.auth.network.model.RefreshTokenRequest
 import com.workplaces.aslapov.data.auth.network.model.Token
 import com.workplaces.aslapov.data.auth.network.model.UserCredentialsNetwork
 import retrofit2.Response
@@ -18,5 +19,5 @@ interface AuthApi {
     suspend fun logout(@Header("Authorization") tokenHeader: String): Response<Unit>
 
     @POST("/auth/refresh")
-    suspend fun refresh(@Body token: String): Token
+    suspend fun refresh(@Body token: RefreshTokenRequest): Token
 }

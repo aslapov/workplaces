@@ -16,11 +16,11 @@ class SignInViewModel @Inject constructor(
 
     val email = viewState.mapDistinct { it.email }
     val password = viewState.mapDistinct { it.password }
-    val isNextButtonEnabled = viewState.mapDistinct { it.email.isValid && it.password.isValid }
+    val isNextButtonEnabled = viewState.mapDistinct { it.email.isValid && it.password.isValid && !it.isLoading }
     val isLoading = viewState.mapDistinct { it.isLoading }
 
     init {
-        viewState.value = createInitialState()
+        state = createInitialState()
     }
 
     fun onEmailEntered(email: String) {
@@ -53,9 +53,13 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun onRegisterClicked() { navigateTo(SignInFragmentDirections.signInToSignUpAction()) }
+    fun onRegisterClicked() {
+        navigateTo(SignInFragmentDirections.signInToSignUpAction())
+    }
 
-    fun onBackClicked() { navigateUp() }
+    fun onBackClicked() {
+        navigateUp()
+    }
 
     private fun createInitialState(): SignInViewState {
         return SignInViewState(

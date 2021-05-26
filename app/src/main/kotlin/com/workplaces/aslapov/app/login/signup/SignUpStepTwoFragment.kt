@@ -14,7 +14,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.observe
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
-import com.workplaces.aslapov.data.util.convertToLocalDateViaInstant
+import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.util.*
@@ -43,19 +43,8 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(R.string.sign_up_calendar_title)
-            .setSelection(Date().time)
-            .build()
-
-        birthday.setOnClickListener { datePicker.show(parentFragmentManager, "tag") }
+        birthday.setOnClickListener { showDatePicker() }
         toolbar.setNavigationOnClickListener { signUpStepTwoViewModel.onBackClicked() }
-
-        datePicker.addOnPositiveButtonClickListener {
-            birthday.text = Date(it).convertToLocalDateViaInstant()
-                .format(dateTimeFormatter)
-                .toEditable()
-        }
 
         register.setOnClickListener {
             signUpViewModel.onSignUpClicked(
@@ -106,6 +95,20 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
         nickname.isEnabled = !isLoading
         birthday.isEnabled = !isLoading
         toolbar.isEnabled = !isLoading
-        register.isEnabled = !isLoading
+    }
+
+    private fun showDatePicker() {
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(R.string.sign_up_calendar_title)
+            .setSelection(Date().time)
+            .build()
+            .apply {
+                addOnPositiveButtonClickListener {
+                    birthday.text = Date(it).convertToLocalDateViaInstant()
+                        .format(dateTimeFormatter)
+                        .toEditable()
+                }
+            }
+            .show(parentFragmentManager, "tag")
     }
 }

@@ -2,7 +2,7 @@ private object DomainVersions {
     const val RETROFIT = "2.9.0"
     const val TIMBER = "4.7.1"
     const val LOGGER = "2.2.0"
-    const val COROUTINES = "1.3.9"
+    const val COROUTINES = "1.5.0"
 }
 
 object DomainDependency {

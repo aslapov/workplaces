@@ -20,7 +20,7 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel<SignUpTwoView
     }
 
     init {
-        viewState.value = createInitialState()
+        state = createInitialState()
     }
 
     fun onFirstNameEntered(firstName: String) {
@@ -55,7 +55,9 @@ class SignUpStepTwoViewModel @Inject constructor() : BaseViewModel<SignUpTwoView
         }
     }
 
-    fun onBackClicked() { navigateUp() }
+    fun onBackClicked() {
+        navigateUp()
+    }
 
     private fun createInitialState(): SignUpTwoViewState {
         return SignUpTwoViewState(

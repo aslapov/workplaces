@@ -67,6 +67,5 @@ class SignInFragment : BaseFragment(R.layout.signin_fragment) {
         password.isEnabled = !isLoading
         toolbar.isEnabled = !isLoading
         register.isEnabled = !isLoading
-        signIn.isEnabled = !isLoading
     }
 }
