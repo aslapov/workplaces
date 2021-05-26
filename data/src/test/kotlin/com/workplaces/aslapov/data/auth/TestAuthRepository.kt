@@ -18,7 +18,10 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import retrofit2.Response
@@ -27,19 +30,18 @@ class TestAuthRepository : FreeSpec({
 
     Feature("Logout") {
 
-        lateinit var testDispatcher: TestCoroutineDispatcher
+        lateinit var testScope: TestCoroutineScope
         lateinit var mockAuthApi: AuthApi
         lateinit var mockTokenSource: TokenStore
         lateinit var authRepository: AuthRepository
+        lateinit var logoutFlowValue: Unit
 
         beforeEachScenario {
-            testDispatcher = TestCoroutineDispatcher()
-            Dispatchers.setMain(testDispatcher)
+            testScope = TestCoroutineScope()
         }
 
         afterEachScenario {
-            testDispatcher.cleanupTestCoroutines()
-            Dispatchers.resetMain()
+            testScope.cleanupTestCoroutines()
         }
 
         Scenario("Logout") {
@@ -54,6 +56,10 @@ class TestAuthRepository : FreeSpec({
                 mockTokenSource = StubTokenStore()
                 mockTokenSource.setTokens(accessToken, "refreshToken")
                 authRepository = AuthRepositoryImpl(mockAuthApi, mockTokenSource)
+
+                testScope.launch {
+                    logoutFlowValue = authRepository.logoutFlow.replayCache.first()
+                }
             }
 
             When("Logout is happened") {
@@ -68,8 +74,7 @@ class TestAuthRepository : FreeSpec({
             }
 
             And("Logout event should be emitted") {
-                val logoutFlowValue = authRepository.logoutEvent.value
-                logoutFlowValue.shouldBeTrue()
+                logoutFlowValue.shouldBe(Unit)
             }
 
             And("Logout api method has been called") {
@@ -105,8 +110,8 @@ class TestAuthRepository : FreeSpec({
             }
 
             And("Logout event should be emitted") {
-                val logoutFlowValue = authRepository.logoutEvent.value
-                logoutFlowValue.shouldBeTrue()
+                val logoutFlowValue = authRepository.logoutFlow.replayCache.first()
+                logoutFlowValue.shouldBe(Unit)
             }
 
             And("Logout api method has been called") {
