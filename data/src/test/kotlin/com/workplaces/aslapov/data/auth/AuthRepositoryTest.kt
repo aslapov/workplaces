@@ -1,32 +1,25 @@
 package com.workplaces.aslapov.data.auth
 
 import com.workplaces.aslapov.base.test.*
-import com.workplaces.aslapov.data.auth.localstore.TokenStore
 import com.workplaces.aslapov.data.auth.localstore.StubTokenStore
+import com.workplaces.aslapov.data.auth.localstore.TokenStore
 import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.domain.login.AuthRepository
-import com.workplaces.aslapov.domain.login.UserCredentials
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldBeNull
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldBeEmpty
-import io.mockk.Runs
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
+import okhttp3.ResponseBody.Companion.toResponseBody
+import retrofit2.HttpException
 import retrofit2.Response
+import java.lang.Exception
 
 class AuthRepositoryTest : FreeSpec({
 
@@ -91,10 +84,13 @@ class AuthRepositoryTest : FreeSpec({
         Scenario("Logout with failed api request") {
 
             val accessToken = "accessToken"
+            var logoutException: Throwable? = null
 
             Given("Initialization auth repository") {
                 mockAuthApi = mockk {
-                    coEvery { logout("Bearer $accessToken") } throws Exception()
+                    coEvery {
+                        logout("Bearer $accessToken")
+                    } returns Response.error(401, "".toResponseBody(null))
                 }
 
                 mockTokenSource = StubTokenStore()
@@ -109,16 +105,18 @@ class AuthRepositoryTest : FreeSpec({
             }
 
             When("Logout is happened") {
-                var isExceptionThrown = false
                 try {
                     authRepository.logout()
-                } catch (e: Exception) {
-                    isExceptionThrown = true
+                } catch (exception: Exception) {
+                    logoutException = exception
                 }
-                isExceptionThrown.shouldBeTrue()
             }
 
-            Then("Logout api method has been called") {
+            Then("Logout failed with exception") {
+                logoutException.shouldBeInstanceOf<HttpException>()
+            }
+
+            And("Logout api method has been called") {
                 coVerify {
                     mockAuthApi.logout("Bearer $accessToken")
                 }
@@ -139,6 +137,7 @@ class AuthRepositoryTest : FreeSpec({
         Scenario("Logout with null access token") {
 
             val accessToken: String? = null
+            var logoutException: Throwable? = null
 
             Given("Initialization auth repository") {
                 mockAuthApi = mockk {
@@ -156,13 +155,15 @@ class AuthRepositoryTest : FreeSpec({
             }
 
             When("Logout is happened") {
-                var isExceptionThrown = false
                 try {
                     authRepository.logout()
-                } catch (e: IllegalArgumentException) {
-                    isExceptionThrown = true
+                } catch (exception: Exception) {
+                    logoutException = exception
                 }
-                isExceptionThrown.shouldBeTrue()
+            }
+
+            Then("Logout failed with exception") {
+                logoutException.shouldBeInstanceOf<IllegalArgumentException>()
             }
 
             And("Tokens in token store should be null") {

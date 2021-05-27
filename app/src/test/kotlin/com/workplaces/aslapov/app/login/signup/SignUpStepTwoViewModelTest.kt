@@ -49,38 +49,37 @@ class SignUpStepTwoViewModelTest : FreeSpec({
 
         Scenario("User entered first name") {
 
-            val validFirstNameFieldState = SignUpTwoFieldState(
-                value = validFirstName,
-                isValid = true,
-                errorId = null
-            )
-
             val notValidFirstName = "123"
-            val notValidFirstNameFieldState = SignUpTwoFieldState(
-                value = notValidFirstName,
-                isValid = false,
-                errorId = R.string.sign_up_firstname_error
-            )
 
             Given("Initialization Step 2 Sign-up ViewModel") {
                 signUpStepTwoViewModel = SignUpStepTwoViewModel()
                 signUpStepTwoViewModel.firstName.observeForever {}
             }
 
-            When("First name \"$validFirstName\" entered") {
+            When("Valid first name entered") {
                 signUpStepTwoViewModel.onFirstNameEntered(validFirstName)
             }
 
-            Then("First name livedata triggered to be value of first name field state") {
+            Then("First name field state is valid") {
+                val validFirstNameFieldState = SignUpTwoFieldState(
+                    value = validFirstName,
+                    isValid = true,
+                    errorId = null
+                )
                 signUpStepTwoViewModel.firstName.value
                     .shouldBe(validFirstNameFieldState)
             }
 
-            When("Not valid first name \"$notValidFirstName\" entered") {
+            When("Not valid first name entered") {
                 signUpStepTwoViewModel.onFirstNameEntered(notValidFirstName)
             }
 
-            Then("First name livedata triggered to be value of first name field state") {
+            Then("First name field state is not valid state with errorId") {
+                val notValidFirstNameFieldState = SignUpTwoFieldState(
+                    value = notValidFirstName,
+                    isValid = false,
+                    errorId = R.string.sign_up_firstname_error
+                )
                 signUpStepTwoViewModel.firstName.value
                     .shouldBe(notValidFirstNameFieldState)
             }
@@ -99,7 +98,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                 signUpStepTwoViewModel.isRegisterButtonEnabled.observeForever {}
             }
 
-            When("First name \"$validFirstName\" entered") {
+            When("Valid first name entered") {
                 signUpStepTwoViewModel.onFirstNameEntered(validFirstName)
             }
 
@@ -108,7 +107,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                     .shouldBe(false)
             }
 
-            When("Last name \"$validLastName\" entered") {
+            When("Valid last name entered") {
                 signUpStepTwoViewModel.onLastNameEntered(validLastName)
             }
 
@@ -117,7 +116,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                     .shouldBe(false)
             }
 
-            When("Nick name \"$validNickName\" entered") {
+            When("Valid nick name entered") {
                 signUpStepTwoViewModel.onNickNameEntered(validNickName)
             }
 
@@ -126,7 +125,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                     .shouldBe(false)
             }
 
-            When("Birthday \"$validBirthDay\" entered") {
+            When("Valid birthday entered") {
                 signUpStepTwoViewModel.onBirthDayEntered(validBirthDay)
             }
 
@@ -135,7 +134,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                     .shouldBe(true)
             }
 
-            When("User entered not valid first name \"$notValidFirstName\"") {
+            When("Not valid first name entered") {
                 signUpStepTwoViewModel.onFirstNameEntered(notValidFirstName)
             }
 
