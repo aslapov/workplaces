@@ -160,7 +160,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                             nickname = validNickName,
                             birthday = validBirthDay,
                         )
-                    } returns Unit
+                    } coAnswers { delay(1000) }
                 }
 
                 signUpViewModel = SignUpViewModel(mockSignUpUseCase)
@@ -182,7 +182,7 @@ class SignUpStepTwoViewModelTest : FreeSpec({
             }
 
             When("Success response received") {
-                //testDispatcher.advanceUntilIdle()
+                testDispatcher.advanceUntilIdle()
             }
 
             Then("Income event of navigating to welcome screen") {
@@ -223,7 +223,10 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                             nickname = validNickName,
                             birthday = validBirthDay,
                         )
-                    } throws SignUpException(errorMessageId)
+                    } coAnswers {
+                        delay(1000)
+                        throw SignUpException(errorMessageId)
+                    }
                 }
 
                 signUpViewModel = SignUpViewModel(mockSignUpUseCase)
