@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -30,7 +30,7 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
     private val birthday: EditText get() = requireView().findViewById(R.id.sign_up_two_birthday)
     private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.sign_up_two_toolbar)
     private val register: Button get() = requireView().findViewById(R.id.sign_up_two_register)
-    private val spinner: ProgressBar get() = requireView().findViewById(R.id.sign_up_two_spinner)
+    private val progress: LinearLayout get() = requireView().findViewById(R.id.sign_up_progress_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,12 +89,7 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
     }
 
     private fun onLoading(isLoading: Boolean) {
-        spinner.isVisible = isLoading
-        firstname.isEnabled = !isLoading
-        lastname.isEnabled = !isLoading
-        nickname.isEnabled = !isLoading
-        birthday.isEnabled = !isLoading
-        toolbar.isEnabled = !isLoading
+        progress.isVisible = isLoading
     }
 
     private fun showDatePicker() {

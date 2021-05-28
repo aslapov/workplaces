@@ -5,7 +5,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -30,7 +30,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
     private val birthday: EditText get() = requireView().findViewById(R.id.profile_edit_birthday)
     private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.profile_edit_toolbar)
     private val save: Button get() = requireView().findViewById(R.id.profile_edit_save)
-    private val spinner: ProgressBar get() = requireView().findViewById(R.id.profile_edit_spinner)
+    private val progress: LinearLayout get() = requireView().findViewById(R.id.profile_progress_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +70,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
     }
 
     private fun onLoading(isLoading: Boolean) {
-        spinner.isVisible = isLoading
-        firstname.isEnabled = !isLoading
-        lastname.isEnabled = !isLoading
-        nickname.isEnabled = !isLoading
-        birthday.isEnabled = !isLoading
-        toolbar.isEnabled = !isLoading
+        progress.isVisible = isLoading
     }
 
     private fun setEditTextError(editText: EditText, fieldState: ProfileFieldState) {

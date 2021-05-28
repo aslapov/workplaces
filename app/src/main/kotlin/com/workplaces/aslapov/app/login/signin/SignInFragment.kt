@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -23,7 +23,7 @@ class SignInFragment : BaseFragment(R.layout.signin_fragment) {
     private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.sign_in_toolbar)
     private val register: Button get() = requireView().findViewById(R.id.sign_in_do_register)
     private val signIn: Button get() = requireView().findViewById(R.id.sign_in)
-    private val spinner: ProgressBar get() = requireView().findViewById(R.id.sign_in_spinner)
+    private val progress: LinearLayout get() = requireView().findViewById(R.id.sign_in_progress_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +62,6 @@ class SignInFragment : BaseFragment(R.layout.signin_fragment) {
     }
 
     private fun onLoading(isLoading: Boolean) {
-        spinner.isVisible = isLoading
-        email.isEnabled = !isLoading
-        password.isEnabled = !isLoading
-        toolbar.isEnabled = !isLoading
-        register.isEnabled = !isLoading
+        progress.isVisible = isLoading
     }
 }
