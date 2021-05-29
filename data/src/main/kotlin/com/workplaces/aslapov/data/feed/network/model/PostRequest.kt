@@ -1,4 +1,4 @@
-package com.workplaces.aslapov.data.profile.network.model
+package com.workplaces.aslapov.data.feed.network.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

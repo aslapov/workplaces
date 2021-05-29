@@ -4,7 +4,7 @@ import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.squareup.moshi.Moshi
 import com.workplaces.aslapov.data.auth.network.AuthApi
-import com.workplaces.aslapov.data.feed.FeedApi
+import com.workplaces.aslapov.data.feed.network.FeedApi
 import com.workplaces.aslapov.data.interceptors.ErrorInterceptor
 import com.workplaces.aslapov.data.interceptors.TokenInterceptor
 import com.workplaces.aslapov.data.interceptors.UserAuthenticator

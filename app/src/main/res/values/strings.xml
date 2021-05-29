@@ -56,9 +56,18 @@
     <!-- endregion -->
 
     <!-- region Экран Ленты -->
+    <string name="feed_toolbar_title">Популярное</string>
     <string name="feed_emptiness">Пустота</string>
     <string name="feed_emptiness_advise">Вам нужны друзья, чтобы лента стала живой</string>
     <string name="feed_emptiness_find_friends">Найти друзей</string>
+    <string name="feed_error">Упс...</string>
+    <string name="feed_error_description">Что-то пошло не так</string>
+    <string name="feed_error_refresh">Обновить</string>
+    <!-- endregion -->
+
+    <!-- region Экран Пост -->
+    <string name="post_text">Soprano, we like to keep it on a high note. It's levels to it, you and I know</string>
+    <string name="post_location">Россия, Москва</string>
     <!-- endregion -->
 
     <!-- region Экран Профиля -->

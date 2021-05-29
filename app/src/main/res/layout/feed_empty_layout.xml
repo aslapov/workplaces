@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".app.feed.FeedEmptyFragment">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/feed_empty_emptiness_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/emptiness"
-        app:layout_constraintBottom_toTopOf="@id/feed_empty_emptiness"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/feed_empty_emptiness" />
 
     <TextView
         android:id="@+id/feed_empty_emptiness"
@@ -23,10 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:text="@string/feed_emptiness"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/feed_empty_advise"
@@ -37,19 +30,17 @@
         android:textAlignment="center"
         android:gravity="center"
         android:text="@string/feed_emptiness_advise"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feed_empty_emptiness" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/feed_empty_emptiness" />
 
     <Button
         android:id="@+id/feed_empty_find_friends"
         style="@style/Widget.App.Button.TextButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
         android:text="@string/feed_emptiness_find_friends"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feed_empty_advise" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/feed_empty_advise" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

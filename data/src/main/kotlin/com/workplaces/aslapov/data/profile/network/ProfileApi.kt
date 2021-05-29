@@ -1,7 +1,7 @@
 package com.workplaces.aslapov.data.profile.network
 
-import com.workplaces.aslapov.data.profile.network.model.PostRequest
-import com.workplaces.aslapov.data.profile.network.model.PostResponse
+import com.workplaces.aslapov.data.feed.network.model.PostRequest
+import com.workplaces.aslapov.data.feed.network.model.PostResponse
 import com.workplaces.aslapov.data.profile.network.model.UserNetwork
 import retrofit2.Response
 import retrofit2.http.*

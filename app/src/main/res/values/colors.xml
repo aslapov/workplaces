@@ -3,6 +3,20 @@
     <color name="colorPrimary">#fe4407</color>
     <color name="colorPrimaryDark">#ffffff</color>
 
+    <color name="colorOrange">#fe4407</color>
+    <color name="colorDarkGrey">#7481A0</color>
+    <color name="colorMiddleGrey">#A2ACC1</color>
+    <color name="colorGrey">#DBE3F5</color>
+    <color name="colorLightGrey">#F5F5F5</color>
+    <color name="colorLightGreyBlue">#F7F8FB</color>
+
+    <color name="colorOnOrange">#FF6532</color>
+    <color name="colorOnDarkGrey">#E3E9F6</color>
+    <color name="colorOnMiddleGrey">#7481A0</color>
+    <color name="colorOnGrey">#425173</color>
+    <color name="colorOnLightGrey">#292929</color>
+    <color name="colorOnLightGreyBlue">#323641</color>
+
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 

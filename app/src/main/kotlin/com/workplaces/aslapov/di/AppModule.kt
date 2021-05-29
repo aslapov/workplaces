@@ -5,10 +5,13 @@ import com.workplaces.aslapov.ResourceProvider
 import com.workplaces.aslapov.data.auth.AuthRepositoryImpl
 import com.workplaces.aslapov.data.auth.localstore.TokenSharedPreferenceSource
 import com.workplaces.aslapov.data.auth.localstore.TokenStore
+import com.workplaces.aslapov.data.feed.PostRepositoryImpl
+import com.workplaces.aslapov.data.feed.StubPostRepository
 import com.workplaces.aslapov.data.profile.FakeUserRepository
 import com.workplaces.aslapov.data.profile.UserRepositoryImpl
 import com.workplaces.aslapov.domain.di.Mock
 import com.workplaces.aslapov.domain.di.RepositoryInUse
+import com.workplaces.aslapov.domain.feed.PostRepository
 import com.workplaces.aslapov.domain.login.AuthRepository
 import com.workplaces.aslapov.domain.profile.UserRepository
 import dagger.Binds
@@ -40,4 +43,14 @@ interface AppModule {
     @Singleton
     @Binds
     fun bindTokenStore(tokenStore: TokenSharedPreferenceSource): TokenStore
+
+    @Singleton
+    @RepositoryInUse
+    @Binds
+    fun bindPostRepository(postRepository: PostRepositoryImpl): PostRepository
+
+    @Singleton
+    @Mock
+    @Binds
+    fun bindStubPostRepository(postRepository: StubPostRepository): PostRepository
 }

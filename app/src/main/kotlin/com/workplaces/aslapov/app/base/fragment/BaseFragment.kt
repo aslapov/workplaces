@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.extensions.lifecycle.Event
-import com.workplaces.aslapov.app.base.viewmodel.ErrorMessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.app.base.viewmodel.Navigate
 import com.workplaces.aslapov.app.base.viewmodel.NavigateUp
@@ -22,7 +21,6 @@ open class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayou
             is Navigate -> findNavController().navigate(event.direction)
             is NavigateUp -> findNavController().popBackStack()
             is MessageEvent -> showMessage(getString(event.message))
-            is ErrorMessageEvent -> showMessage(event.errorMessage)
         }
     }
 

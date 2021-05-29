@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.feed.FeedFragment">
+
+    <include
+        android:id="@+id/feed_layout"
+        android:visibility="gone"
+        layout="@layout/feed_layout"/>
+
+    <include
+        android:id="@+id/feed_progress_layout"
+        android:visibility="gone"
+        layout="@layout/loading_layout"/>
+
+    <include
+        android:id="@+id/feed_empty_layout"
+        android:visibility="gone"
+        layout="@layout/feed_empty_layout"/>
+
+    <include
+        android:id="@+id/feed_error_layout"
+        android:visibility="gone"
+        layout="@layout/feed_error_layout"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

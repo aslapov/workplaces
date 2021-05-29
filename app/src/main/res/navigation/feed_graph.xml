@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/feed_empty_dest"
-        android:name="com.workplaces.aslapov.app.feed.FeedEmptyFragment"
-        tools:layout="@layout/feed_empty_fragment" />
+        android:name="com.workplaces.aslapov.app.feed.FeedFragment"
+        tools:layout="@layout/feed_empty_layout" />
 
 </navigation>

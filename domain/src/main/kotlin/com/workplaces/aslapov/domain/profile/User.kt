@@ -7,5 +7,5 @@ data class User(
     val lastName: String,
     val nickName: String?,
     val avatarUrl: String?,
-    val birthday: LocalDate
+    val birthday: LocalDate,
 )

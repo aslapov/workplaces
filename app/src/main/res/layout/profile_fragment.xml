@@ -109,7 +109,7 @@
     <Button
         android:id="@+id/profile_find_friends"
         style="@style/Widget.App.Button.TextButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
         android:text="@string/profile_find_friends"
