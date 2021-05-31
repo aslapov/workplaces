@@ -63,6 +63,8 @@ dependencies {
         exclude("org.json", "json")
     }
 
+    implementation(DataDependency.SECURITY_CRYPTO)
+
     kapt(DataDependency.DAGGER_COMPILER)
     kapt(DataDependency.MOSHI_COMPILER)
 

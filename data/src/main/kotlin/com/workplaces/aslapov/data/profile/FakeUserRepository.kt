@@ -15,7 +15,7 @@ class FakeUserRepository @Inject constructor(
     private val profileApi: FakeProfileApi
 ) : UserRepository {
 
-    private val _user: MutableStateFlow<User?> = MutableStateFlow(userSource.getUser()?.toUser())
+    private val _user: MutableStateFlow<User?> = MutableStateFlow(userSource.getUser())
     override val user: StateFlow<User?> = _user
 
     override suspend fun updateUser(user: User): User {
@@ -31,7 +31,7 @@ class FakeUserRepository @Inject constructor(
     }
 
     override fun logout() {
-        userSource.logout()
+        userSource.setUser(null)
         _user.value = null
     }
 

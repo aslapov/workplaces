@@ -1,7 +1,10 @@
 package com.workplaces.aslapov.data.auth.localstore
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import javax.inject.Inject
 
 class TokenSharedPreferenceSource @Inject constructor(context: Context) : TokenStore {
@@ -12,7 +15,17 @@ class TokenSharedPreferenceSource @Inject constructor(context: Context) : TokenS
         private const val REFRESH_TOKEN_KEY: String = "REFRESH_TOKEN_KEY"
     }
 
-    private val sharedPreferences = context.getSharedPreferences(TOKEN_SHARED_PREFS_FILE, Context.MODE_PRIVATE)
+    private val mainKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
+        context,
+        TOKEN_SHARED_PREFS_FILE,
+        mainKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
+    )
 
     override fun getAccessToken(): String? = sharedPreferences.getString(ACCESS_TOKEN_KEY, null)
 
@@ -21,7 +34,7 @@ class TokenSharedPreferenceSource @Inject constructor(context: Context) : TokenS
     override fun setTokens(accessToken: String, refreshToken: String) {
         sharedPreferences.edit {
             putString(ACCESS_TOKEN_KEY, accessToken)
-            putString(REFRESH_TOKEN_KEY, refreshToken.toString())
+            putString(REFRESH_TOKEN_KEY, refreshToken)
 
             apply()
         }
