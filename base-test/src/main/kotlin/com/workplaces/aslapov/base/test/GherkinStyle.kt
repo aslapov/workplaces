@@ -1,4 +1,5 @@
 @file:Suppress("TestFunctionName")
+
 package com.workplaces.aslapov.base.test
 
 import io.kotest.core.spec.style.FreeSpec

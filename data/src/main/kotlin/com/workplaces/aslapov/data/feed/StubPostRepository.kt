@@ -5,8 +5,13 @@ import com.workplaces.aslapov.domain.feed.PostRepository
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.time.LocalDate
-import java.util.*
 import javax.inject.Inject
+
+const val POSTS_COUNT = 15
+const val MOSCOW_LON = 37.36
+const val MOSCOW_LAT = 55.45
+const val LIKES_COUNT = 15
+const val LIKED_INTERVAL = 3
 
 class StubPostRepository @Inject constructor() : PostRepository {
 
@@ -18,19 +23,25 @@ class StubPostRepository @Inject constructor() : PostRepository {
         birthday = LocalDate.parse("1994-02-19", dateTimeFormatter),
     )
 
-    private val post = Post(
-        id = UUID.randomUUID().toString(),
-        text = "Soprano, we like to keep it on a high note. It's levels to it, you and I know",
-        imageUrl = null,
-        lon = 37.36,
-        lat = 55.45,
-        author = user,
-        likes = 15,
-        liked = true,
-    )
+    private val _posts = mutableListOf<Post>()
+    private val posts: List<Post> = _posts
 
-    private val _posts = mutableListOf(post, post, post, post, post, post, post, post, post, post, post, post, post)
-    private val posts = _posts
+    init {
+        for (i in 1..POSTS_COUNT) {
+            _posts.add(
+                Post(
+                    id = i.toString(),
+                    text = "Soprano, we like to keep it on a high note. It's levels to it, you and I know",
+                    imageUrl = null,
+                    lon = MOSCOW_LON,
+                    lat = MOSCOW_LAT,
+                    author = user,
+                    likes = LIKES_COUNT,
+                    liked = i % LIKED_INTERVAL == 0,
+                )
+            )
+        }
+    }
 
     override suspend fun getFeed(): List<Post> = posts
 

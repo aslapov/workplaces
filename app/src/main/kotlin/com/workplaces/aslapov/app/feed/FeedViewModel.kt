@@ -6,9 +6,12 @@ import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.domain.feed.FeedException
 import com.workplaces.aslapov.domain.feed.FeedUseCase
 import com.workplaces.aslapov.domain.feed.Post
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+
+const val DELAY_TIME: Long = 3000
 
 class FeedViewModel @Inject constructor(
     private val feedUseCase: FeedUseCase,
@@ -27,8 +30,25 @@ class FeedViewModel @Inject constructor(
         observeViewState()
     }
 
+    fun onPostLikeClicked(post: Post) {
+        viewModelScope.launch {
+            try {
+                if (post.liked) {
+                    feedUseCase.removeLike(post)
+                } else {
+                    feedUseCase.like(post)
+                }
+                state = FeedViewState.Content(feedUseCase.getFeed())
+            } catch (e: FeedException) {
+                Timber.tag(TAG).d(e)
+                state = FeedViewState.Error
+            }
+        }
+    }
+
     private fun observeViewState() {
         viewModelScope.launch {
+            delay(DELAY_TIME)
             state = try {
                 val posts = feedUseCase.getFeed()
 

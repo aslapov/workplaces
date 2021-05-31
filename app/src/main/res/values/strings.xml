@@ -56,7 +56,7 @@
     <!-- endregion -->
 
     <!-- region Экран Ленты -->
-    <string name="feed_toolbar_title">Популярное</string>
+    <string name="feed_header">Популярное</string>
     <string name="feed_emptiness">Пустота</string>
     <string name="feed_emptiness_advise">Вам нужны друзья, чтобы лента стала живой</string>
     <string name="feed_emptiness_find_friends">Найти друзей</string>
@@ -66,7 +66,7 @@
     <!-- endregion -->
 
     <!-- region Экран Пост -->
-    <string name="post_text">Soprano, we like to keep it on a high note. It's levels to it, you and I know</string>
+    <string name="post_text">Soprano, we like to keep it on a high note. It\'s levels to it, you and I know</string>
     <string name="post_location">Россия, Москва</string>
     <!-- endregion -->
 

@@ -127,6 +127,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
+
     sourceSets.forEach { it.java.srcDir("src/${it.name}/kotlin") }
 }
 
@@ -143,6 +147,9 @@ dependencies {
     implementation(AppDependency.BROWSER)
     implementation(AppDependency.RMR_VIEW_BINDING)
     implementation(AppDependency.RMR_LIVEDATA)
+
+    implementation(AppDependency.EPOXY)
+    kapt(AppDependency.EPOXY_PROCESSOR)
 
     implementation(AppDependency.NAVIGATION_FRAGMENT)
     implementation(AppDependency.NAVIGATION_FRAGMENT_KTX)
