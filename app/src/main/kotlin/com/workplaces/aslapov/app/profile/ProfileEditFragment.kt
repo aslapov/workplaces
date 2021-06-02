@@ -13,9 +13,9 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.observe
+import com.workplaces.aslapov.AnimationHelper
 import com.workplaces.aslapov.LoadingView
 import com.workplaces.aslapov.R
-import com.workplaces.aslapov.animateLoading
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
 import com.workplaces.aslapov.di.DI
@@ -74,7 +74,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     private fun onLoading(isLoading: Boolean) {
         progress.isVisible = isLoading
-        animateLoading(loading)
+        AnimationHelper(loading).start()
     }
 
     private fun setEditTextError(editText: EditText, fieldState: ProfileFieldState) {

@@ -7,7 +7,9 @@ import com.workplaces.aslapov.app.base.viewmodel.MessageEvent
 import com.workplaces.aslapov.domain.login.UserCredentials
 import com.workplaces.aslapov.domain.login.signup.SignUpException
 import com.workplaces.aslapov.domain.login.signup.SignUpUseCase
+import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 class SignUpViewModel @Inject constructor(
@@ -39,10 +41,10 @@ class SignUpViewModel @Inject constructor(
                 val userCredentials = UserCredentials(email, password)
                 signUpUseCase.signUp(
                     userCredentials = userCredentials,
-                    firstname = firstname,
-                    lastname = lastname,
-                    nickname = nickname,
-                    birthday = birthday,
+                    firstName = firstname,
+                    lastName = lastname,
+                    nickName = nickname,
+                    birthDay = LocalDate.parse(birthday, dateTimeFormatter),
                 )
                 navigateTo(SignUpStepTwoFragmentDirections.signUpToWelcomeAction())
             } catch (e: SignUpException) {

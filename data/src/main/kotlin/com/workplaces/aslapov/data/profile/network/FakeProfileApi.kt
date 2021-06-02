@@ -1,36 +1,44 @@
 package com.workplaces.aslapov.data.profile.network
 
-import com.workplaces.aslapov.data.profile.network.model.UserNetwork
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import kotlinx.coroutines.delay
 import java.time.LocalDate
 import javax.inject.Inject
 
-private const val SUSPEND_TIME_MILLIS = 500L
-
 class FakeProfileApi @Inject constructor() {
-    suspend fun getMe(): UserNetwork {
+
+    companion object {
+        private const val SUSPEND_TIME_MILLIS = 500L
+    }
+
+    suspend fun getMe(): User {
         delay(SUSPEND_TIME_MILLIS)
-        return UserNetwork(
+        return User(
             id = "63abe7f0-03d5-451b-a744-f517973987db",
             firstName = "Egor",
             lastName = "Aslapov",
             nickName = null,
             avatarUrl = null,
-            birthday = LocalDate.parse("1970-01-01", dateTimeFormatter)
+            birthDay = LocalDate.parse("1970-01-01", dateTimeFormatter)
         )
     }
 
-    suspend fun updateUser(user: User): UserNetwork {
+    suspend fun updateUser(
+        firstName: String,
+        lastName: String,
+        nickName: String,
+        avatarUrl: String?,
+        birthDay: LocalDate,
+    ): User {
         delay(SUSPEND_TIME_MILLIS)
-        return UserNetwork(
+        return User(
             id = "63abe7f0-03d5-451b-a744-f517973987db",
-            firstName = user.firstName,
-            lastName = user.lastName,
-            nickName = user.nickName,
-            avatarUrl = user.avatarUrl,
-            birthday = user.birthday
+            firstName = firstName,
+            lastName = lastName,
+            nickName = nickName,
+            avatarUrl = avatarUrl,
+            birthDay = birthDay
         )
     }
 }

@@ -18,14 +18,14 @@ class PostController constructor(
     override fun buildModels(posts: List<Post>) {
         val header = resources.getString(R.string.feed_header)
 
-        feedHeader {
-            id(UUID.randomUUID().toString())
+        headerView {
+            id(header)
             title(header)
         }
 
         posts.forEach {
             post {
-                id(UUID.randomUUID().toString())
+                id(it.id)
                 title(it.text)
                 author(it.author)
                 like(it.liked)

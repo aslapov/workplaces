@@ -8,15 +8,17 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 
-const val BLOCK_WIDTH_DIVIDER = 9f
-const val INDENT_DIVIDER = 90f
-const val BLOCK_RADIUS_DIVIDER = 2.857f
-
 class LoadingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    companion object {
+        private const val BLOCK_WIDTH_DIVIDER = 9f
+        private const val INDENT_DIVIDER = BLOCK_WIDTH_DIVIDER * 10
+        private const val BLOCK_RADIUS_DIVIDER = 40 / 14f
+    }
 
     var leftTopBlockColor: Int = ContextCompat.getColor(context, R.color.colorLightGreyBlue)
         set(value) {
@@ -24,19 +26,19 @@ class LoadingView @JvmOverloads constructor(
             invalidate()
         }
 
-    var rightTopBlockPaint: Int = ContextCompat.getColor(context, R.color.colorGrey)
+    var rightTopBlockColor: Int = ContextCompat.getColor(context, R.color.colorGrey)
         set(value) {
             field = value
             invalidate()
         }
 
-    var rightBottomBlockPaint: Int = ContextCompat.getColor(context, R.color.colorMiddleGrey)
+    var rightBottomBlockColor: Int = ContextCompat.getColor(context, R.color.colorMiddleGrey)
         set(value) {
             field = value
             invalidate()
         }
 
-    var leftBottomBlockPaint: Int = ContextCompat.getColor(context, R.color.colorDarkGrey)
+    var leftBottomBlockColor: Int = ContextCompat.getColor(context, R.color.colorDarkGrey)
         set(value) {
             field = value
             invalidate()
@@ -101,21 +103,21 @@ class LoadingView @JvmOverloads constructor(
                 rightTopBlockRect,
                 cornerRadius,
                 cornerRadius,
-                paint.apply { color = rightTopBlockPaint }
+                paint.apply { color = rightTopBlockColor }
             )
 
             drawRoundRect(
                 rightBottomBlockRect,
                 cornerRadius,
                 cornerRadius,
-                paint.apply { color = rightBottomBlockPaint }
+                paint.apply { color = rightBottomBlockColor }
             )
 
             drawRoundRect(
                 leftBottomBlockRect,
                 cornerRadius,
                 cornerRadius,
-                paint.apply { color = leftBottomBlockPaint }
+                paint.apply { color = leftBottomBlockColor }
             )
         }
     }

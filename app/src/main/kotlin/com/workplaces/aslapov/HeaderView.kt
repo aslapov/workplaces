@@ -9,7 +9,7 @@ import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.KotlinHolder
 
 @EpoxyModelClass(layout = R.layout.feed_header)
-abstract class FeedHeaderModel : EpoxyModelWithHolder<FeedHeaderHolder>() {
+abstract class HeaderView : EpoxyModelWithHolder<FeedHeaderHolder>() {
     @EpoxyAttribute lateinit var title: String
 
     override fun bind(holder: FeedHeaderHolder) {

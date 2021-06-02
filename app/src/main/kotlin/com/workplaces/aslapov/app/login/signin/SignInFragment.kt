@@ -10,9 +10,9 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.appbar.MaterialToolbar
 import com.redmadrobot.extensions.lifecycle.observe
+import com.workplaces.aslapov.AnimationHelper
 import com.workplaces.aslapov.LoadingView
 import com.workplaces.aslapov.R
-import com.workplaces.aslapov.animateLoading
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
 
@@ -66,6 +66,6 @@ class SignInFragment : BaseFragment(R.layout.signin_fragment) {
 
     private fun onLoading(isLoading: Boolean) {
         progress.isVisible = isLoading
-        animateLoading(loading)
+        AnimationHelper(loading).start()
     }
 }

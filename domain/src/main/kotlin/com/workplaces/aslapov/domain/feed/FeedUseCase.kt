@@ -17,10 +17,8 @@ class FeedUseCase @Inject constructor(
     }
 
     suspend fun getFeed(): List<Post> {
-        val posts: List<Post>
-
-        try {
-            posts = postRepository.getFeed()
+        return try {
+            postRepository.getFeed()
         } catch (e: NetworkException) {
             Timber.tag(TAG).d(e)
             throw FeedException(getExceptionMessageIdByCode(e.code))
@@ -28,8 +26,6 @@ class FeedUseCase @Inject constructor(
             Timber.tag(TAG).d(e)
             throw FeedException(R.string.profile_network_connection_error)
         }
-
-        return posts
     }
 
     suspend fun like(post: Post) {

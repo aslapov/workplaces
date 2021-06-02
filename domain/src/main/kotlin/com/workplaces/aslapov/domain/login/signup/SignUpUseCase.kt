@@ -6,9 +6,7 @@ import com.workplaces.aslapov.domain.R
 import com.workplaces.aslapov.domain.di.RepositoryInUse
 import com.workplaces.aslapov.domain.login.AuthRepository
 import com.workplaces.aslapov.domain.login.UserCredentials
-import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.profile.UserRepository
-import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import timber.log.Timber
 import java.net.UnknownHostException
 import java.time.LocalDate
@@ -25,23 +23,21 @@ class SignUpUseCase @Inject constructor(
 
     suspend fun signUp(
         userCredentials: UserCredentials,
-        firstname: String,
-        lastname: String,
-        nickname: String,
-        birthday: String
+        firstName: String,
+        lastName: String,
+        nickName: String,
+        birthDay: LocalDate,
     ) {
         try {
             authRepository.register(userCredentials.email, userCredentials.password)
 
-            val user = User(
-                firstName = firstname,
-                lastName = lastname,
-                nickName = nickname,
-                birthday = LocalDate.parse(birthday, dateTimeFormatter),
-                avatarUrl = null
+            userRepository.updateUser(
+                firstName = firstName,
+                lastName = lastName,
+                nickName = nickName,
+                birthDay = birthDay,
+                avatarUrl = null,
             )
-
-            userRepository.updateUser(user)
         } catch (e: NetworkException) {
             Timber.tag(TAG).d(e)
             throw SignUpException(getExceptionMessageIdByCode(e.code))

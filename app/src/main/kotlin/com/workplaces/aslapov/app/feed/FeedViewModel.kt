@@ -1,7 +1,6 @@
 package com.workplaces.aslapov.app.feed
 
 import androidx.lifecycle.viewModelScope
-import com.redmadrobot.extensions.lifecycle.mapDistinct
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.domain.feed.FeedException
 import com.workplaces.aslapov.domain.feed.FeedUseCase
@@ -11,19 +10,14 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-const val DELAY_TIME: Long = 3000
-
 class FeedViewModel @Inject constructor(
     private val feedUseCase: FeedUseCase,
 ) : BaseViewModel<FeedViewState>() {
 
     companion object {
         private const val TAG = "ProfileViewModel"
+        private const val DELAY_TIME: Long = 3000
     }
-
-    val empty = viewState.mapDistinct { it is FeedViewState.Empty }
-    val loading = viewState.mapDistinct { it is FeedViewState.Loading }
-    val error = viewState.mapDistinct { it is FeedViewState.Error }
 
     init {
         createInitialState()
@@ -32,16 +26,16 @@ class FeedViewModel @Inject constructor(
 
     fun onPostLikeClicked(post: Post) {
         viewModelScope.launch {
-            try {
+            state = try {
                 if (post.liked) {
                     feedUseCase.removeLike(post)
                 } else {
                     feedUseCase.like(post)
                 }
-                state = FeedViewState.Content(feedUseCase.getFeed())
+                FeedViewState.Content(feedUseCase.getFeed())
             } catch (e: FeedException) {
                 Timber.tag(TAG).d(e)
-                state = FeedViewState.Error
+                FeedViewState.Error
             }
         }
     }

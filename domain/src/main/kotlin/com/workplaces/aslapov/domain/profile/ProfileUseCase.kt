@@ -11,11 +11,12 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import java.net.UnknownHostException
+import java.time.LocalDate
 import javax.inject.Inject
 
 class ProfileUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository,
-    @RepositoryInUse private val userRepository: UserRepository
+    @RepositoryInUse private val userRepository: UserRepository,
 ) {
 
     companion object {
@@ -29,9 +30,21 @@ class ProfileUseCase @Inject constructor(
             .catch { handleError(it) }
     }
 
-    suspend fun updateProfile(user: User) {
+    suspend fun updateProfile(
+        firstName: String,
+        lastName: String,
+        nickName: String,
+        avatarUrl: String?,
+        birthDay: LocalDate,
+    ) {
         try {
-            userRepository.updateUser(user)
+            userRepository.updateUser(
+                firstName = firstName,
+                lastName = lastName,
+                nickName = nickName,
+                avatarUrl = avatarUrl,
+                birthDay = birthDay,
+            )
         } catch (e: NetworkException) {
             Timber.tag(TAG).d(e)
             throw ProfileException(getExceptionMessageIdByCode(e.code))

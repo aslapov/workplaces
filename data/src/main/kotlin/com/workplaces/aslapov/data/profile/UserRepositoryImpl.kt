@@ -2,11 +2,11 @@ package com.workplaces.aslapov.data.profile
 
 import com.workplaces.aslapov.data.AppCache
 import com.workplaces.aslapov.data.profile.network.ProfileApi
-import com.workplaces.aslapov.data.profile.network.model.toUser
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.profile.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.time.LocalDate
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -19,19 +19,23 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentUser(): User {
         return profileApi.getCurrentUser()
-            .toUser()
             .also { saveUser(it) }
     }
 
-    override suspend fun updateUser(user: User): User {
+    override suspend fun updateUser(
+        firstName: String,
+        lastName: String,
+        nickName: String,
+        avatarUrl: String?,
+        birthDay: LocalDate,
+    ): User {
         return profileApi.updateMe(
-            firstName = user.firstName,
-            lastName = user.lastName,
-            nickName = user.nickName,
-            avatarUrl = user.avatarUrl,
-            birthday = user.birthday
+            firstName = firstName,
+            lastName = lastName,
+            nickName = nickName,
+            avatarUrl = avatarUrl,
+            birthDay = birthDay,
         )
-            .toUser()
             .also { saveUser(it) }
     }
 

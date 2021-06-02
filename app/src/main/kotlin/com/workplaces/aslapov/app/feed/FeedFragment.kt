@@ -7,10 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.redmadrobot.extensions.lifecycle.observe
-import com.workplaces.aslapov.ApplicationResourceProvider
-import com.workplaces.aslapov.LoadingView
-import com.workplaces.aslapov.R
-import com.workplaces.aslapov.animateLoading
+import com.workplaces.aslapov.*
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.feed.Post
@@ -41,9 +38,6 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
         posts.adapter = postController.adapter
 
         observe(feedViewModel.viewState, ::onStateChanged)
-        observe(feedViewModel.empty, ::onEmpty)
-        observe(feedViewModel.error, ::onError)
-        observe(feedViewModel.loading, ::onLoading)
         observe(feedViewModel.eventsQueue, ::onEvent)
     }
 
@@ -52,28 +46,17 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
     }
 
     private fun onStateChanged(state: FeedViewState) {
-        if (state is FeedViewState.Content) {
-            feed.isVisible = true
-            showContent(state.posts)
+        empty.isVisible = state is FeedViewState.Empty
+        error.isVisible = state is FeedViewState.Error
+
+        progress.isVisible = (state is FeedViewState.Loading)
+            .also { AnimationHelper(loading).start() }
+
+        feed.isVisible = if (state is FeedViewState.Content) {
+            postController.setData(state.posts)
+            true
         } else {
-            feed.isVisible = false
+            false
         }
-    }
-
-    private fun showContent(posts: List<Post>) {
-        postController.setData(posts)
-    }
-
-    private fun onEmpty(isEmpty: Boolean) {
-        empty.isVisible = isEmpty
-    }
-
-    private fun onError(isError: Boolean) {
-        error.isVisible = isError
-    }
-
-    private fun onLoading(isLoading: Boolean) {
-        progress.isVisible = isLoading
-        animateLoading(loading)
     }
 }

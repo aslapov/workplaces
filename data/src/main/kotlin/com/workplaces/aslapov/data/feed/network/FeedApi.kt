@@ -1,6 +1,6 @@
 package com.workplaces.aslapov.data.feed.network
 
-import com.workplaces.aslapov.data.feed.network.model.PostResponse
+import com.workplaces.aslapov.domain.feed.Post
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface FeedApi {
     @GET("feed")
-    suspend fun getFeed(): List<PostResponse>
+    suspend fun getFeed(): List<Post>
 
     @POST("feed/{id}/like")
     suspend fun like(@Path("id") id: String): Response<Unit>
@@ -18,5 +18,5 @@ interface FeedApi {
     suspend fun removeLike(@Path("id") id: String): Response<Unit>
 
     @GET("feed/favorite")
-    suspend fun getFavoriteFeed(): List<PostResponse>
+    suspend fun getFavoriteFeed(): List<Post>
 }

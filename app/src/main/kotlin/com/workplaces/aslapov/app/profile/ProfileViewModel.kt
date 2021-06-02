@@ -56,7 +56,7 @@ class ProfileViewModel @Inject constructor(
         val firstname = user.firstName
         val lastName = user.lastName
         val nickName = user.nickName?.let { "@${user.nickName}" }.orEmpty()
-        val period = Period.between(user.birthday, LocalDate.now())
+        val period = Period.between(user.birthDay, LocalDate.now())
 
         state = ProfileViewState(
             name = "$firstname $lastName",

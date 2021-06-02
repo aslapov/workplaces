@@ -154,10 +154,10 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                     coEvery {
                         signUp(
                             userCredentials = UserCredentials(validEmail, validPassword),
-                            firstname = validFirstName,
-                            lastname = validLastName,
-                            nickname = validNickName,
-                            birthday = validBirthDay,
+                            firstName = validFirstName,
+                            lastName = validLastName,
+                            nickName = validNickName,
+                            birthDay = validBirthDay,
                         )
                     } coAnswers { delay(1000) }
                 }
@@ -198,10 +198,10 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                 coVerify {
                     mockSignUpUseCase.signUp(
                         userCredentials = UserCredentials(validEmail, validPassword),
-                        firstname = validFirstName,
-                        lastname = validLastName,
-                        nickname = validNickName,
-                        birthday = validBirthDay,
+                        firstName = validFirstName,
+                        lastName = validLastName,
+                        nickName = validNickName,
+                        birthDay = validBirthDay,
                     )
                 }
             }
@@ -217,10 +217,10 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                     coEvery {
                         signUp(
                             userCredentials = UserCredentials(validEmail, validPassword),
-                            firstname = validFirstName,
-                            lastname = validLastName,
-                            nickname = validNickName,
-                            birthday = validBirthDay,
+                            firstName = validFirstName,
+                            lastName = validLastName,
+                            nickName = validNickName,
+                            birthDay = validBirthDay,
                         )
                     } coAnswers {
                         delay(1000)
@@ -264,10 +264,10 @@ class SignUpStepTwoViewModelTest : FreeSpec({
                 coVerify {
                     mockSignUpUseCase.signUp(
                         userCredentials = UserCredentials(validEmail, validPassword),
-                        firstname = validFirstName,
-                        lastname = validLastName,
-                        nickname = validNickName,
-                        birthday = validBirthDay,
+                        firstName = validFirstName,
+                        lastName = validLastName,
+                        nickName = validNickName,
+                        birthDay = validBirthDay,
                     )
                 }
             }

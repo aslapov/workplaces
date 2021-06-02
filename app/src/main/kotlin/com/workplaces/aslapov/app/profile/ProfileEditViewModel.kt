@@ -81,15 +81,14 @@ class ProfileEditViewModel @Inject constructor(
 
     fun onSaveClicked() {
         viewModelScope.launch {
-            val user = User(
-                firstName = state.firstName.value,
-                lastName = state.lastName.value,
-                nickName = state.nickName.value,
-                birthday = LocalDate.parse(state.birthDay.value, dateTimeFormatter),
-                avatarUrl = user.avatarUrl
-            )
             try {
-                profileUseCase.updateProfile(user)
+                profileUseCase.updateProfile(
+                    firstName = state.firstName.value,
+                    lastName = state.lastName.value,
+                    nickName = state.nickName.value,
+                    birthDay = LocalDate.parse(state.birthDay.value, dateTimeFormatter),
+                    avatarUrl = user.avatarUrl,
+                )
                 eventsQueue.offerEvent(NavigateUp)
             } catch (e: ProfileException) {
                 eventsQueue.offerEvent(MessageEvent(e.messageId))
@@ -110,7 +109,7 @@ class ProfileEditViewModel @Inject constructor(
                         firstName = user.firstName,
                         lastName = user.lastName,
                         nickName = user.nickName.orEmpty(),
-                        birthDay = user.birthday.format(dateTimeFormatter),
+                        birthDay = user.birthDay.format(dateTimeFormatter),
                     )
                 )
             }
@@ -134,7 +133,7 @@ class ProfileEditViewModel @Inject constructor(
         val isUserFieldsChanged = state.firstName.value != user.firstName ||
             state.lastName.value != user.lastName ||
             state.nickName.value != user.nickName ||
-            state.birthDay.value != user.birthday.format(dateTimeFormatter)
+            state.birthDay.value != user.birthDay.format(dateTimeFormatter)
 
         state = state.copy(isSaveButtonEnabled = isUserFieldsValid && isUserFieldsChanged)
     }
@@ -154,7 +153,7 @@ class ProfileEditViewModel @Inject constructor(
         val firstname = user.firstName
         val lastName = user.lastName
         val nickName = user.nickName.orEmpty()
-        val birthDay = user.birthday.format(dateTimeFormatter)
+        val birthDay = user.birthDay.format(dateTimeFormatter)
 
         state = ProfileEditViewState(
             firstName = ProfileFieldState(firstname, isFirstnameValid(firstname), null),

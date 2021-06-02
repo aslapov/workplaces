@@ -5,22 +5,26 @@ import com.workplaces.aslapov.domain.feed.PostRepository
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.time.LocalDate
+import java.util.*
 import javax.inject.Inject
-
-const val POSTS_COUNT = 15
-const val MOSCOW_LON = 37.36
-const val MOSCOW_LAT = 55.45
-const val LIKES_COUNT = 15
-const val LIKED_INTERVAL = 3
 
 class StubPostRepository @Inject constructor() : PostRepository {
 
+    companion object {
+        private const val POSTS_COUNT = 15
+        private const val MOSCOW_LON = 37.36
+        private const val MOSCOW_LAT = 55.45
+        private const val LIKES_COUNT = 15
+        private const val LIKED_INTERVAL = 3
+    }
+
     private val user = User(
+        id = UUID.randomUUID().toString(),
         firstName = "Egor",
         lastName = "Aslapov",
         nickName = "Egorius",
         avatarUrl = null,
-        birthday = LocalDate.parse("1994-02-19", dateTimeFormatter),
+        birthDay = LocalDate.parse("1994-02-19", dateTimeFormatter),
     )
 
     private val _posts = mutableListOf<Post>()
