@@ -3,6 +3,7 @@ package com.workplaces.aslapov.app.feed
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -18,9 +19,8 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
 
     private val feed: LinearLayout get() = requireView().findViewById(R.id.feed_layout)
     private val progress: LinearLayout get() = requireView().findViewById(R.id.feed_progress_layout)
-    private val empty: LinearLayout get() = requireView().findViewById(R.id.feed_empty_layout)
-    private val error: LinearLayout get() = requireView().findViewById(R.id.feed_error_layout)
-    private val loading: LoadingView get() = requireView().findViewById(R.id.loading)
+    private val empty: ConstraintLayout get() = requireView().findViewById(R.id.feed_empty_layout)
+    private val error: ConstraintLayout get() = requireView().findViewById(R.id.feed_error_layout)
 
     private val posts: EpoxyRecyclerView get() = requireView().findViewById(R.id.feed_posts)
 
@@ -48,9 +48,7 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
     private fun onStateChanged(state: FeedViewState) {
         empty.isVisible = state is FeedViewState.Empty
         error.isVisible = state is FeedViewState.Error
-
-        progress.isVisible = (state is FeedViewState.Loading)
-            .also { AnimationHelper(loading).start() }
+        progress.isVisible = state is FeedViewState.Loading
 
         feed.isVisible = if (state is FeedViewState.Content) {
             postController.setData(state.posts)

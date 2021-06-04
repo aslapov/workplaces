@@ -3,13 +3,13 @@ package com.workplaces.aslapov.domain.feed
 import com.workplaces.aslapov.domain.ErrorCode
 import com.workplaces.aslapov.domain.NetworkException
 import com.workplaces.aslapov.domain.R
-import com.workplaces.aslapov.domain.di.Mock
+import com.workplaces.aslapov.domain.di.RepositoryInUse
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 
 class FeedUseCase @Inject constructor(
-    @Mock private val postRepository: PostRepository,
+    @RepositoryInUse private val postRepository: PostRepository,
 ) {
 
     companion object {

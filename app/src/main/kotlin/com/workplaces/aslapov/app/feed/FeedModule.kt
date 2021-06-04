@@ -13,5 +13,5 @@ interface FeedModule {
     @Binds
     @IntoMap
     @ViewModelKey(FeedViewModel::class)
-    fun bindLoginViewModel(viewModel: FeedViewModel): ViewModel
+    fun bindFeedViewModel(viewModel: FeedViewModel): ViewModel
 }

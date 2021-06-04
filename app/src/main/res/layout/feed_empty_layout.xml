@@ -1,58 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="100">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/feed_empty_emptiness_image"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="bottom"
-        android:layout_weight="40">
+        android:src="@drawable/emptiness"
+        app:layout_constraintBottom_toTopOf="@id/feed_empty_emptiness"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <ImageView
-            android:id="@+id/feed_empty_emptiness_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/emptiness"
-            android:layout_gravity="center" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/feed_empty_emptiness"
+        android:textAppearance="@style/TextAppearance.App.H1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="60">
+        android:text="@string/feed_emptiness"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/feed_empty_emptiness"
-            android:textAppearance="@style/TextAppearance.App.H1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/feed_emptiness" />
+    <TextView
+        android:id="@+id/feed_empty_advise"
+        android:textAppearance="@style/TextAppearance.App.H2"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/feed_emptiness_advise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feed_empty_emptiness" />
 
-        <TextView
-            android:id="@+id/feed_empty_advise"
-            android:textAppearance="@style/TextAppearance.App.H2"
-            android:layout_width="232dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="@string/feed_emptiness_advise" />
+    <Button
+        android:id="@+id/feed_empty_find_friends"
+        style="@style/Widget.App.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:text="@string/feed_emptiness_find_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feed_empty_advise" />
 
-        <Button
-            android:id="@+id/feed_empty_find_friends"
-            style="@style/Widget.App.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_gravity="center"
-            android:text="@string/feed_emptiness_find_friends" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

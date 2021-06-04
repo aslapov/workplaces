@@ -12,8 +12,6 @@ import androidx.navigation.navGraphViewModels
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.observe
-import com.workplaces.aslapov.AnimationHelper
-import com.workplaces.aslapov.LoadingView
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
@@ -33,7 +31,6 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
     private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.sign_up_two_toolbar)
     private val register: Button get() = requireView().findViewById(R.id.sign_up_two_register)
     private val progress: LinearLayout get() = requireView().findViewById(R.id.sign_up_progress_layout)
-    private val loading: LoadingView get() = requireView().findViewById(R.id.loading)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +90,6 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
 
     private fun onLoading(isLoading: Boolean) {
         progress.isVisible = isLoading
-        AnimationHelper(loading).start()
     }
 
     private fun showDatePicker() {

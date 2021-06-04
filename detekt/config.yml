@@ -611,7 +611,7 @@ style:
   MagicNumber:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-    ignoreNumbers: ['-1', '0', '0.5', '1', '2']
+    ignoreNumbers: ['-1', '0', '0.5', '1', '2', '3']
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: true
     ignoreLocalVariableDeclaration: false
