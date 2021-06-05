@@ -2,21 +2,19 @@ package com.workplaces.aslapov.app.profile
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import com.redmadrobot.extensions.lifecycle.observe
+import com.redmadrobot.extensions.viewbinding.viewBinding
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.databinding.ProfileFragmentBinding
 import com.workplaces.aslapov.di.DI
 
 class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
 
     private val profileViewModel: ProfileViewModel by viewModels { viewModelFactory }
 
-    private val name: TextView get() = requireView().findViewById(R.id.profile_name)
-    private val nickname: TextView get() = requireView().findViewById(R.id.profile_nickname)
-    private val age: TextView get() = requireView().findViewById(R.id.profile_age)
+    private val binding: ProfileFragmentBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +27,17 @@ class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
         observe(profileViewModel.viewState, ::onStateChanged)
         observe(profileViewModel.eventsQueue, ::onEvent)
 
-        view.findViewById<ImageView>(R.id.profile_edit).setOnClickListener { profileViewModel.onEditClicked() }
-        view.findViewById<ImageView>(R.id.profile_logout).setOnClickListener { profileViewModel.onLogout() }
+        binding.apply {
+            profileEdit.setOnClickListener { profileViewModel.onEditClicked() }
+            profileLogout.setOnClickListener { profileViewModel.onLogout() }
+        }
     }
 
     private fun onStateChanged(state: ProfileViewState) {
-        name.text = state.name
-        nickname.text = state.nickName
-        age.text = state.age
+        binding.apply {
+            profileName.text = state.name
+            profileNickname.text = state.nickName
+            profileAge.text = state.age
+        }
     }
 }

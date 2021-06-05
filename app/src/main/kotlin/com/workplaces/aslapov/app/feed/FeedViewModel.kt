@@ -5,7 +5,6 @@ import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.domain.feed.FeedException
 import com.workplaces.aslapov.domain.feed.FeedUseCase
 import com.workplaces.aslapov.domain.feed.Post
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -16,7 +15,6 @@ class FeedViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "ProfileViewModel"
-        private const val DELAY_TIME: Long = 3000
     }
 
     init {
@@ -42,7 +40,6 @@ class FeedViewModel @Inject constructor(
 
     private fun observeViewState() {
         viewModelScope.launch {
-            delay(DELAY_TIME)
             state = try {
                 val posts = feedUseCase.getFeed()
 

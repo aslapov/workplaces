@@ -3,19 +3,18 @@ package com.workplaces.aslapov.app.profile
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.redmadrobot.extensions.lifecycle.Event
 import com.redmadrobot.extensions.lifecycle.observe
+import com.redmadrobot.extensions.viewbinding.viewBinding
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.data.util.helpers.convertToLocalDateViaInstant
+import com.workplaces.aslapov.databinding.ProfileEditFragmentBinding
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.util.dateTimeFormatter
 import java.util.*
@@ -24,13 +23,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     private val profileEditViewModel: ProfileEditViewModel by viewModels { viewModelFactory }
 
-    private val firstname: EditText get() = requireView().findViewById(R.id.profile_edit_firstname)
-    private val lastname: EditText get() = requireView().findViewById(R.id.profile_edit_lastname)
-    private val nickname: EditText get() = requireView().findViewById(R.id.profile_edit_nickname)
-    private val birthday: EditText get() = requireView().findViewById(R.id.profile_edit_birthday)
-    private val toolbar: MaterialToolbar get() = requireView().findViewById(R.id.profile_edit_toolbar)
-    private val save: Button get() = requireView().findViewById(R.id.profile_edit_save)
-    private val progress: LinearLayout get() = requireView().findViewById(R.id.profile_progress_layout)
+    private val binding: ProfileEditFragmentBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,34 +36,38 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        birthday.setOnClickListener { showDatePicker() }
-        toolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
-        save.setOnClickListener { profileEditViewModel.onSaveClicked() }
+        binding.apply {
+            profileEditBirthday.setOnClickListener { showDatePicker() }
+            profileEditToolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
+            profileEditSave.setOnClickListener { profileEditViewModel.onSaveClicked() }
+        }
     }
 
     private fun setViewModelObservers() {
-        observe(profileEditViewModel.firstName) { setEditTextError(firstname, it) }
-        observe(profileEditViewModel.lastName) { setEditTextError(lastname, it) }
-        observe(profileEditViewModel.nickName) { setEditTextError(nickname, it) }
-        observe(profileEditViewModel.birthDay) { setEditTextError(birthday, it) }
+        observe(profileEditViewModel.firstName) { setEditTextError(binding.profileEditFirstname, it) }
+        observe(profileEditViewModel.lastName) { setEditTextError(binding.profileEditLastname, it) }
+        observe(profileEditViewModel.nickName) { setEditTextError(binding.profileEditNickname, it) }
+        observe(profileEditViewModel.birthDay) { setEditTextError(binding.profileEditBirthday, it) }
         observe(profileEditViewModel.isSaveButtonEnabled, ::onSaveButtonEnabledChanged)
         observe(profileEditViewModel.isLoading, ::onLoading)
         observe(profileEditViewModel.eventsQueue, ::onEvent)
     }
 
     private fun setEditTextWatchers() {
-        firstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
-        lastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
-        nickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
-        birthday.doAfterTextChanged { profileEditViewModel.onBirthDayEntered(it.toString()) }
+        binding.apply {
+            profileEditFirstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
+            profileEditLastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
+            profileEditNickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
+            profileEditBirthday.doAfterTextChanged { profileEditViewModel.onBirthDayEntered(it.toString()) }
+        }
     }
 
     private fun onSaveButtonEnabledChanged(isEnabled: Boolean) {
-        save.isEnabled = isEnabled
+        binding.profileEditSave.isEnabled = isEnabled
     }
 
     private fun onLoading(isLoading: Boolean) {
-        progress.isVisible = isLoading
+        binding.profileProgressLayout.root.isVisible = isLoading
     }
 
     private fun setEditTextError(editText: EditText, fieldState: ProfileFieldState) {
@@ -88,7 +85,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    birthday.text = Date(it).convertToLocalDateViaInstant()
+                    binding.profileEditBirthday.text = Date(it).convertToLocalDateViaInstant()
                         .format(dateTimeFormatter)
                         .toEditable()
                 }
@@ -98,10 +95,12 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     override fun onEvent(event: Event) {
         if (event is SetProfileFieldsEvent) {
-            firstname.setText(event.firstName)
-            lastname.setText(event.lastName)
-            nickname.setText(event.nickName)
-            birthday.setText(event.birthDay)
+            binding.apply {
+                profileEditFirstname.setText(event.firstName)
+                profileEditLastname.setText(event.lastName)
+                profileEditNickname.setText(event.nickName)
+                profileEditBirthday.setText(event.birthDay)
+            }
         } else {
             super.onEvent(event)
         }

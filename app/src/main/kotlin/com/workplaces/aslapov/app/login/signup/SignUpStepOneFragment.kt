@@ -3,15 +3,15 @@ package com.workplaces.aslapov.app.login.signup
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.navGraphViewModels
-import com.google.android.material.appbar.MaterialToolbar
 import com.redmadrobot.extensions.lifecycle.observe
+import com.redmadrobot.extensions.viewbinding.viewBinding
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.databinding.SignupOneFragmentBinding
 import com.workplaces.aslapov.di.DI
 
 class SignUpStepOneFragment : BaseFragment(R.layout.signup_one_fragment) {
@@ -19,9 +19,7 @@ class SignUpStepOneFragment : BaseFragment(R.layout.signup_one_fragment) {
     private val signUpViewModel: SignUpViewModel by navGraphViewModels(R.id.sign_up_graph) { viewModelFactory }
     private val signUpStepOneViewModel: SignUpStepOneViewModel by viewModels { viewModelFactory }
 
-    private val email: EditText get() = requireView().findViewById(R.id.sign_up_one_email)
-    private val password: EditText get() = requireView().findViewById(R.id.sign_up_one_password)
-    private val signUpNext: Button get() = requireView().findViewById(R.id.sign_up_one_next)
+    private val binding: SignupOneFragmentBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,37 +29,39 @@ class SignUpStepOneFragment : BaseFragment(R.layout.signup_one_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.sign_up_one_toolbar)
-        val registered = view.findViewById<Button>(R.id.sign_up_one_register_already)
-
         setViewModelObservers()
 
-        email.text = signUpViewModel.email.toEditable()
-        password.text = signUpViewModel.password.toEditable()
+        binding.apply {
+            signUpOneEmail.text = signUpViewModel.email.toEditable()
+            signUpOnePassword.text = signUpViewModel.password.toEditable()
 
-        email.doAfterTextChanged { signUpStepOneViewModel.onEmailEntered(it.toString()) }
-        password.doAfterTextChanged { signUpStepOneViewModel.onPasswordEntered(it.toString()) }
+            signUpOneEmail.doAfterTextChanged { signUpStepOneViewModel.onEmailEntered(it.toString()) }
+            signUpOnePassword.doAfterTextChanged { signUpStepOneViewModel.onPasswordEntered(it.toString()) }
 
-        toolbar.setNavigationOnClickListener { signUpStepOneViewModel.onBackClicked() }
-        registered.setOnClickListener { signUpStepOneViewModel.onRegisteredClicked() }
+            signUpOneToolbar.setNavigationOnClickListener { signUpStepOneViewModel.onBackClicked() }
+            signUpOneRegisterAlready.setOnClickListener { signUpStepOneViewModel.onRegisteredClicked() }
 
-        signUpNext.setOnClickListener {
-            signUpViewModel.onGoNextClicked(email.text.toString(), password.text.toString())
-            signUpStepOneViewModel.onNextClicked()
+            signUpOneNext.setOnClickListener {
+                signUpViewModel.onGoNextClicked(
+                    signUpOneEmail.text.toString(),
+                    signUpOnePassword.text.toString()
+                )
+                signUpStepOneViewModel.onNextClicked()
+            }
+
+            signUpOneEmail.requestFocus()
         }
-
-        email.requestFocus()
     }
 
     private fun setViewModelObservers() {
-        observe(signUpStepOneViewModel.email) { setEditTextError(email, it) }
-        observe(signUpStepOneViewModel.password) { setEditTextError(password, it) }
+        observe(signUpStepOneViewModel.email) { setEditTextError(binding.signUpOneEmail, it) }
+        observe(signUpStepOneViewModel.password) { setEditTextError(binding.signUpOnePassword, it) }
         observe(signUpStepOneViewModel.isNextButtonEnabled, ::onNextButtonEnableChanged)
         observe(signUpStepOneViewModel.eventsQueue, ::onEvent)
     }
 
     private fun onNextButtonEnableChanged(isEnabled: Boolean) {
-        signUpNext.isEnabled = isEnabled
+        binding.signUpOneNext.isEnabled = isEnabled
     }
 
     private fun setEditTextError(editText: EditText, fieldState: SignUpOneFieldState) {

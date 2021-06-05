@@ -2,14 +2,14 @@ package com.workplaces.aslapov.app.feed
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.airbnb.epoxy.EpoxyRecyclerView
 import com.redmadrobot.extensions.lifecycle.observe
-import com.workplaces.aslapov.*
+import com.redmadrobot.extensions.viewbinding.viewBinding
+import com.workplaces.aslapov.ApplicationResourceProvider
+import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
+import com.workplaces.aslapov.databinding.FeedFragmentBinding
 import com.workplaces.aslapov.di.DI
 import com.workplaces.aslapov.domain.feed.Post
 
@@ -17,12 +17,7 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
 
     private val feedViewModel: FeedViewModel by viewModels { viewModelFactory }
 
-    private val feed: LinearLayout get() = requireView().findViewById(R.id.feed_layout)
-    private val progress: LinearLayout get() = requireView().findViewById(R.id.feed_progress_layout)
-    private val empty: ConstraintLayout get() = requireView().findViewById(R.id.feed_empty_layout)
-    private val error: ConstraintLayout get() = requireView().findViewById(R.id.feed_error_layout)
-
-    private val posts: EpoxyRecyclerView get() = requireView().findViewById(R.id.feed_posts)
+    private val binding: FeedFragmentBinding by viewBinding()
 
     private lateinit var postController: PostController
 
@@ -35,7 +30,7 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        posts.adapter = postController.adapter
+        binding.feedLayout.feedPosts.adapter = postController.adapter
 
         observe(feedViewModel.viewState, ::onStateChanged)
         observe(feedViewModel.eventsQueue, ::onEvent)
@@ -46,15 +41,17 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
     }
 
     private fun onStateChanged(state: FeedViewState) {
-        empty.isVisible = state is FeedViewState.Empty
-        error.isVisible = state is FeedViewState.Error
-        progress.isVisible = state is FeedViewState.Loading
+        binding.apply {
+            feedEmptyLayout.root.isVisible = state is FeedViewState.Empty
+            feedErrorLayout.root.isVisible = state is FeedViewState.Error
+            feedProgressLayout.root.isVisible = state is FeedViewState.Loading
 
-        feed.isVisible = if (state is FeedViewState.Content) {
-            postController.setData(state.posts)
-            true
-        } else {
-            false
+            feedLayout.root.isVisible = if (state is FeedViewState.Content) {
+                postController.setData(state.posts)
+                true
+            } else {
+                false
+            }
         }
     }
 }
