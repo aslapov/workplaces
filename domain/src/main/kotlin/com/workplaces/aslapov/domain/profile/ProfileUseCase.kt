@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
+import javax.net.ssl.SSLPeerUnverifiedException
 
 class ProfileUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository,
@@ -29,15 +30,13 @@ class ProfileUseCase @Inject constructor(
             .catch { handleError(it) }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun updateProfile(user: User) {
         try {
             userRepository.updateUser(user)
-        } catch (e: NetworkException) {
-            Timber.tag(TAG).d(e)
-            throw ProfileException(getExceptionMessageIdByCode(e.code))
-        } catch (e: UnknownHostException) {
-            Timber.tag(TAG).d(e)
-            throw ProfileException(R.string.profile_network_connection_error)
+        } catch (error: Throwable) {
+            Timber.tag(TAG).d(error)
+            handleError(error)
         }
     }
 
@@ -53,11 +52,13 @@ class ProfileUseCase @Inject constructor(
     }
 
     private fun handleError(error: Throwable) {
-        Timber.tag(TAG).d(error)
-        when (error) {
-            is NetworkException -> throw ProfileException(getExceptionMessageIdByCode(error.code))
-            is UnknownHostException -> throw ProfileException(R.string.profile_network_connection_error)
+        val messageId = when (error) {
+            is NetworkException -> getExceptionMessageIdByCode(error.code)
+            is UnknownHostException -> R.string.profile_network_connection_error
+            is SSLPeerUnverifiedException -> R.string.profile_pinning_failure
+            else -> R.string.profile_fail
         }
+        throw ProfileException(messageId)
     }
 
     private fun getExceptionMessageIdByCode(code: ErrorCode): Int {

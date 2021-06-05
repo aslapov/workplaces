@@ -13,6 +13,7 @@ import com.workplaces.aslapov.data.moshiadapters.UriAdapter
 import com.workplaces.aslapov.data.profile.network.ProfileApi
 import dagger.Module
 import dagger.Provides
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -23,6 +24,7 @@ class NetworkModule {
 
     companion object {
         private const val BASE_URL = "https://interns2021.redmadrobot.com/"
+        private const val HOST_NAME = "interns2021.redmadrobot.com"
     }
 
     @Singleton
@@ -74,7 +76,8 @@ class NetworkModule {
     fun provideOkHttpClient(
         userAuthenticator: UserAuthenticator,
         tokenInterceptor: TokenInterceptor,
-        errorInterceptor: ErrorInterceptor
+        errorInterceptor: ErrorInterceptor,
+        certificatePinner: CertificatePinner,
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
@@ -82,6 +85,7 @@ class NetworkModule {
             .addInterceptor(tokenInterceptor)
             .addInterceptor(errorInterceptor)
             .addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
+            .certificatePinner(certificatePinner)
             .build()
     }
 
@@ -89,12 +93,22 @@ class NetworkModule {
     @Provides
     @UnauthorizedZone
     fun provideAuthOkHttpClient(
-        errorInterceptor: ErrorInterceptor
+        errorInterceptor: ErrorInterceptor,
+        certificatePinner: CertificatePinner,
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
             .addInterceptor(errorInterceptor)
             .addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
+            .certificatePinner(certificatePinner)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCertificatePinner(): CertificatePinner {
+        return CertificatePinner.Builder()
+            .add(HOST_NAME, "sha256/PhNkc2DlW1XmAx2zBHgYaIeSanzL6bazbMHtdFeAhlE=")
             .build()
     }
 }

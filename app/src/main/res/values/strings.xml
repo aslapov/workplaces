@@ -65,7 +65,7 @@
     <string name="feed_error_refresh">Обновить</string>
     <!-- endregion -->
 
-    <!-- region Экран Пост -->
+    <!-- region Пост -->
     <string name="post_text">Soprano, we like to keep it on a high note. It\'s levels to it, you and I know</string>
     <string name="post_location">Россия, Москва</string>
     <!-- endregion -->

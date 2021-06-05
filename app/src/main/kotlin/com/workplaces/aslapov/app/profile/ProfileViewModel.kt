@@ -27,6 +27,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     init {
+        createInitialState()
         observeViewState()
     }
 
@@ -50,6 +51,7 @@ class ProfileViewModel @Inject constructor(
         when (error) {
             is ProfileException -> eventsQueue.offerEvent(MessageEvent(error.messageId))
         }
+        state = state.copy(isErrorState = true, isLoading = false)
     }
 
     private fun createViewStateFromUser(user: User) {
@@ -62,6 +64,18 @@ class ProfileViewModel @Inject constructor(
             name = "$firstname $lastName",
             nickName = nickName,
             age = resources.getQuantityString(R.plurals.age, period.years, period.years),
+            isErrorState = false,
+            isLoading = false,
+        )
+    }
+
+    private fun createInitialState() {
+        state = ProfileViewState(
+            name = "",
+            nickName = "",
+            age = "",
+            isErrorState = false,
+            isLoading = true,
         )
     }
 }
@@ -70,4 +84,6 @@ data class ProfileViewState(
     val name: String,
     val nickName: String,
     val age: String,
+    val isErrorState: Boolean,
+    val isLoading: Boolean,
 )

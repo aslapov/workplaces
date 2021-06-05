@@ -3,56 +3,57 @@ package com.workplaces.aslapov.domain.feed
 import com.workplaces.aslapov.domain.ErrorCode
 import com.workplaces.aslapov.domain.NetworkException
 import com.workplaces.aslapov.domain.R
-import com.workplaces.aslapov.domain.di.Mock
+import com.workplaces.aslapov.domain.di.RepositoryInUse
+import com.workplaces.aslapov.domain.profile.ProfileException
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
+import javax.net.ssl.SSLPeerUnverifiedException
 
 class FeedUseCase @Inject constructor(
-    @Mock private val postRepository: PostRepository,
+    @RepositoryInUse private val postRepository: PostRepository,
 ) {
 
     companion object {
         private const val TAG = "FeedUseCase"
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun getFeed(): List<Post> {
-        val posts: List<Post>
-
-        try {
-            posts = postRepository.getFeed()
-        } catch (e: NetworkException) {
-            Timber.tag(TAG).d(e)
-            throw FeedException(getExceptionMessageIdByCode(e.code))
-        } catch (e: UnknownHostException) {
-            Timber.tag(TAG).d(e)
-            throw FeedException(R.string.profile_network_connection_error)
+        return try {
+            postRepository.getFeed()
+        } catch (error: Throwable) {
+            Timber.tag(TAG).d(error)
+            throw FeedException(getErrorMessageId(error))
         }
-
-        return posts
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun like(post: Post) {
         try {
             postRepository.like(post)
-        } catch (e: NetworkException) {
-            Timber.tag(TAG).d(e)
-            throw FeedException(getExceptionMessageIdByCode(e.code))
-        } catch (e: UnknownHostException) {
-            Timber.tag(TAG).d(e)
-            throw FeedException(R.string.profile_network_connection_error)
+        } catch (error: Throwable) {
+            Timber.tag(TAG).d(error)
+            throw ProfileException(getErrorMessageId(error))
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun removeLike(post: Post) {
         try {
             postRepository.removeLike(post)
-        } catch (e: NetworkException) {
-            Timber.tag(TAG).d(e)
-            throw FeedException(getExceptionMessageIdByCode(e.code))
-        } catch (e: UnknownHostException) {
-            Timber.tag(TAG).d(e)
-            throw FeedException(R.string.profile_network_connection_error)
+        } catch (error: Throwable) {
+            Timber.tag(TAG).d(error)
+            throw ProfileException(getErrorMessageId(error))
+        }
+    }
+
+    private fun getErrorMessageId(error: Throwable): Int {
+        return when (error) {
+            is NetworkException -> getExceptionMessageIdByCode(error.code)
+            is UnknownHostException -> R.string.feed_network_connection_error
+            is SSLPeerUnverifiedException -> R.string.feed_ssl_pinning_failure
+            else -> R.string.feed_fail
         }
     }
 
