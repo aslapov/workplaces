@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
+import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
 
 class ProfileUseCase @Inject constructor(
@@ -56,6 +57,7 @@ class ProfileUseCase @Inject constructor(
             is NetworkException -> getExceptionMessageIdByCode(error.code)
             is UnknownHostException -> R.string.profile_network_connection_error
             is SSLPeerUnverifiedException -> R.string.profile_pinning_failure
+            is SSLHandshakeException -> R.string.profile_pinning_failure
             else -> R.string.profile_fail
         }
         throw ProfileException(messageId)

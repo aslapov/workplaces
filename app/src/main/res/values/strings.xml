@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Aslapov</string>
 
+    <string name="root_warning">"Обнаружен root. Ваши данные из приложения могут украсть.</string>
+
     <!-- region Bottom Navigation -->
     <string name="bottom_navigation_feed">feed</string>
     <string name="bottom_navigation_new_feed">new feed</string>

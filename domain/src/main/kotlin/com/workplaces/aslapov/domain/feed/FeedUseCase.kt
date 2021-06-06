@@ -8,6 +8,7 @@ import com.workplaces.aslapov.domain.profile.ProfileException
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
+import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
 
 class FeedUseCase @Inject constructor(
@@ -53,6 +54,7 @@ class FeedUseCase @Inject constructor(
             is NetworkException -> getExceptionMessageIdByCode(error.code)
             is UnknownHostException -> R.string.feed_network_connection_error
             is SSLPeerUnverifiedException -> R.string.feed_ssl_pinning_failure
+            is SSLHandshakeException -> R.string.feed_ssl_pinning_failure
             else -> R.string.feed_fail
         }
     }

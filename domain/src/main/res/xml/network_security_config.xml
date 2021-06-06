@@ -3,7 +3,7 @@
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">interns2021.redmadrobot.com</domain>
         <pin-set>
-            <pin digest="SHA-256">PhNkc2DlW1XmAx2zBHgYaIeSanzL6bazbMHtdFeAhlE=</pin>
+            <pin digest="SHA-256">MAVq5hbYTBXZBS28Tj4dmgZsA8zFN5xSyDGpkpft13s=</pin>
         </pin-set>
     </domain-config>
 </network-security-config>

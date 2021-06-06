@@ -108,7 +108,7 @@ class NetworkModule {
     @Provides
     fun provideCertificatePinner(): CertificatePinner {
         return CertificatePinner.Builder()
-            .add(HOST_NAME, "sha256/PhNkc2DlW1XmAx2zBHgYaIeSanzL6bazbMHtdFeAhlE=")
+            .add(HOST_NAME, "sha256/MAVq5hbYTBXZBS28Tj4dmgZsA8zFN5xSyDGpkpft13s=")
             .build()
     }
 }
