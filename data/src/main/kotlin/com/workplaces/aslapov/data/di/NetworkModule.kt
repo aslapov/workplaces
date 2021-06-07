@@ -3,6 +3,7 @@ package com.workplaces.aslapov.data.di
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.squareup.moshi.Moshi
+import com.workplaces.aslapov.data.BuildConfig
 import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.data.feed.network.FeedApi
 import com.workplaces.aslapov.data.interceptors.ErrorInterceptor
@@ -23,8 +24,8 @@ import javax.inject.Singleton
 class NetworkModule {
 
     companion object {
-        private const val BASE_URL = "https://interns2021.redmadrobot.com/"
         private const val HOST_NAME = "interns2021.redmadrobot.com"
+        private const val BASE_URL = "https://$HOST_NAME/"
     }
 
     @Singleton
@@ -80,12 +81,15 @@ class NetworkModule {
         certificatePinner: CertificatePinner,
     ): OkHttpClient {
         return OkHttpClient
-            .Builder()
-            .authenticator(userAuthenticator)
-            .addInterceptor(tokenInterceptor)
-            .addInterceptor(errorInterceptor)
-            .addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
-            .certificatePinner(certificatePinner)
+            .Builder().apply {
+                authenticator(userAuthenticator)
+                addInterceptor(tokenInterceptor)
+                addInterceptor(errorInterceptor)
+                addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
+                if (!BuildConfig.DEBUG) {
+                    certificatePinner(certificatePinner)
+                }
+            }
             .build()
     }
 
@@ -97,10 +101,13 @@ class NetworkModule {
         certificatePinner: CertificatePinner,
     ): OkHttpClient {
         return OkHttpClient
-            .Builder()
-            .addInterceptor(errorInterceptor)
-            .addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
-            .certificatePinner(certificatePinner)
+            .Builder().apply {
+                addInterceptor(errorInterceptor)
+                addInterceptor(LoggingInterceptor.Builder().setLevel(Level.BODY).build())
+                if (!BuildConfig.DEBUG) {
+                    certificatePinner(certificatePinner)
+                }
+            }
             .build()
     }
 

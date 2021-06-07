@@ -13,6 +13,7 @@ import com.workplaces.aslapov.app.login.signup.SignUpModule
 import com.workplaces.aslapov.app.login.welcome.WelcomeModule
 import com.workplaces.aslapov.app.newfeed.NewFeedModule
 import com.workplaces.aslapov.app.profile.ProfileModule
+import com.workplaces.aslapov.data.di.LocalStoreModule
 import com.workplaces.aslapov.data.di.NetworkModule
 import dagger.BindsInstance
 import dagger.Component
@@ -24,6 +25,7 @@ import javax.inject.Singleton
         AppModule::class,
         ViewModelModule::class,
         NetworkModule::class,
+        LocalStoreModule::class,
         MainModule::class,
         LoginModule::class,
         SignInModule::class,

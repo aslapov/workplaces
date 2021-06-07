@@ -25,42 +25,43 @@ class MainActivity : BaseActivity() {
     private val mainViewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DI.appComponent.inject(this)
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
         val rootBeer = RootBeer(applicationContext)
         if (rootBeer.isRooted) {
-            Toast.makeText(applicationContext, R.string.root_warning, Toast.LENGTH_LONG)
-        } else {
-            DI.appComponent.inject(this)
+            Toast.makeText(applicationContext, R.string.root_warning, Toast.LENGTH_LONG).show()
+        }
 
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
-            findViewById<FrameLayout>(R.id.activity_start_container_screens).dispatchApplyWindowInsetsToChild()
-            val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        findViewById<FrameLayout>(R.id.activity_start_container_screens).dispatchApplyWindowInsetsToChild()
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-            val host: NavHostFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment ?: return
+        val host: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment ?: return
 
-            host.findNavController().run {
-                bottomNavigation.setupWithNavController(this)
-            }
+        host.findNavController().run {
+            bottomNavigation.setupWithNavController(this)
+        }
 
-            val navController = host.navController
-            navController.graph = navController.navInflater.inflate(R.navigation.root_graph)
+        val navController = host.navController
+        navController.graph = navController.navInflater.inflate(R.navigation.root_graph)
 
-            if (mainViewModel.isUserLoggedIn()) {
-                navController.navigate(R.id.to_main_graph_action)
-            }
+        if (mainViewModel.isUserLoggedIn()) {
+            navController.navigate(R.id.to_main_graph_action)
+        }
 
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                val isBottomNavigationVisible = destination.id == R.id.feed_empty_dest ||
-                    destination.id == R.id.new_feed_dest ||
-                    destination.id == R.id.profile_dest
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val isBottomNavigationVisible = destination.id == R.id.feed_empty_dest ||
+                destination.id == R.id.new_feed_dest ||
+                destination.id == R.id.profile_dest
 
-                bottomNavigation.isVisible = isBottomNavigationVisible
-            }
+            bottomNavigation.isVisible = isBottomNavigationVisible
+        }
 
-            observe(mainViewModel.eventsQueue) {
-                if (it is Navigate) navController.navigate(it.direction)
-            }
+        observe(mainViewModel.eventsQueue) {
+            if (it is Navigate) navController.navigate(it.direction)
         }
     }
 }

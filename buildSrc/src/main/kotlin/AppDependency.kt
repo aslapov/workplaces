@@ -9,7 +9,7 @@ internal object AppVersions {
     const val RMR_VIEW_BINDING = "4.1.2-2"
     const val RMR_LIVEDATA = "2.3.0-0"
     const val EPOXY = "4.6.1"
-    const val ROOTBEER = "0.0.9"
+    const val ROOT_BEER = "0.1.0"
     const val NAVIGATION = "2.3.5"
 }
 
@@ -39,5 +39,5 @@ object AppDependency {
     // DAGGER
     const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:${CoreVersions.DAGGER}"
 
-    const val ROOT_BEER = "com.scottyab:rootbeer-lib:${AppVersions.ROOTBEER}"
+    const val ROOT_BEER = "com.scottyab:rootbeer-lib:${AppVersions.ROOT_BEER}"
 }
