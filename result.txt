@@ -1,0 +1,28 @@
+1. Добавление таблицы:
+
+CREATE TABLE "posts" (
+	"id"	TEXT NOT NULL UNIQUE,
+	"text"	TEXT,
+	"image_url"	TEXT,
+	"lon"	REAL,
+	"lat"	REAL,
+	"author"	TEXT NOT NULL,
+	"likes"	INTEGER NOT NULL,
+	"liked"	INTEGER NOT NULL,
+	PRIMARY KEY("id")
+);
+
+
+
+2. Вставка в таблицу 4 записей
+
+INSERT INTO posts VALUES ("6470d562-26e8-43f2-8c64-3d54ead23a36", "Soprano, we like to keep it on a high note. It's levels to it, you and I know", null, 37.36, 55.45, "robot", 15, 0);
+INSERT INTO posts VALUES ("f7c40589-bad5-4387-8d30-922e7a2fcdff", "Нашёл интересное место в Хамовниках", null, 37.36, 55.45, "petrov", 1, 1);
+INSERT INTO posts VALUES ("ef2a7975-ce59-48d0-b135-1b7a4cb23a07", "Классное место. Адрес не скажу. Вот фотка самого места", "https://interns2021.redmadrobot.com/user-avatars/8e891162-8fcf-4e1e-a038-64f612c190f2-1617711863442-1914558387.jpg", null, null, "ivanov", 0, 0);
+INSERT INTO posts VALUES ("713b16a6-b7b8-4b65-a411-4b8a9ace57fe", "Где лучшее место для работы? Рядом с клубом", null, 37.36, 55.45, "egorius", 150, 1);
+
+
+
+3. Чтение записей, у которых 'liked' равно 'true'
+
+SELECT * FROM posts WHERE liked = 1;
