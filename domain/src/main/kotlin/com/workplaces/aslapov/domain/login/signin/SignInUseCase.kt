@@ -8,6 +8,8 @@ import com.workplaces.aslapov.domain.login.AuthRepository
 import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
+import javax.net.ssl.SSLHandshakeException
+import javax.net.ssl.SSLPeerUnverifiedException
 
 class SignInUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository
@@ -17,15 +19,23 @@ class SignInUseCase @Inject constructor(
         private const val TAG = "SignInUseCase"
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun signIn(email: String, password: String) {
         try {
             authRepository.login(email, password)
-        } catch (e: NetworkException) {
-            Timber.tag(TAG).d(e)
-            throw SignInException(getExceptionMessageIdByCode(e.code))
-        } catch (e: UnknownHostException) {
-            Timber.tag(TAG).d(e)
-            throw SignInException(R.string.sign_in_network_connection_error)
+        } catch (error: Exception) {
+            Timber.tag(TAG).d(error)
+            throw SignInException(getErrorMessageId(error))
+        }
+    }
+
+    private fun getErrorMessageId(error: Throwable): Int {
+        return when (error) {
+            is NetworkException -> getExceptionMessageIdByCode(error.code)
+            is UnknownHostException -> R.string.sign_in_network_connection_error
+            is SSLPeerUnverifiedException -> R.string.sign_in_ssl_pinning_failure
+            is SSLHandshakeException -> R.string.sign_in_ssl_pinning_failure
+            else -> R.string.sign_in_fail
         }
     }
 

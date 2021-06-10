@@ -1,5 +1,6 @@
 package com.workplaces.aslapov.domain
 
+import android.support.annotation.Keep
 import java.io.IOException
 
 class NetworkException(
@@ -8,6 +9,7 @@ class NetworkException(
     override val cause: Throwable? = null,
 ) : IOException(message, cause)
 
+@Keep
 enum class ErrorCode {
     INVALID_CREDENTIALS,
     INVALID_TOKEN,

@@ -5,3 +5,7 @@
     <fields>;
 }
 -dontwarn kotlin.**
+-keep class kotlin.Metadata { *; }
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}

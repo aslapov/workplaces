@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Aslapov</string>
 
+    <string name="root_warning">"Обнаружен root. Ваши данные из приложения могут украсть.</string>
+
     <!-- region Bottom Navigation -->
     <string name="bottom_navigation_feed">feed</string>
     <string name="bottom_navigation_new_feed">new feed</string>
@@ -65,7 +67,7 @@
     <string name="feed_error_refresh">Обновить</string>
     <!-- endregion -->
 
-    <!-- region Экран Пост -->
+    <!-- region Пост -->
     <string name="post_text">Soprano, we like to keep it on a high note. It\'s levels to it, you and I know</string>
     <string name="post_location">Россия, Москва</string>
     <!-- endregion -->

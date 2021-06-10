@@ -156,5 +156,7 @@ dependencies {
     implementation(AppDependency.NAVIGATION_UI)
     implementation(AppDependency.NAVIGATION_UI_KTX)
 
+    implementation(AppDependency.ROOT_BEER)
+
     kapt(AppDependency.DAGGER_COMPILER)
 }

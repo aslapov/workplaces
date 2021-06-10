@@ -1,6 +1,6 @@
 package com.workplaces.aslapov.data.profile
 
-import com.workplaces.aslapov.data.AppCache
+import com.workplaces.aslapov.data.profile.localstore.UserSharedPreferencesSource
 import com.workplaces.aslapov.data.profile.network.ProfileApi
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.profile.UserRepository
@@ -11,10 +11,10 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val profileApi: ProfileApi,
-    private val cache: AppCache
+    private val userSource: UserSharedPreferencesSource,
 ) : UserRepository {
 
-    private val _user: MutableStateFlow<User?> = MutableStateFlow(cache.getUser())
+    private val _user: MutableStateFlow<User?> = MutableStateFlow(userSource.getUser())
     override val user: StateFlow<User?> = _user
 
     override suspend fun getCurrentUser(): User {
@@ -44,7 +44,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     private fun saveUser(user: User?) {
-        cache.setUser(user)
+        userSource.setUser(user)
         _user.value = user
     }
 }

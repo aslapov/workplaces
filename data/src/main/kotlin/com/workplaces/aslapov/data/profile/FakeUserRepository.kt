@@ -40,7 +40,7 @@ class FakeUserRepository @Inject constructor(
     }
 
     override fun logout() {
-        userSource.logout()
+        userSource.setUser(null)
         _user.value = null
     }
 
