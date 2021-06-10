@@ -11,6 +11,8 @@ import timber.log.Timber
 import java.net.UnknownHostException
 import java.time.LocalDate
 import javax.inject.Inject
+import javax.net.ssl.SSLHandshakeException
+import javax.net.ssl.SSLPeerUnverifiedException
 
 class SignUpUseCase @Inject constructor(
     @RepositoryInUse private val authRepository: AuthRepository,
@@ -21,6 +23,7 @@ class SignUpUseCase @Inject constructor(
         private const val TAG = "SignUpUseCase"
     }
 
+    @Suppress("TooGenericExceptionCaught")
     suspend fun signUp(
         userCredentials: UserCredentials,
         firstName: String,
@@ -38,12 +41,19 @@ class SignUpUseCase @Inject constructor(
                 birthDay = birthDay,
                 avatarUrl = null,
             )
-        } catch (e: NetworkException) {
-            Timber.tag(TAG).d(e)
-            throw SignUpException(getExceptionMessageIdByCode(e.code))
-        } catch (e: UnknownHostException) {
-            Timber.tag(TAG).d(e)
-            throw SignUpException(R.string.sign_up_network_connection_error)
+        } catch (error: Exception) {
+            Timber.tag(TAG).d(error)
+            throw SignUpException(getErrorMessageId(error))
+        }
+    }
+
+    private fun getErrorMessageId(error: Throwable): Int {
+        return when (error) {
+            is NetworkException -> getExceptionMessageIdByCode(error.code)
+            is UnknownHostException -> R.string.sign_up_network_connection_error
+            is SSLPeerUnverifiedException -> R.string.sign_up_ssl_pinning_failure
+            is SSLHandshakeException -> R.string.sign_up_ssl_pinning_failure
+            else -> R.string.sign_up_fail
         }
     }
 

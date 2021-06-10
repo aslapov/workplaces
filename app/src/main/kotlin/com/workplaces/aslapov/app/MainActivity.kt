@@ -2,6 +2,7 @@ package com.workplaces.aslapov.app
 
 import android.os.Bundle
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.redmadrobot.extensions.lifecycle.observe
+import com.scottyab.rootbeer.RootBeer
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.activity.BaseActivity
 import com.workplaces.aslapov.app.base.viewmodel.Navigate
@@ -27,6 +29,12 @@ class MainActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val rootBeer = RootBeer(applicationContext)
+        if (rootBeer.isRooted) {
+            Toast.makeText(applicationContext, R.string.root_warning, Toast.LENGTH_LONG).show()
+        }
+
         findViewById<FrameLayout>(R.id.activity_start_container_screens).dispatchApplyWindowInsetsToChild()
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 

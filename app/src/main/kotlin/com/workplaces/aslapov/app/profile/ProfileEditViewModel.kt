@@ -122,6 +122,7 @@ class ProfileEditViewModel @Inject constructor(
         when (error) {
             is ProfileException -> eventsQueue.offerEvent(MessageEvent(error.messageId))
         }
+        state = state.copy(isLoading = false)
     }
 
     private fun checkSaveButtonEnable() {
