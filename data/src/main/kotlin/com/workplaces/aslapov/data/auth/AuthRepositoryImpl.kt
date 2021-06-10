@@ -49,9 +49,9 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun refreshToken(): String {
         val refreshToken = requireNotNull(refreshToken)
-        val token = authApi.refresh(RefreshTokenRequest(refreshToken))
-        saveToken(token)
-        return token.accessToken
+        return authApi.refresh(RefreshTokenRequest(refreshToken))
+            .also { saveToken(it) }
+            .accessToken
     }
 
     private fun saveToken(token: Token) {
