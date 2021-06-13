@@ -3,7 +3,6 @@ package com.workplaces.aslapov.app.feed
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -14,18 +13,17 @@ import com.workplaces.aslapov.domain.profile.User
 @EpoxyModelClass(layout = R.layout.post_item)
 abstract class PostModel : EpoxyModelWithHolder<PostHolder>() {
 
-    @EpoxyAttribute lateinit var title: String
+    @EpoxyAttribute var title: String? = null
 
     @EpoxyAttribute lateinit var author: User
 
     @EpoxyAttribute var like: Boolean = false
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
-    @CallbackProp
     lateinit var clickListener: View.OnClickListener
 
     override fun bind(holder: PostHolder) {
-        holder.title.text = title
+        holder.title.text = title ?: ""
         holder.author.text = author.nickName?.let { "@${author.nickName}" }.orEmpty()
 
         val likeImageId = if (like) R.drawable.icon_like_pressed else R.drawable.icon_like

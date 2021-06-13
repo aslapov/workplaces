@@ -1,6 +1,7 @@
 package com.workplaces.aslapov.app.profile
 
 import androidx.lifecycle.viewModelScope
+import com.workplaces.aslapov.MainGraphDirections
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.ResourceProvider
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
@@ -37,6 +38,10 @@ class ProfileViewModel @Inject constructor(
 
     fun onLogout() {
         viewModelScope.launch { profileUseCase.logout() }
+    }
+
+    fun onFindFriendsClicked() {
+        navigateTo(MainGraphDirections.toFindFriendsGraph())
     }
 
     private fun observeViewState() {

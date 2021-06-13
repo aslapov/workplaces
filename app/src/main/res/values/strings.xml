@@ -74,12 +74,20 @@
 
     <!-- region Экран Профиля -->
     <string name="profile_posts">Посты</string>
+    <string name="profile_posts_emptiness">Если молчать, люди никогда не узнат о вас</string>
+    <string name="profile_posts_create">Создать пост</string>
     <string name="profile_likes">Лайки</string>
+    <string name="profile_likes_emptiness">Вы ещё не поставили ни одного лайка, но можете из ленты</string>
+    <string name="profile_likes_go_to_feed">Перейти к ленте</string>
     <string name="profile_friends">Друзья</string>
+    <string name="profile_friends_emptiness">Вы пока одиноки в сервисе, но это можно исправить</string>
+    <string name="profile_friends_find">Найти друзей</string>
     <string name="profile_emptiness">Пустота</string>
-    <string name="profile_emptiness_advise">Вы пока одиноки в сервисе, но это можно исправить</string>
-    <string name="profile_find_friends">Найти друзей</string>
     <string name="profile_network_connection_error">Проверьте подключение к интернету</string>
+    <string name="profile_find_more_friends">Найти ещё друзей</string>
+    <string name="profile_error">Упс...</string>
+    <string name="profile_error_description">Что-то пошло не так</string>
+    <string name="profile_error_refresh">Обновить</string>
     <!-- endregion -->
 
     <!-- region Экран Редактирования Профиля -->
@@ -95,6 +103,11 @@
     <string name="profile_edit_calendar_title">Выберите дату</string>
     <string name="profile_edit_save">Сохранить</string>
     <string name="profile_edit_network_connection_error">Проверьте подключение к интернету</string>
+    <!-- endregion -->
+
+    <!-- region Экран Поиска друзей -->
+    <string name="find_friends_title">Поиск друзей</string>
+    <string name="find_friends_hint">Имя или никнейм друга</string>
     <!-- endregion -->
 
     <plurals name="age">

@@ -6,6 +6,7 @@ import com.squareup.moshi.Moshi
 import com.workplaces.aslapov.data.BuildConfig
 import com.workplaces.aslapov.data.auth.network.AuthApi
 import com.workplaces.aslapov.data.feed.network.FeedApi
+import com.workplaces.aslapov.data.findfriends.network.SearchApi
 import com.workplaces.aslapov.data.interceptors.ErrorInterceptor
 import com.workplaces.aslapov.data.interceptors.TokenInterceptor
 import com.workplaces.aslapov.data.interceptors.UserAuthenticator
@@ -39,6 +40,10 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideFeedApi(@AuthorizedZone retrofit: Retrofit): FeedApi = retrofit.create(FeedApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideSearchApi(@AuthorizedZone retrofit: Retrofit): SearchApi = retrofit.create(SearchApi::class.java)
 
     @Singleton
     @Provides

@@ -18,7 +18,7 @@ class FakeProfileApi @Inject constructor() {
             id = "63abe7f0-03d5-451b-a744-f517973987db",
             firstName = "Egor",
             lastName = "Aslapov",
-            nickName = null,
+            nickName = "egorius",
             avatarUrl = null,
             birthDay = LocalDate.parse("1970-01-01", dateTimeFormatter)
         )

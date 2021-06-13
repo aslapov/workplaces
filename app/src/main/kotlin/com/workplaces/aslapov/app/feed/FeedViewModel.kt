@@ -1,6 +1,7 @@
 package com.workplaces.aslapov.app.feed
 
 import androidx.lifecycle.viewModelScope
+import com.workplaces.aslapov.MainGraphDirections
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.domain.feed.FeedException
 import com.workplaces.aslapov.domain.feed.FeedUseCase
@@ -18,7 +19,6 @@ class FeedViewModel @Inject constructor(
     }
 
     init {
-        createInitialState()
         observeViewState()
     }
 
@@ -38,7 +38,16 @@ class FeedViewModel @Inject constructor(
         }
     }
 
+    fun onRefreshClicked() {
+        observeViewState()
+    }
+
+    fun onFindFriendsClicked() {
+        navigateTo(MainGraphDirections.toFindFriendsGraph())
+    }
+
     private fun observeViewState() {
+        state = FeedViewState.Loading
         viewModelScope.launch {
             state = try {
                 val posts = feedUseCase.getFeed()
@@ -53,10 +62,6 @@ class FeedViewModel @Inject constructor(
                 FeedViewState.Error
             }
         }
-    }
-
-    private fun createInitialState() {
-        state = FeedViewState.Loading
     }
 }
 

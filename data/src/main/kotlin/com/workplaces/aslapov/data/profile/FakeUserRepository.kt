@@ -2,6 +2,7 @@ package com.workplaces.aslapov.data.profile
 
 import com.workplaces.aslapov.data.profile.localstore.UserSharedPreferencesSource
 import com.workplaces.aslapov.data.profile.network.FakeProfileApi
+import com.workplaces.aslapov.domain.feed.Post
 import com.workplaces.aslapov.domain.profile.User
 import com.workplaces.aslapov.domain.profile.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +38,26 @@ class FakeUserRepository @Inject constructor(
             birthDay = birthDay,
         )
             .also { saveUser(it) }
+    }
+
+    override suspend fun getFriends(): List<User> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addFriend(userId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteFriend(userId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPosts(): List<Post> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addPost(text: String?, imageFile: String?, lon: Double?, lat: Double?): Post {
+        TODO("Not yet implemented")
     }
 
     override fun logout() {

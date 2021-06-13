@@ -1,6 +1,6 @@
 package com.workplaces.aslapov.data.profile.network
 
-import com.workplaces.aslapov.data.feed.network.model.PostRequest
+import com.workplaces.aslapov.data.profile.network.model.UserIdBodyRequest
 import com.workplaces.aslapov.domain.feed.Post
 import com.workplaces.aslapov.domain.profile.User
 import retrofit2.Response
@@ -25,7 +25,7 @@ interface ProfileApi {
     suspend fun getFriends(): List<User>
 
     @POST("me/friends")
-    suspend fun addFriend(@Field("user_id") userId: String): Response<Unit>
+    suspend fun addFriend(@Body userId: UserIdBodyRequest): Response<Unit>
 
     @DELETE("me/friends/{id}")
     suspend fun deleteFriend(@Path("id") userId: String): Response<Unit>
@@ -33,6 +33,12 @@ interface ProfileApi {
     @GET("me/posts")
     suspend fun getPosts(): List<Post>
 
+    @Multipart
     @POST("me/posts")
-    suspend fun addPost(@Body post: PostRequest): Post
+    suspend fun addPost(
+        @Part("text") text: String?,
+        @Part("image_file") imageFile: String?,
+        @Part("lon") lon: Double?,
+        @Part("lat") lat: Double?,
+    ): Post
 }

@@ -7,6 +7,7 @@ import com.workplaces.aslapov.app.MainModule
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.app.base.viewmodel.ViewModelModule
 import com.workplaces.aslapov.app.feed.FeedModule
+import com.workplaces.aslapov.app.findfriends.FindFriendsModule
 import com.workplaces.aslapov.app.login.LoginModule
 import com.workplaces.aslapov.app.login.signin.SignInModule
 import com.workplaces.aslapov.app.login.signup.SignUpModule
@@ -33,7 +34,8 @@ import javax.inject.Singleton
         WelcomeModule::class,
         FeedModule::class,
         NewFeedModule::class,
-        ProfileModule::class
+        ProfileModule::class,
+        FindFriendsModule::class,
     ]
 )
 interface AppComponent {

@@ -30,6 +30,7 @@ class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
         binding.apply {
             profileEdit.setOnClickListener { profileViewModel.onEditClicked() }
             profileLogout.setOnClickListener { profileViewModel.onLogout() }
+            profileFindFriends.setOnClickListener { profileViewModel.onFindFriendsClicked() }
         }
     }
 

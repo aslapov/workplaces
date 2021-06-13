@@ -16,7 +16,6 @@ import com.workplaces.aslapov.domain.feed.Post
 class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.AdapterCallbacks {
 
     private val feedViewModel: FeedViewModel by viewModels { viewModelFactory }
-
     private val binding: FeedFragmentBinding by viewBinding()
 
     private lateinit var postController: PostController
@@ -30,10 +29,14 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.feedLayout.feedPosts.adapter = postController.adapter
-
         observe(feedViewModel.viewState, ::onStateChanged)
         observe(feedViewModel.eventsQueue, ::onEvent)
+
+        binding.apply {
+            feedLayout.feedPosts.adapter = postController.adapter
+            feedErrorLayout.feedErrorRefresh.setOnClickListener { feedViewModel.onRefreshClicked() }
+            feedEmptyLayout.feedEmptyFindFriends.setOnClickListener { feedViewModel.onFindFriendsClicked() }
+        }
     }
 
     override fun onPostLikeClicked(post: Post) {

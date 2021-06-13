@@ -10,4 +10,10 @@
 
     <include app:graph="@navigation/profile_graph" />
 
+    <action
+        android:id="@+id/to_find_friends_graph"
+        app:destination="@+id/find_friends_graph" />
+
+    <include app:graph="@navigation/find_friends_graph" />
+
 </navigation>

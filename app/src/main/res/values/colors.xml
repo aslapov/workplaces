@@ -20,7 +20,7 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 
-    <color name="colorAppBackground">#F7F8FB</color>
+    <color name="colorAppBackground">#FFFFFF</color>
 
     <color name="textGrey">#A2ACC1</color>
     <color name="blackTextToolbar">#17171C</color>
