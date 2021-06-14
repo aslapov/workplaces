@@ -1,6 +1,7 @@
-package com.workplaces.aslapov
+package com.workplaces.aslapov.app
 
-import android.animation.*
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import com.workplaces.aslapov.R
 
 class LoadingView @JvmOverloads constructor(
     context: Context,

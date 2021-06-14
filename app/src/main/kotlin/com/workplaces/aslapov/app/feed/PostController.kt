@@ -3,6 +3,7 @@ package com.workplaces.aslapov.app.feed
 import com.airbnb.epoxy.TypedEpoxyController
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.ResourceProvider
+import com.workplaces.aslapov.app.headerView
 import java.util.*
 
 class PostController constructor(
@@ -19,7 +20,7 @@ class PostController constructor(
 
         headerView {
             id(header)
-            title(header)
+            headTitle(header)
         }
 
         posts.forEach {
