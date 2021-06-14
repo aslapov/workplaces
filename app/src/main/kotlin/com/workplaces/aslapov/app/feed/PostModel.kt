@@ -13,7 +13,7 @@ import com.workplaces.aslapov.domain.profile.User
 @EpoxyModelClass(layout = R.layout.post_item)
 abstract class PostModel : EpoxyModelWithHolder<PostHolder>() {
 
-    @EpoxyAttribute var title: String? = null
+    @EpoxyAttribute var title: String? = ""
 
     @EpoxyAttribute lateinit var author: User
 
@@ -23,7 +23,7 @@ abstract class PostModel : EpoxyModelWithHolder<PostHolder>() {
     lateinit var clickListener: View.OnClickListener
 
     override fun bind(holder: PostHolder) {
-        holder.title.text = title ?: ""
+        holder.title.text = title?.let { title }.orEmpty()
         holder.author.text = author.nickName?.let { "@${author.nickName}" }.orEmpty()
 
         val likeImageId = if (like) R.drawable.icon_like_pressed else R.drawable.icon_like

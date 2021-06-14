@@ -46,11 +46,10 @@ class FindFriendsFragment : BaseFragment(R.layout.find_friends_fragment), Friend
                 doAfterTextChanged { viewModel.onSearchWordChanged(it.toString()) }
 
                 setOnTouchListener { view, event ->
-                    if (event.action == MotionEvent.ACTION_UP) {
-                        if (event.rawX >= (view.right - findFriendsSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width())) {
-                            viewModel.onCancelClicked()
-                            return@setOnTouchListener true
-                        }
+                    val rightImageWidth = findFriendsSearch.compoundDrawables[DRAWABLE_RIGHT].bounds.width()
+                    if (event.action == MotionEvent.ACTION_UP && event.rawX >= view.right - rightImageWidth) {
+                        viewModel.onCancelClicked()
+                        return@setOnTouchListener true
                     }
                     return@setOnTouchListener false
                 }

@@ -1,5 +1,6 @@
 package com.workplaces.aslapov.data.profile
 
+import android.graphics.Bitmap
 import com.workplaces.aslapov.data.profile.localstore.UserSharedPreferencesSource
 import com.workplaces.aslapov.data.profile.network.ProfileApi
 import com.workplaces.aslapov.data.profile.network.model.UserIdBodyRequest
@@ -46,7 +47,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getFriends(): List<User> {
-        TODO("Not yet implemented")
+        return profileApi.getFriends()
     }
 
     override suspend fun addFriend(userId: String) {
@@ -70,11 +71,16 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPosts(): List<Post> {
-        TODO("Not yet implemented")
+        return profileApi.getPosts()
     }
 
-    override suspend fun addPost(text: String?, imageFile: String?, lon: Double?, lat: Double?): Post {
-        TODO("Not yet implemented")
+    override suspend fun addPost(text: String?, imageFile: Bitmap?, lon: Double?, lat: Double?): Post {
+        return profileApi.addPost(
+            text = text,
+            imageFile = null,
+            lon = lon,
+            lat = lat,
+        )
     }
 
     override fun logout() {

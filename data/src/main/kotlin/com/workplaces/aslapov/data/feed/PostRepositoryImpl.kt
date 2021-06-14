@@ -15,9 +15,9 @@ class PostRepositoryImpl @Inject constructor(
 
     override suspend fun getFeed(): List<Post> = feedApi.getFeed()
 
-    override suspend fun like(post: Post) {
+    override suspend fun like(postId: String) {
         try {
-            feedApi.like(post.id)
+            feedApi.like(postId)
                 .checkIsSuccessful()
         } catch (e: HttpException) {
             val exception = NetworkException(e.message(), ErrorCode.GENERIC_ERROR, e.cause)
@@ -25,9 +25,9 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun removeLike(post: Post) {
+    override suspend fun removeLike(postId: String) {
         try {
-            feedApi.removeLike(post.id)
+            feedApi.removeLike(postId)
                 .checkIsSuccessful()
         } catch (e: HttpException) {
             val exception = NetworkException(e.message(), ErrorCode.GENERIC_ERROR, e.cause)

@@ -33,7 +33,7 @@ class UserSharedPreferencesSource @Inject constructor(
                 id = id,
                 firstName = firstName ?: "Unknown",
                 lastName = lastName ?: "Unknown",
-                nickName = nickName ?: "",
+                nickName = nickName?.let { nickName }.orEmpty(),
                 avatarUrl = avatarUrl,
                 birthDay = LocalDate.parse(birthday, dateTimeFormatter)
             )

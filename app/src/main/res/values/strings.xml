@@ -110,6 +110,11 @@
     <string name="find_friends_hint">Имя или никнейм друга</string>
     <!-- endregion -->
 
+    <!-- region Экран Новый пост -->
+    <string name="new_post_welcome">Чем хотите поделиться?</string>
+    <string name="new_post_camera_activity_not_found">Не найдено приложение с камерой</string>
+    <!-- endregion -->
+
     <plurals name="age">
         <item quantity="zero">%d год</item>
         <item quantity="one">%d год</item>

@@ -30,9 +30,9 @@ class FeedUseCase @Inject constructor(
     }
 
     @Suppress("TooGenericExceptionCaught")
-    suspend fun like(post: Post) {
+    suspend fun like(postId: String) {
         try {
-            postRepository.like(post)
+            postRepository.like(postId)
         } catch (error: Throwable) {
             Timber.tag(TAG).d(error)
             throw ProfileException(getErrorMessageId(error))
@@ -40,9 +40,9 @@ class FeedUseCase @Inject constructor(
     }
 
     @Suppress("TooGenericExceptionCaught")
-    suspend fun removeLike(post: Post) {
+    suspend fun removeLike(postId: String) {
         try {
-            postRepository.removeLike(post)
+            postRepository.removeLike(postId)
         } catch (error: Throwable) {
             Timber.tag(TAG).d(error)
             throw ProfileException(getErrorMessageId(error))

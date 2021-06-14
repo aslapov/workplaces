@@ -12,7 +12,7 @@ import com.workplaces.aslapov.app.login.LoginModule
 import com.workplaces.aslapov.app.login.signin.SignInModule
 import com.workplaces.aslapov.app.login.signup.SignUpModule
 import com.workplaces.aslapov.app.login.welcome.WelcomeModule
-import com.workplaces.aslapov.app.newfeed.NewFeedModule
+import com.workplaces.aslapov.app.newpost.NewPostModule
 import com.workplaces.aslapov.app.profile.ProfileModule
 import com.workplaces.aslapov.data.di.LocalStoreModule
 import com.workplaces.aslapov.data.di.NetworkModule
@@ -33,7 +33,7 @@ import javax.inject.Singleton
         SignUpModule::class,
         WelcomeModule::class,
         FeedModule::class,
-        NewFeedModule::class,
+        NewPostModule::class,
         ProfileModule::class,
         FindFriendsModule::class,
     ]

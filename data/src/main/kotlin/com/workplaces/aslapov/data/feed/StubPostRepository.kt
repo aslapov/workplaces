@@ -49,13 +49,15 @@ class StubPostRepository @Inject constructor() : PostRepository {
 
     override suspend fun getFeed(): List<Post> = posts
 
-    override suspend fun like(post: Post) {
-        val postIndex = _posts.indexOfFirst { postItem -> postItem.id == post.id }
+    override suspend fun like(postId: String) {
+        val postIndex = _posts.indexOfFirst { postItem -> postItem.id == postId }
+        val post = _posts[postIndex]
         _posts[postIndex] = post.copy(likes = post.likes + 1, liked = true)
     }
 
-    override suspend fun removeLike(post: Post) {
-        val postIndex = _posts.indexOfFirst { postItem -> postItem.id == post.id }
+    override suspend fun removeLike(postId: String) {
+        val postIndex = _posts.indexOfFirst { postItem -> postItem.id == postId }
+        val post = _posts[postIndex]
         _posts[postIndex] = post.copy(likes = post.likes - 1, liked = false)
     }
 

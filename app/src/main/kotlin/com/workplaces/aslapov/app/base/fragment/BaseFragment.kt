@@ -24,7 +24,7 @@ open class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayou
         }
     }
 
-    private fun showMessage(message: String) {
+    protected fun showMessage(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 }

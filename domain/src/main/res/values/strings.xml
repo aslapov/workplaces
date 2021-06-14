@@ -48,4 +48,10 @@
     <string name="find_friends_ssl_pinning_failure">Certificate pinning failure!</string>
     <!-- endregion -->
 
+    <!-- region Новый Пост -->
+    <string name="new_post_fail">Упс, что-то пошло не так!</string>
+    <string name="new_post_network_connection_error">Проверьте подключение к интернету</string>
+    <string name="new_post_ssl_pinning_failure">Certificate pinning failure!</string>
+    <!-- endregion -->
+
 </resources>

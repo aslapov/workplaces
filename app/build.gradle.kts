@@ -147,6 +147,7 @@ dependencies {
     implementation(AppDependency.BROWSER)
     implementation(AppDependency.RMR_VIEW_BINDING)
     implementation(AppDependency.RMR_LIVEDATA)
+    implementation(AppDependency.COIL)
 
     implementation(AppDependency.EPOXY)
     kapt(AppDependency.EPOXY_PROCESSOR)

@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/new_feed_graph"
-    app:startDestination="@id/new_feed_dest">
+    app:startDestination="@id/new_post_dest">
 
     <fragment
-        android:id="@+id/new_feed_dest"
-        android:name="com.workplaces.aslapov.app.newfeed.NewFeedDummyFragment"
-        tools:layout="@layout/new_feed_dummy_fragment" />
+        android:id="@+id/new_post_dest"
+        android:name="com.workplaces.aslapov.app.newpost.NewPostFragment"
+        tools:layout="@layout/new_post_fragment" />
 
 </navigation>

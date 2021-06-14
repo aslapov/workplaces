@@ -1,4 +1,4 @@
-package com.workplaces.aslapov.app.newfeed
+package com.workplaces.aslapov.app.newpost
 
 import androidx.lifecycle.ViewModel
 import com.workplaces.aslapov.app.base.viewmodel.ViewModelKey
@@ -8,10 +8,10 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module(includes = [ViewModelModule::class])
-interface NewFeedModule {
+interface NewPostModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(NewFeedDummyViewModel::class)
-    fun bindNewFeedDummyViewModel(viewModel: NewFeedDummyViewModel): ViewModel
+    @ViewModelKey(NewPostViewModel::class)
+    fun bindNewFeedDummyViewModel(viewModel: NewPostViewModel): ViewModel
 }

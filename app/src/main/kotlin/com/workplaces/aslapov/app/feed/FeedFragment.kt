@@ -11,7 +11,6 @@ import com.workplaces.aslapov.R
 import com.workplaces.aslapov.app.base.fragment.BaseFragment
 import com.workplaces.aslapov.databinding.FeedFragmentBinding
 import com.workplaces.aslapov.di.DI
-import com.workplaces.aslapov.domain.feed.Post
 
 class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.AdapterCallbacks {
 
@@ -39,7 +38,12 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
         }
     }
 
-    override fun onPostLikeClicked(post: Post) {
+    override fun onStart() {
+        super.onStart()
+        feedViewModel.onRefreshClicked()
+    }
+
+    override fun onPostLikeClicked(post: PostInfo) {
         feedViewModel.onPostLikeClicked(post)
     }
 

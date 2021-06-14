@@ -54,7 +54,7 @@ class FindFriendsViewModel @Inject constructor(
             try {
                 findFriendsUseCase.addFriend(userId)
                 eventsQueue.offerEvent(MessageEvent(R.string.find_friends_success_add))
-            } catch(e: FindFriendsException) {
+            } catch (e: FindFriendsException) {
                 eventsQueue.offerEvent(MessageEvent(e.messageId))
             }
         }
@@ -67,7 +67,7 @@ class FindFriendsViewModel @Inject constructor(
             setLoadingState()
             friends = findFriendsUseCase.findFriends(searchWord)
                 .map { user -> toUserInfo(user) }
-        } catch(e: FindFriendsException) {
+        } catch (e: FindFriendsException) {
             eventsQueue.offerEvent(MessageEvent(e.messageId))
         } finally {
             state = state.copy(friends = friends, isLoading = false)

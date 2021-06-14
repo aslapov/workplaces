@@ -1,5 +1,6 @@
 package com.workplaces.aslapov.data.profile
 
+import android.graphics.Bitmap
 import com.workplaces.aslapov.data.profile.localstore.UserSharedPreferencesSource
 import com.workplaces.aslapov.data.profile.network.FakeProfileApi
 import com.workplaces.aslapov.domain.feed.Post
@@ -41,23 +42,23 @@ class FakeUserRepository @Inject constructor(
     }
 
     override suspend fun getFriends(): List<User> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 
     override suspend fun addFriend(userId: String) {
-        TODO("Not yet implemented")
+        profileApi.addFriend()
     }
 
     override suspend fun deleteFriend(userId: String) {
-        TODO("Not yet implemented")
+        profileApi.deleteFriend()
     }
 
     override suspend fun getPosts(): List<Post> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 
-    override suspend fun addPost(text: String?, imageFile: String?, lon: Double?, lat: Double?): Post {
-        TODO("Not yet implemented")
+    override suspend fun addPost(text: String?, imageFile: Bitmap?, lon: Double?, lat: Double?): Post {
+        return profileApi.addPost(text, lon, lat)
     }
 
     override fun logout() {

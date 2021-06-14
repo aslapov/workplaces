@@ -5,7 +5,6 @@ import com.workplaces.aslapov.MainGraphDirections
 import com.workplaces.aslapov.app.base.viewmodel.BaseViewModel
 import com.workplaces.aslapov.domain.feed.FeedException
 import com.workplaces.aslapov.domain.feed.FeedUseCase
-import com.workplaces.aslapov.domain.feed.Post
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,19 +17,15 @@ class FeedViewModel @Inject constructor(
         private const val TAG = "ProfileViewModel"
     }
 
-    init {
-        observeViewState()
-    }
-
-    fun onPostLikeClicked(post: Post) {
+    fun onPostLikeClicked(post: PostInfo) {
         viewModelScope.launch {
             state = try {
                 if (post.liked) {
-                    feedUseCase.removeLike(post)
+                    feedUseCase.removeLike(post.id)
                 } else {
-                    feedUseCase.like(post)
+                    feedUseCase.like(post.id)
                 }
-                FeedViewState.Content(feedUseCase.getFeed())
+                FeedViewState.Content(feedUseCase.getFeed().map { toPostInfo(it) })
             } catch (e: FeedException) {
                 Timber.tag(TAG).d(e)
                 FeedViewState.Error
@@ -50,7 +45,7 @@ class FeedViewModel @Inject constructor(
         state = FeedViewState.Loading
         viewModelScope.launch {
             state = try {
-                val posts = feedUseCase.getFeed()
+                val posts = feedUseCase.getFeed().map { toPostInfo(it) }
 
                 if (posts.isEmpty()) {
                     FeedViewState.Empty
@@ -70,6 +65,6 @@ sealed class FeedViewState {
     object Loading : FeedViewState()
     object Error : FeedViewState()
     data class Content(
-        val posts: List<Post>
+        val posts: List<PostInfo>
     ) : FeedViewState()
 }

@@ -54,7 +54,6 @@ class MainActivity : BaseActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isBottomNavigationVisible = destination.id == R.id.feed_empty_dest ||
-                destination.id == R.id.new_feed_dest ||
                 destination.id == R.id.profile_dest
 
             bottomNavigation.isVisible = isBottomNavigationVisible

@@ -31,13 +31,7 @@
         android:lineHeight="17sp"
         android:textFontWeight="400" />
 
-    <View
-        android:id="@+id/post_location_view"
-        android:layout_width="148dp"
-        android:layout_height="100dp"
-        android:background="@drawable/fake_location_shape"/>
-
-    <View
+    <ImageView
         android:id="@+id/post_location_photo"
         android:layout_width="148dp"
         android:layout_height="122dp"

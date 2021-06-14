@@ -11,6 +11,7 @@ internal object AppVersions {
     const val EPOXY = "4.6.1"
     const val ROOT_BEER = "0.1.0"
     const val NAVIGATION = "2.3.5"
+    const val COIL = "1.2.2"
 }
 
 object AppDependency {
@@ -23,6 +24,7 @@ object AppDependency {
     const val MATERIAL_UI = "com.google.android.material:material:${AppVersions.MATERIAL_UI}"
     const val RMR_VIEW_BINDING = "com.redmadrobot.extensions:viewbinding-ktx:${AppVersions.RMR_VIEW_BINDING}"
     const val RMR_LIVEDATA = "com.redmadrobot.extensions:lifecycle-livedata-ktx:${AppVersions.RMR_LIVEDATA}"
+    const val COIL = "io.coil-kt:coil:${AppVersions.COIL}"
 
     // EPOXY
     const val EPOXY = "com.airbnb.android:epoxy:${AppVersions.EPOXY}"

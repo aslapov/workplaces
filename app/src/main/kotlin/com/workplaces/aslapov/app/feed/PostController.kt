@@ -3,19 +3,18 @@ package com.workplaces.aslapov.app.feed
 import com.airbnb.epoxy.TypedEpoxyController
 import com.workplaces.aslapov.R
 import com.workplaces.aslapov.ResourceProvider
-import com.workplaces.aslapov.domain.feed.Post
 import java.util.*
 
 class PostController constructor(
     private val resources: ResourceProvider,
     private val callbacks: AdapterCallbacks,
-) : TypedEpoxyController<List<Post>>() {
+) : TypedEpoxyController<List<PostInfo>>() {
 
     interface AdapterCallbacks {
-        fun onPostLikeClicked(post: Post)
+        fun onPostLikeClicked(post: PostInfo)
     }
 
-    override fun buildModels(posts: List<Post>) {
+    override fun buildModels(posts: List<PostInfo>) {
         val header = resources.getString(R.string.feed_header)
 
         headerView {
@@ -24,11 +23,13 @@ class PostController constructor(
         }
 
         posts.forEach {
-            post {
+            postView {
                 id(it.id)
                 title(it.text)
-                author(it.author)
+                authorNickName(it.authorNickName)
+                location(it.location)
                 like(it.liked)
+                image(it.imageUrl)
                 clickListener { _ -> this@PostController.callbacks.onPostLikeClicked(it) }
             }
         }

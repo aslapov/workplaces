@@ -1,5 +1,6 @@
 package com.workplaces.aslapov.domain.profile
 
+import android.graphics.Bitmap
 import com.workplaces.aslapov.domain.feed.Post
 import kotlinx.coroutines.flow.StateFlow
 import java.time.LocalDate
@@ -25,7 +26,7 @@ interface UserRepository {
 
     suspend fun addPost(
         text: String?,
-        imageFile: String?,
+        imageFile: Bitmap?,
         lon: Double?,
         lat: Double?,
     ): Post
