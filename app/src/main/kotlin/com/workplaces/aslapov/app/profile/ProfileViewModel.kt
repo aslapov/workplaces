@@ -62,7 +62,7 @@ class ProfileViewModel @Inject constructor(
     private fun createViewStateFromUser(user: User) {
         val firstname = user.firstName
         val lastName = user.lastName
-        val nickName = user.nickName?.let { "@${it}" }.orEmpty()
+        val nickName = user.nickName?.let { "@$it" }.orEmpty()
         val period = Period.between(user.birthDay, LocalDate.now())
 
         state = ProfileViewState(
