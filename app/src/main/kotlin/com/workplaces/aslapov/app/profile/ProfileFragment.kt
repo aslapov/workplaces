@@ -27,7 +27,7 @@ class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
         observe(profileViewModel.viewState, ::onStateChanged)
         observe(profileViewModel.eventsQueue, ::onEvent)
 
-        binding.apply {
+        with(binding) {
             profileEdit.setOnClickListener { profileViewModel.onEditClicked() }
             profileLogout.setOnClickListener { profileViewModel.onLogout() }
             profileFindFriends.setOnClickListener { profileViewModel.onFindFriendsClicked() }
@@ -35,7 +35,7 @@ class ProfileFragment : BaseFragment(R.layout.profile_fragment) {
     }
 
     private fun onStateChanged(state: ProfileViewState) {
-        binding.apply {
+        with(binding) {
             profileName.text = state.name
             profileNickname.text = state.nickName
             profileAge.text = state.age

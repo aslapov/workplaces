@@ -13,12 +13,15 @@ data class PostInfo(
 )
 
 fun toPostInfo(post: Post): PostInfo {
+    val location = "${post.lat?.toString() ?: "0.0"}°, ${post.lon?.toString() ?: "0.0"}°"
+    val author = post.author.nickName?.let { "@$it" }.orEmpty()
+
     return PostInfo(
         id = post.id,
         text = post.text,
         imageUrl = post.imageUrl,
-        location = "${post.lat?.toString() ?: "0.0"}°, ${post.lon?.toString() ?: "0.0"}°",
-        authorNickName = post.author.nickName?.let { "@$it" }.orEmpty(),
+        location = location,
+        authorNickName = author,
         likes = post.likes,
         liked = post.liked,
     )

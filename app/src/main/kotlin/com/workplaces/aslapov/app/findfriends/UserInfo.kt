@@ -13,7 +13,7 @@ fun toUserInfo(user: User): UserInfo {
     return UserInfo(
         id = user.id,
         fullName = "${user.firstName} ${user.lastName}",
-        nickName = user.nickName?.let { user.nickName }.orEmpty(),
+        nickName = user.nickName.orEmpty(),
         avatarUrl = user.avatarUrl,
     )
 }

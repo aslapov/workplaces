@@ -36,7 +36,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        binding.apply {
+        with(binding) {
             profileEditBirthday.setOnClickListener { showDatePicker() }
             profileEditToolbar.setNavigationOnClickListener { profileEditViewModel.onBackClicked() }
             profileEditSave.setOnClickListener { profileEditViewModel.onSaveClicked() }
@@ -54,7 +54,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
     }
 
     private fun setEditTextWatchers() {
-        binding.apply {
+        with(binding) {
             profileEditFirstname.doAfterTextChanged { profileEditViewModel.onFirstNameEntered(it.toString()) }
             profileEditLastname.doAfterTextChanged { profileEditViewModel.onLastNameEntered(it.toString()) }
             profileEditNickname.doAfterTextChanged { profileEditViewModel.onNickNameEntered(it.toString()) }
@@ -95,7 +95,7 @@ class ProfileEditFragment : BaseFragment(R.layout.profile_edit_fragment) {
 
     override fun onEvent(event: Event) {
         if (event is SetProfileFieldsEvent) {
-            binding.apply {
+            with(binding) {
                 profileEditFirstname.setText(event.firstName)
                 profileEditLastname.setText(event.lastName)
                 profileEditNickname.setText(event.nickName)

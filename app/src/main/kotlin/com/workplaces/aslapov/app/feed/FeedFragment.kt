@@ -31,7 +31,7 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
         observe(feedViewModel.viewState, ::onStateChanged)
         observe(feedViewModel.eventsQueue, ::onEvent)
 
-        binding.apply {
+        with(binding) {
             feedLayout.feedPosts.adapter = postController.adapter
             feedErrorLayout.feedErrorRefresh.setOnClickListener { feedViewModel.onRefreshClicked() }
             feedEmptyLayout.feedEmptyFindFriends.setOnClickListener { feedViewModel.onFindFriendsClicked() }
@@ -48,7 +48,7 @@ class FeedFragment : BaseFragment(R.layout.feed_fragment), PostController.Adapte
     }
 
     private fun onStateChanged(state: FeedViewState) {
-        binding.apply {
+        with(binding) {
             feedEmptyLayout.root.isVisible = state is FeedViewState.Empty
             feedErrorLayout.root.isVisible = state is FeedViewState.Error
             feedProgressLayout.root.isVisible = state is FeedViewState.Loading

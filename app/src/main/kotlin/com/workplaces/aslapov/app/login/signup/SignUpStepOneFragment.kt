@@ -31,7 +31,7 @@ class SignUpStepOneFragment : BaseFragment(R.layout.signup_one_fragment) {
 
         setViewModelObservers()
 
-        binding.apply {
+        with(binding) {
             signUpOneEmail.text = signUpViewModel.email.toEditable()
             signUpOnePassword.text = signUpViewModel.password.toEditable()
 

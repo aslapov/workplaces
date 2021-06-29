@@ -37,7 +37,7 @@ class FindFriendsFragment : BaseFragment(R.layout.find_friends_fragment), Friend
         observe(viewModel.viewState, ::onStateChanged)
         observe(viewModel.eventsQueue, ::onEvent)
 
-        binding.apply {
+        with(binding) {
             findFriendsToolbar.setOnClickListener { viewModel.onBackClicked() }
             findFriendsResult.setController(friendsToAddController)
 
@@ -70,7 +70,7 @@ class FindFriendsFragment : BaseFragment(R.layout.find_friends_fragment), Friend
     }
 
     private fun onStateChanged(state: FindFriendsViewState) {
-        binding.apply {
+        with(binding) {
             findFriendsProgressLayout.root.isVisible = state.isLoading
             findFriendsResult.isVisible = !state.isLoading
         }

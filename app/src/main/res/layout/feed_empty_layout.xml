@@ -8,7 +8,7 @@
         android:id="@+id/feed_empty_emptiness_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/emptiness"
+        app:srcCompat="@drawable/emptiness"
         app:layout_constraintBottom_toTopOf="@id/feed_empty_emptiness"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

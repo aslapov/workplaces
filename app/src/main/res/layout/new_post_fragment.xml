@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:src="@drawable/icon_location"
+        app:srcCompat="@drawable/icon_location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:src="@drawable/icon_image"
+        app:srcCompat="@drawable/icon_image"
         app:layout_constraintStart_toEndOf="@+id/new_post_location"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:layout_marginHorizontal="12dp"
-        android:src="@drawable/icon_send"
+        app:srcCompat="@drawable/icon_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 

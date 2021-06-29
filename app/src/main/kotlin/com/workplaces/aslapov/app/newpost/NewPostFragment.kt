@@ -25,6 +25,7 @@ class NewPostFragment : BaseFragment(R.layout.new_post_fragment) {
     companion object {
         private const val TAG = "NewPostFragment"
         private const val REQUEST_IMAGE_CAPTURE = 1
+        private const val RESULT_INTENT_EXTRA_DATA = "data"
     }
 
     private val viewModel: NewPostViewModel by viewModels { viewModelFactory }
@@ -41,7 +42,7 @@ class NewPostFragment : BaseFragment(R.layout.new_post_fragment) {
 
         observe(viewModel.eventsQueue, ::onEvent)
 
-        binding.apply {
+        with(binding) {
             newPostToolbar.setOnClickListener {
                 hideKeyBoard()
                 viewModel.onBackClicked()
@@ -72,7 +73,7 @@ class NewPostFragment : BaseFragment(R.layout.new_post_fragment) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val imageBitmap = data?.extras?.get(RESULT_INTENT_EXTRA_DATA) as Bitmap
             binding.newPostImage.load(imageBitmap)
             viewModel.onImageTook(imageBitmap)
         }

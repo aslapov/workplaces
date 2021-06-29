@@ -25,7 +25,7 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
 
         observe(loginViewModel.eventsQueue, ::onEvent)
 
-        binding.apply {
+        with(binding) {
             loginSignIn.setOnClickListener { loginViewModel.onSignInClicked() }
             loginSignUp.setOnClickListener { loginViewModel.onSignUpClicked() }
         }

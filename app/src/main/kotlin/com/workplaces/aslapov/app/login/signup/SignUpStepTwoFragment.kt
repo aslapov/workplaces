@@ -36,7 +36,7 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
         setViewModelObservers()
         setEditTextWatchers()
 
-        binding.apply {
+        with(binding) {
             signUpTwoBirthday.setOnClickListener { showDatePicker() }
             signUpTwoToolbar.setNavigationOnClickListener { signUpStepTwoViewModel.onBackClicked() }
 
@@ -65,7 +65,7 @@ class SignUpStepTwoFragment : BaseFragment(R.layout.signup_two_fragment) {
     }
 
     private fun setEditTextWatchers() {
-        binding.apply {
+        with(binding) {
             signUpTwoFirstname.doAfterTextChanged { signUpStepTwoViewModel.onFirstNameEntered(it.toString()) }
             signUpTwoLastname.doAfterTextChanged { signUpStepTwoViewModel.onLastNameEntered(it.toString()) }
             signUpTwoNickname.doAfterTextChanged { signUpStepTwoViewModel.onNickNameEntered(it.toString()) }
